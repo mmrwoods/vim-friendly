@@ -3,7 +3,7 @@
 Friendly defaults for Vim, if you are new to Vim, this is a good place to start.
 
 Inspired by Tim Pope's [sensible.vim](https://github.com/tpope/vim-sensible),
-but unconstrained by any ambition to be universal set of defaults, this plugin
+but unconstrained by any ambition to be a universal set of defaults, this plugin
 overrides some of Vim's default settings and adds a few other minor tweaks to
 make the initial experience more friendly to newcomers, without going too crazy.
 
