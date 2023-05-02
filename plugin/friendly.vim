@@ -76,7 +76,9 @@ set splitbelow                    " Open horizontal splits below
 
 set t_Co=256                      " Assume a 256 color terminal, ignore $TERM
 
-set noballooneval                 " Disable slow and annoying tooltips
+if has("balloon_eval")
+  set noballooneval               " Disable slow and annoying tooltips
+endif
 
 set synmaxcol=200                 " Disable syntax highlighting on very long lines
 
