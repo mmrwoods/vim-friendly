@@ -58,3 +58,7 @@ runtime! plugin/friendly.vim
 
 Alternatively, install as an optional package and use `packadd friendly` in your
 vimrc. See `:help packages`.
+
+## Caveats
+
+This is a work in progress, and if found to be useful, it will change.
