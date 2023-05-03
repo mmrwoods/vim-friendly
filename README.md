@@ -61,4 +61,16 @@ vimrc. See `:help packages`.
 
 ## Caveats
 
-This is a work in progress, and if found to be useful, it will change.
+This is a work in progress. If found to be useful, it will change, and break.
+
+## References
+
+Everything here is copied from somewhere else, mostly these places:
+
+* https://github.com/tpope/vim-sensible
+* https://neovim.io/doc/user/vim_diff.html
+* https://github.com/neovim/neovim/issues/2676
+* https://github.com/mmrwoods/dotfiles/blob/main/vim/vimrc
+* https://github.com/thoughtbot/dotfiles/blob/main/vimrc
+* https://github.com/garybernhardt/dotfiles/blob/main/.vimrc
+* https://github.com/vim/vim/blob/master/runtime/defaults.vim
