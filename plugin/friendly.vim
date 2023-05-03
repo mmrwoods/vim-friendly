@@ -26,11 +26,13 @@ filetype plugin indent on         " Turn on file type detection and indentation
 
 set autoindent                    " Auto-indent if no file type specific indent
 
-set expandtab sts=2 sw=2          " Default to two-space indent, no tabs
+set expandtab sts=2 sw=2          " Default to two-space indent, expand tabs
+
+set smarttab                      " Use shiftwidth with <Tab> at start of line
 
 set showcmd                       " Show incomplete commands as you type
 
-set backspace=indent,eol,start    " Intuitive backspacing
+set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 
 set hidden                        " Allow hidden buffers with unsaved changes
 
