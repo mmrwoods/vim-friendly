@@ -89,7 +89,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.i
 set wildignore=*~,*.o,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png,*.pyc,.DS_Store,*.egg*,.git,__pycache__
 
 " Custom status line, show relative file path and file type
-set statusline=%<%.99{expand('%:~:.')}\ \%h%w%m%r%{get(g:,'ZoomWin_statusline','')}\ %=\ %{&ft}\ %l\:\%-c\ %P
+set statusline=%<%.99{expand('%:~:.')}\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
 
 " Store windows, tabs, current directory, and buffer info in sessions
 " Exclude blank to avoid issues with nofile & quickfix windows (e.g.
