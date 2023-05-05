@@ -53,9 +53,8 @@ endif
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
-set incsearch                     " Highlight and move to match as you type
-au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
-au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
+set hlsearch                      " Enable highlighting of search matches
+set incsearch                     " And move to first match as you type
 
 set nowrap                        " Turn off line wrapping by default
 set scrolloff=1                   " Show context when scrolling vertically
@@ -189,6 +188,21 @@ vnoremap <S-Tab> <gv
 " default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
 " without this mapping, backspacing in visual mode just moves the cursor.
 vnoremap <BS> "_x
+
+" Use CTRL-L to clear search highlighting and call :diffupdate
+" Note: copied from vim-sensible, also included in Neovim defaults
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+" Only highlight search matches while search cmdline active. IMO this is just
+" less confusing for new Vim users, even when CTRL-L is mapped to nohlsearch.
+" Disable with ":augroup friendly_hlsearch | exe 'au!' | augroup END"
+augroup friendly_hlsearch
+  au!
+  au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
+  au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
+augroup END
 
 " Turn on spell checking by default for git commits
 autocmd FileType gitcommit setlocal spell
