@@ -75,6 +75,26 @@ Then configure git to use Vim as editor, initialised with this minimal vimrc:
 git config --global core.editor 'vim -u ~/.vimrc.minimal'
 ```
 
+**Can I use this with other plugin managers?**
+
+Yes, but load friendly.vim before other plugins, and your own vimrc settings.
+
+For example, this should work with [vim-plug](https://github.com/junegunn/vim-plug):
+
+```vim
+call plug#begin()
+Plug 'mmrwoods/vim-friendly'
+call plug#end()
+runtime! plugin/friendly.vim
+```
+
+And this should work with [pathogen.vim](https://github.com/tpope/vim-pathogen):
+
+```vim
+execute pathogen#infect()
+runtime! plugin/friendly.vim
+```
+
 ## Caveats
 
 This is a work in progress. If found to be useful, it will change, and break.
