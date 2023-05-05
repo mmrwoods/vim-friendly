@@ -34,7 +34,7 @@ git clone https://github.com/mmrwoods/vim-friendly.git friendly
 
 Add add this line to the start of your vimrc (e.g. ~/.vimrc):
 
-```
+```vim
 packadd friendly
 ```
 
@@ -44,10 +44,10 @@ Make any changes you like after `packadd friendly` in your vimrc. Settings can
 just be overridden, mappings can undone using `unmap` and friends, but autocmds
 are a little tricky as you need to reset the autocmd group (at least for now).
 
-```
+```vim
 packadd friendly
 
-" override textwidth, 80 column default, wat??? 
+" override textwidth, 80 column default, wat???
 set textwidth=120
 
 " undo q <nop> mapping, I like recording commands
@@ -61,22 +61,18 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 
 **Can I use this as a minimal vimrc for git commits?**
 
-Yes, you can, create a separate vimrc that loads friendly.vim and then stops
+Yes, create a separate vimrc that adds friendly.vim and updates packpath to stop
 other plugins apart from Vim's own runtime plugins from loading automatically:
 
 ```
-$ vim ~/.vimrc.minimal
-...
-" load friendly.vim plugin
-packadd friendly
-" disable other plugins
-set packpath=$VIMRUNTIME
+echo 'packadd friendly' > ~/.vimrc.minimal
+echo 'set packpath=$VIMRUNTIME' >> ~/.vimrc.minimal
 ```
 
-Then configure git to use Vim as editor, started with this minimal vimrc:
+Then configure git to use Vim as editor, initialised with this minimal vimrc:
 
 ```
-git config --global core.editor "vim -u ~/.vimrc.minimal"
+git config --global core.editor 'vim -u ~/.vimrc.minimal'
 ```
 
 ## Caveats
