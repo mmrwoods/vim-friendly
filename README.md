@@ -24,40 +24,60 @@ on Windows too. Should also work with Neovim, but may need a little tweaking.
 
 ## Installation
 
-Use your favourite package manager, or Vim's built-in package support:
+Install as an optional plugin using Vim's built-in package support:
 
 ```
-mkdir -p ~/.vim/pack/mmrwoods/start
-cd ~/.vim/pack/mmrwoods/start
+mkdir -p ~/.vim/pack/mmrwoods/opt
+cd ~/.vim/pack/mmrwoods/opt
 git clone https://github.com/mmrwoods/vim-friendly.git friendly
 ```
 
-If you like to get loco, you could use this as your initial vimrc:
+Add add this line to the start of your vimrc (e.g. ~/.vimrc):
 
 ```
-git clone https://github.com/mmrwoods/vim-friendly.git
-cp vim-friendly/plugin/friendly.vim ~/.vimrc
-rm -rf vim-friendly
-```
-
-If you like to get really loco, you could use this for git only:
-
-```
-git clone https://github.com/mmrwoods/vim-friendly.git
-cp vim-friendly/plugin/friendly.vim ~/.vimrc.minimal
-git config --global core.editor "vim -u ~/.vimrc.minimal"
+packadd friendly
 ```
 
 ## Customisation
 
-If installed as a plugin, add this to your vimrc and put your overrides below:
+Make any changes you like after `packadd friendly` in your vimrc. Settings can
+just be overridden, mappings can undone using `unmap` and friends, but autocmds
+are a little tricky as you need to reset the autocmd group (at least for now).
 
 ```
-runtime! plugin/friendly.vim
+packadd friendly
+
+" override textwidth, 80 column default, wat??? 
+set textwidth=120
+
+" undo q <nop> mapping, I like recording commands
+unmap q
+
+" stop automatically clearing search highlighting
+augroup friendly_hlsearch | exe 'au!' | augroup END
 ```
 
-Alternatively, install as an optional package and use `packadd friendly` in your
-vimrc. See `:help packages`.
+## FAQs
+
+**Can I use this as a minimal vimrc for git commits?**
+
+Yes, you can, create a separate vimrc that loads friendly.vim and then stops
+other plugins apart from Vim's own runtime plugins from loading automatically:
+
+```
+$ vim ~/.vimrc.minimal
+...
+" load friendly.vim plugin
+packadd friendly
+" disable other plugins
+set packpath=$VIMRUNTIME
+```
+
+Then configure git to use Vim as editor, started with this minimal vimrc:
+
+```
+git config --global core.editor "vim -u ~/.vimrc.minimal"
+```
 
 ## Caveats
 
