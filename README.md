@@ -95,6 +95,11 @@ execute pathogen#infect()
 runtime! plugin/friendly.vim
 ```
 
+**Why do I have to explicitly load friendly.vim?**
+
+Strictly speaking, you don't, but this is not a universally accepted set of
+defaults, and you may well want to override/unset some of them in your vimrc.
+
 ## Caveats
 
 This is a work in progress. If found to be useful, it will change, and break.
