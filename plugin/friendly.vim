@@ -33,7 +33,7 @@ set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 set hidden                        " Allow hidden buffers with unsaved changes
 
 set wildmenu                      " Enhanced command line completion
-set wildmode=list:longest         " Complete files like a shell
+set wildmode=list:longest,full    " Complete files like a shell (similar to zsh)
 
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
