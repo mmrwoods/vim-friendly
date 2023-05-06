@@ -117,9 +117,6 @@ set complete+=kspell
 " Disable completing keywords in included files, can make completion slow
 set complete-=i
 
-" Default format options, auto-format comments, but not code/text
-set formatoptions=croql
-
 " Delete comment leader when joining commented lines
 set formatoptions+=j
 
@@ -205,9 +202,6 @@ autocmd FileType gitcommit setlocal spell
 
 " Enable syntax highlighting for long lines in git commits
 autocmd FileType gitcommit setlocal synmaxcol=0
-
-" Automatically wrap markdown text at textwidth
-autocmd FileType markdown setlocal formatoptions+=t
 
 " Turn on spell checking by default for markdown files
 autocmd FileType markdown setlocal spell
