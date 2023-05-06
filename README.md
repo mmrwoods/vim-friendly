@@ -47,8 +47,8 @@ are a little tricky as you need to reset the autocmd group (at least for now).
 ```vim
 packadd friendly
 
-" override textwidth, 80 column default, wat???
-set textwidth=120
+" Automatically add missing EOL at end of file
+set fixeol
 
 " undo q <nop> mapping, I like recording commands
 unmap q

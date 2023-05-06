@@ -13,8 +13,6 @@ set nomodeline                    " No modelines (potential for security issues)
 
 set nofixeol                      " Disable fixeol by default, use .editorconfig
 
-set textwidth=80                  " Default textwidth, override using .editorconfig
-
 set cursorline                    " Highlight the cursor line
 
 set ttyfast                       " Assume a fast terminal connection
