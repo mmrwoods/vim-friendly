@@ -1,8 +1,8 @@
-if exists('g:loaded_friendly') 
+" Prevent duplicate loading, allows overriding from vimrc
+if exists("g:loaded_friendly")
   finish
-else
-  let g:loaded_friendly = 'yes'
 endif
+let g:loaded_friendly = 1
 
 set nocompatible                  " Disable vi compatibility (must come first)
 
