@@ -15,6 +15,16 @@ Ideally, everything here should be easy to override from your own vimrc. If you
 find something is not easy to override, please submit an issue (or even better,
 open a pull request).
 
+## Features
+
+* Friendly, but not universally applicable, default settings for new Vim users.
+* Disables some default mappings which new users find confusing (e.g. Q and q).
+* Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
+* A few convenience mappings for new users (e.g. Tab/Shift-Tab to shift lines).
+* Simple tab completion in insert mode, including relative path completion.
+* Handles existing swap files where possible (swap file warnings are confusing).
+* Opens diff in vertical split when writing commits with `git commit --verbose`.
+
 ## Requirements
 
 Vim 8.1 or later, though some features are only supported by and enabled on
