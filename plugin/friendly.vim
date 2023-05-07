@@ -166,9 +166,9 @@ noremap Y y$
 nnoremap <Del> "_x
 vnoremap <Del> "_x
 
-" Don't use Q for Ex mode, use it for formatting.  Except for Select mode.
-" Copied from $VIMRUNTIME/defaults.vim. Revert with ":unmap Q".
-map Q gq
+" Don't use Q for Ex mode, except for Select mode, confusing for new users
+" Revert with ":unmap Q".
+map Q <nop>
 sunmap Q
 
 " Stop recording commands and opening the command history by accident
