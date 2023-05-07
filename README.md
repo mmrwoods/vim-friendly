@@ -61,12 +61,11 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 
 **Can I use this as a minimal vimrc for git commits?**
 
-Yes, create a separate vimrc that adds friendly.vim and updates packpath to stop
-other plugins apart from Vim's own runtime plugins from loading automatically:
+Yes, create a separate vimrc that adds friendly.vim and disables other plugins:
 
 ```
 echo 'packadd friendly' > ~/.vimrc.minimal
-echo 'set packpath=$VIMRUNTIME' >> ~/.vimrc.minimal
+echo 'set noloadplugins' >> ~/.vimrc.minimal
 ```
 
 Then configure git to use Vim as editor, initialised with this minimal vimrc:
