@@ -21,6 +21,7 @@ open a pull request).
 * Disables some default mappings which new users find confusing (e.g. Q and q).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * A few convenience mappings for new users (e.g. Tab/Shift-Tab to shift lines).
+* Sets the default color scheme to slate, hopefully more appealing to new users.
 * Simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Opens diff in vertical split when writing commits with `git commit --verbose`.
@@ -73,6 +74,26 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 ```
 
 ## FAQs
+
+**I don't like the color scheme, can I change it?**
+
+Of course, I just chose slate as the default color scheme because it's included
+in Vim versions 8 and 9, and it resembles the defaults in Atom and VSCode, but
+you can change it using the `colorscheme` command.
+
+Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
+as completion options. Try them out to see which one you like, and then add it to
+your vimrc to make this your new default, e.g.
+
+```vim
+packadd friendly
+
+" Change default color scheme
+colorscheme habamax
+```
+
+By default you can only choose from color schemes included with Vim, but there
+are hundreds, if not thousands, of other color schemes available as plugins.
 
 **Can I use this as a minimal vimrc for git commits?**
 
