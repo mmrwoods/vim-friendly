@@ -25,6 +25,11 @@ open a pull request).
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Opens diff in vertical split when writing commits with `git commit --verbose`.
 
+Changing how Vim handles git commits might seem an odd thing to include in what
+should be a baseline Vim configuration, but for many users new to Vim, writing
+a commit message is their first real interaction with Vim, and I want that to
+be a positive experience, encouraging people to use Vim (and write good commits).
+
 ## Requirements
 
 Vim 8.1 or later, though some features are only supported by and enabled on
