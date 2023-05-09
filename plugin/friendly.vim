@@ -154,7 +154,11 @@ endif
 
 " Use a less bare, more colourful, colorscheme by default if possible
 try
-  colorscheme slate
+  if &background ==# 'dark'
+    colorscheme slate
+  else
+    colorscheme delek
+  endif
 catch
   colorscheme default
 endtry
