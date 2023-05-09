@@ -71,13 +71,15 @@ set laststatus=2                  " Show the status line all the time
 set splitright                    " Open vertical splits to the right
 set splitbelow                    " Open horizontal splits below
 
-set t_Co=256                      " Assume a 256 color terminal, ignore $TERM
-
 if has("balloon_eval")
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
 set synmaxcol=200                 " Disable syntax highlighting on very long lines
+
+" Assume a 256 color terminal, ignore $TERM, makes things just work, even when
+" terminal emulator is configured incorrectly or $TERM is overridden somewhere
+set t_Co=256
 
 " Suffixes that can be ignored when completing file names
 set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -93,10 +95,10 @@ set statusline=%<%.99{expand('%:~:.')}\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
 " NERDTree, Tagbar, Ack), which are not well supported by vim sessions
 set sessionoptions=buffers,curdir,tabpages,winsize,winpos,resize
 
-" save upper case globals with viminfo - sessionman uses g:LAST_SESSION
+" Persist g:UPPERCASE variables in viminfo, used by plugins, e.g. sessionman
 set viminfo^=!
 
-" set list mode characters used to display whitespace, toggle with <leader>tw
+" list mode characters used to display whitespace, toggle with :set list!
 " note: only use basic latin and latin 1 supplement unicode characters to
 " avoid missing glyphs, see https://github.com/tpope/vim-sensible/issues/57
 set listchars=tab:»·,nbsp:¤,trail:·
@@ -176,6 +178,8 @@ map Q <nop>
 sunmap Q
 
 " Stop recording commands and opening the command history by accident
+" See ":h q" and ":h q:" to understand exactly what this disables
+" Revert with ":unmap q".
 nnoremap q <nop>
 
 " Retain selection after shifting highlighted lines in visual mode
@@ -291,8 +295,6 @@ autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
 " Show diff from git commit --verbose in a new vertical split
 " Inspired by https://github.com/rhysd/committia.vim, but mostly copied
 " from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
-autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
-autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
 function <SID>GitCommitSplitDiff()
   " Save the contents of the z register
   let old_z = getreg("z")
@@ -320,3 +322,5 @@ function <SID>GitCommitSplitDiff()
     call setreg("z", old_z, old_z_type)
   endtry
 endfunction
+autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
+autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
