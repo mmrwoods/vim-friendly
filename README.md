@@ -20,18 +20,18 @@ open a pull request).
 * Friendly, but not universally applicable, default settings for new Vim users.
 * Disables some default mappings which new users find confusing (e.g. Q and q).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
-* A few convenience mappings for new users (e.g. Tab/Shift-Tab to shift lines).
+* Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the default color scheme to slate or delek (dark or light background).
 * Enables spell checking for git commits and markdown files by default.
 * Enables system clipboard integration (and X11 primary selection if available).
-* Simple tab completion in insert mode, including relative path completion.
+* Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Opens diff in vertical split when writing commits with `git commit --verbose`.
 
 Changing how Vim handles git commits might seem an odd thing to include in what
-should be a baseline Vim configuration, but for many users new to Vim, writing
-a commit message is their first real interaction with Vim, and I want that to
-be a positive experience, encouraging people to use Vim (and write good commits).
+should be a baseline Vim configuration, but for many new users, writing a commit
+message is their first real interaction with Vim, and I want that to be a
+positive experience, encouraging people to use Vim (and write good commits).
 
 ## Requirements
 
@@ -79,9 +79,9 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 
 **I don't like the color scheme, can I change it?**
 
-Of course, I just chose slate as the default color scheme because it's included
-in Vim versions 8 and 9, and it resembles the defaults in Atom and VSCode, but
-you can change it using the `colorscheme` command.
+Of course, I just chose default color schemes that were included in Vim versions
+8 and 9 and resemble the defaults in Sublime and Visual Studio Code, but you can
+change the color scheme using the `colorscheme` command.
 
 Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
 as completion options. Try them out to see which one you like, and then add it to
@@ -90,7 +90,6 @@ your vimrc to make this your new default, e.g.
 ```vim
 packadd friendly
 
-" Change default color scheme
 colorscheme habamax
 ```
 
