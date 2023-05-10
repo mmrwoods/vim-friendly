@@ -7,7 +7,6 @@ let g:loaded_friendly = 1
 set nocompatible                  " Disable vi compatibility (must come first)
 
 set encoding=utf-8                " Default to UTF8, don't use value from $LANG
-set nobomb                        " And don't add a BOM, assume UTF8 everywhere
 
 set nofixeol                      " Disable fixeol by default, use .editorconfig
 
