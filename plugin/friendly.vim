@@ -202,52 +202,66 @@ endif
 
 " Only highlight search matches while search cmdline active. IMO this is just
 " less confusing for new Vim users, even when CTRL-L is mapped to nohlsearch.
-" Disable with ":augroup friendly_hlsearch | exe 'au!' | augroup END"
+" Disable with ":augroup friendly_hlsearch | au! | augroup END"
 augroup friendly_hlsearch
   au!
   au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
   au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
 augroup END
 
-" Turn on spell checking by default for git commits
-autocmd FileType gitcommit setlocal spell
+augroup friendly_filetypes
+  au!
+  " Turn on spell checking by default for git commits
+  autocmd FileType gitcommit setlocal spell
 
-" Enable syntax highlighting for long lines in git commits
-autocmd FileType gitcommit setlocal synmaxcol=0
+  " Enable syntax highlighting for long lines in git commits
+  autocmd FileType gitcommit setlocal synmaxcol=0
 
-" Turn on spell checking by default for markdown files
-autocmd FileType markdown setlocal spell
+  " Turn on spell checking by default for markdown files
+  autocmd FileType markdown setlocal spell
 
-" Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
-" and it's not worth arguing about (personally I think markdown should be
-" treated as source, and I will wrap at 80 if no other rules apply, but I
-" also respect other peoples' and teams' opinions and follow their rules)
-autocmd FileType markdown setlocal wrap linebreak
+  " Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
+  " and it's not worth arguing about (personally I think markdown should be
+  " treated as source, and I will wrap at 80 if no other rules apply, but I
+  " also respect other peoples' and teams' opinions and follow their rules)
+  autocmd FileType markdown setlocal wrap linebreak
 
-" Disable yaml indentexpr from runtime files, too magical and confusing for
-" occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
-autocmd FileType yaml setlocal autoindent indentexpr=
+  " Disable yaml indentexpr from runtime files, too magical and confusing for
+  " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
+  autocmd FileType yaml setlocal autoindent indentexpr=
 
-" Avoid error editing crontab: temp file must be edited in place
-autocmd filetype crontab setlocal nobackup nowritebackup
+  " Avoid error editing crontab: temp file must be edited in place
+  autocmd filetype crontab setlocal nobackup nowritebackup
+augroup END
 
 " Only show cursorline in currently focused/active window
 " Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
 " various edge cases with popups, same buffer in multiple windows etc.
-autocmd WinEnter,BufEnter * setlocal cursorline
-autocmd WinLeave,BufLeave * setlocal nocursorline
+" Disable with ":augroup friendly_cursorline | au! | augroup END"
+augroup friendly_cursorline
+  au!
+  autocmd WinEnter,BufEnter * setlocal cursorline
+  autocmd WinLeave,BufLeave * setlocal nocursorline
+augroup END
 
 " Jump to last known cursor position when editing (except for git commits)
-autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
-  \   exe "normal! g`\"" |
-  \ endif
+" Note: augroup name copied from Vim's defaults.vim, I don't really like it,
+" but can't think of anything better at the moment - may change this later.
+" Disable with ":augroup friendly_startup | au! | augroup END" (for now)
+augroup friendly_startup
+  au!
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
 
 " autochdir when in insert mode for relative file path completion
 " stolen from, damn I forget where, but I definitely stole it
 " FIXME: remap i_CTRL-X_CTRL-F and use au CompleteDone instead?
-augroup working_directory
-  autocmd!
+" Disable with ":augroup friendly_autochdir | au! | augroup END"
+augroup friendly_autochdir
+  au!
   " set current directory on insert mode
   autocmd InsertEnter * let w:save_cwd = getcwd() | silent! lcd %:p:h
   " switch back to previous directory when leaving insert mode
@@ -274,6 +288,7 @@ endfunction
 inoremap <expr> <tab> <SID>SimpleTab()
 
 " Do the right thing with swap files, inspired by vim-autoswap
+" Disable with ":augroup friendly_swapexists | au! | augroup END"
 function! <SID>HandleSwapfile(filename, swapname)
   if getftime(a:swapname) < getftime(a:filename)
     " swapfile is older than file itself, just delete it
@@ -289,11 +304,15 @@ function! <SID>HandleSwapfile(filename, swapname)
     endif
   endif
 endfunction
-autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
+augroup friendly_swapexists
+  au!
+  autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
+augroup END
 
 " Show diff from git commit --verbose in a new vertical split
 " Inspired by https://github.com/rhysd/committia.vim, but mostly copied
 " from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
+" Disable with ":augroup friendly_commitsplit | au! | augroup END"
 function <SID>GitCommitSplitDiff()
   " Save the contents of the z register
   let old_z = getreg("z")
@@ -321,5 +340,8 @@ function <SID>GitCommitSplitDiff()
     call setreg("z", old_z, old_z_type)
   endtry
 endfunction
-autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
-autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
+augroup friendly_commitsplit
+  au!
+  autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
+  autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
+augroup END
