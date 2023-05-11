@@ -217,6 +217,12 @@ augroup friendly_filetypes
   " Enable syntax highlighting for long lines in git commits
   autocmd FileType gitcommit setlocal synmaxcol=0
 
+  " Auto wrap and indent bulleted lists spanning multiple lines in git commits
+  " Abuses Vim's comment formatting, see :h fo-table and :h format-comments
+  " FIXME: might warrant a separate augroup so can be disabled independently
+  autocmd FileType gitcommit setlocal comments=fb:*,fb:-
+  autocmd FileType gitcommit setlocal formatoptions+=c
+
   " Turn on spell checking by default for markdown files
   autocmd FileType markdown setlocal spell
 
