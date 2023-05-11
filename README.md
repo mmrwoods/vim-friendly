@@ -56,6 +56,12 @@ Add add this line to the start of your vimrc (e.g. ~/.vimrc):
 packadd friendly
 ```
 
+If you don't have a vimrc, just create one that loads friendly.vim:
+
+```
+echo 'packadd friendly' >> ~/.vimrc
+```
+
 ## Customisation
 
 Make any changes you like after `packadd friendly` in your vimrc. Settings can
