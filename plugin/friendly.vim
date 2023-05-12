@@ -223,6 +223,12 @@ augroup friendly_filetypes
   autocmd FileType gitcommit setlocal comments=fb:*,fb:-
   autocmd FileType gitcommit setlocal formatoptions+=c
 
+  " Override formatlistpat for git commmits to avoid indenting after line
+  " starting with number followed by space. Copied from latest gitcommit
+  " filetype plugin, see https://github.com/tpope/vim-git/commit/e7afd90a
+  " FIXME: version check to avoid overriding after Vim runtime files updated?
+  autocmd FileType gitcommit setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
+
   " Turn on spell checking by default for markdown files
   autocmd FileType markdown setlocal spell
 
