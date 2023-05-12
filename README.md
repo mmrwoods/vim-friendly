@@ -88,6 +88,17 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 No, but Neovim natively supports EditorConfig and there is also an "official"
 EditorConfig [plugin](https://github.com/editorconfig/editorconfig-vim) for Vim.
 
+If you install the EditorConfig plugin for Vim, you might want to add the
+following lines to your vimrc:
+
+```vim
+" Don't force hard wrap at max line length
+let g:EditorConfig_preserve_formatoptions = 1
+
+" Only highlight when line exceeds max length
+let g:EditorConfig_max_line_indicator = "fillexceeding"
+```
+
 **I don't like the color scheme, can I change it?**
 
 Of course, I just chose default color schemes that were included in Vim versions
