@@ -14,7 +14,7 @@ set cursorline                    " Highlight the cursor line
 
 set ttyfast                       " Assume a fast terminal connection
 
-runtime macros/matchit.vim        " Load the matchit plugin
+runtime macros/matchit.vim        " Extended matching with %, see h: matchit
 
 syntax enable                     " Turn on syntax highlighting
 filetype plugin indent on         " Turn on file type detection and indentation
