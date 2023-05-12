@@ -83,6 +83,11 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 
 ## FAQs
 
+**Does this support [EditorConfig](https://editorconfig.org/)?**
+
+No, but Neovim natively supports EditorConfig and there is also an "official"
+EditorConfig [plugin](https://github.com/editorconfig/editorconfig-vim) for Vim.
+
 **I don't like the color scheme, can I change it?**
 
 Of course, I just chose default color schemes that were included in Vim versions
