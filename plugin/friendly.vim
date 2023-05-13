@@ -189,6 +189,24 @@ vnoremap < <gv
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
+" Allow basic windows style editing shortcuts. Copied from mswin.vim but
+" implements fewer shortcuts, in fewer modes, to avoid breaking things like
+" CTRL-A/CTRL-X to add/subtract numbers and CTRL-V for visual block mode.
+" For more extensive windows style editing shortcuts, see :help mswin.vim
+"
+" CTRL-C is Copy in visual mode
+vnoremap <C-C> "+y
+" CTRL-V is Paste in insert mode
+exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+" CTRL-Z is Undo in normal and insert modes
+noremap <C-Z> u
+inoremap <C-Z> <C-O>u
+" CTRL-Y is Redo in normal and insert modes
+noremap <C-Y> <C-R>
+inoremap <C-Y> <C-O><C-R>
+" CTRL-A is Select All in insert mode only
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+
 " Make backspace work with visual selections again. This used to work by
 " default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
 " without this mapping, backspacing in visual mode just moves the cursor.
