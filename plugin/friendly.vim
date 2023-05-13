@@ -142,6 +142,10 @@ if has("nvim") || has("patch-8.2.2508")
   set fillchars+=eob:~
 endif
 
+" Do not recognize octal numbers when adding/subtracting using CTRL-A
+" and CTRL-X, e.g. make CTRL-A on "007" result in "008", not "010"
+set nrformats-=octal
+
 " Enable mouse support in normal, visual and insert modes
 set mouse=nvi
 
