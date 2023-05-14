@@ -216,9 +216,10 @@ inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
 " without this mapping, backspacing in visual mode just moves the cursor.
 vnoremap <BS> "_x
 
-" Use CTRL-L to clear search highlighting and call :diffupdate
-" Note: copied from vim-sensible, also included in Neovim defaults
-if maparg('<C-L>', 'n') ==# ''
+" Use CTRL-L to clear search highlighting and call :diffupdate,
+" in addition to clearing & redrawing the screen, see :h CTRL-L
+" Copied from vim-sensible, also included in Neovim defaults
+if empty(mapcheck('<C-L>', 'n'))
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
