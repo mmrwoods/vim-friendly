@@ -222,6 +222,19 @@ if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
+" Allow undo of text deleted using CTRL-U in insert mode, see :h i_CTRL-U
+" Coped from vim-sensible, also included defaults.vim and Neovim defaults
+" See https://vim.fandom.com/wiki/Recover_from_accidental_Ctrl-U
+if empty(mapcheck('<C-U>', 'i'))
+  inoremap <C-U> <C-G>u<C-U>
+endif
+
+" Allow undo of text deleted using CTRL-W in insert mode, see :h i_CTRL-W
+" Coped from vim-sensible, also included in Neovim, but not in defaults.vim
+if empty(mapcheck('<C-W>', 'i'))
+  inoremap <C-W> <C-G>u<C-W>
+endif
+
 " Only highlight search matches while search cmdline active. IMO this is just
 " less confusing for new Vim users, even when CTRL-L is mapped to nohlsearch.
 " Disable with ":augroup friendly_hlsearch | au! | augroup END"
