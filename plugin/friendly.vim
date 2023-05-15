@@ -21,7 +21,11 @@ filetype plugin indent on         " Turn on file type detection and indentation
 
 set autoindent                    " Auto-indent if no file type specific indent
 
-set expandtab sts=2 sw=2          " Default to two-space indent, expand tabs
+set expandtab                     " Insert spaces when hitting <Tab>
+
+set shiftwidth=2                  " Use two-space indent when shifting lines
+
+set softtabstop=-1                " Use shiftwidth with <Tab> and <Backspace>
 
 set smarttab                      " Use shiftwidth with <Tab> at start of line
 
