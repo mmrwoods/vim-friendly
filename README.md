@@ -99,6 +99,21 @@ let g:EditorConfig_preserve_formatoptions = 1
 let g:EditorConfig_max_line_indicator = "fillexceeding"
 ```
 
+**Why does this default to a 2-space indent?**
+
+Because 2-space and 4-space indent seem the most popular indenting styles, and
+defaulting to 2 rather than 4 spaces makes the default usable for most people.
+If you don't like this, you can change it in your vimrc:
+
+```vim
+set shiftwidth=4
+```
+
+Or you could just install [sleuth.vim](https://github.com/tpope/vim-sleuth) and
+forget about it. Sleuth.vim also supports EditorConfig files, but doesn't trim
+trailing whitespace. For a minimalist Vim configuration, friendly.vim and
+sleuth.vim make a great combination.
+
 **I don't like the color scheme, can I change it?**
 
 Of course, I just chose default color schemes that were included in Vim versions
