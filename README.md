@@ -83,6 +83,25 @@ augroup friendly_hlsearch | exe 'au!' | augroup END
 
 ## FAQs
 
+**I don't like the color scheme, can I change it?**
+
+Of course, I just chose default color schemes that were included in Vim versions
+8 and 9 and resemble the defaults in Sublime and Visual Studio Code, but you can
+change the color scheme using the `colorscheme` command.
+
+Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
+as completion options. Try them out to see which one you like, and then add it to
+your vimrc to make this your new default, e.g.
+
+```vim
+packadd friendly
+
+colorscheme habamax
+```
+
+By default you can only choose from color schemes included with Vim, but there
+are hundreds, if not thousands, of other color schemes available as plugins.
+
 **Does this support [EditorConfig](https://editorconfig.org/)?**
 
 No, but Neovim natively supports EditorConfig and there is also an "official"
@@ -113,25 +132,6 @@ Or you could just install [sleuth.vim](https://github.com/tpope/vim-sleuth) and
 forget about it. Sleuth.vim also supports EditorConfig files, but doesn't trim
 trailing whitespace. For a minimalist Vim configuration, friendly.vim and
 sleuth.vim make a great combination.
-
-**I don't like the color scheme, can I change it?**
-
-Of course, I just chose default color schemes that were included in Vim versions
-8 and 9 and resemble the defaults in Sublime and Visual Studio Code, but you can
-change the color scheme using the `colorscheme` command.
-
-Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
-as completion options. Try them out to see which one you like, and then add it to
-your vimrc to make this your new default, e.g.
-
-```vim
-packadd friendly
-
-colorscheme habamax
-```
-
-By default you can only choose from color schemes included with Vim, but there
-are hundreds, if not thousands, of other color schemes available as plugins.
 
 **Can I use this as a minimal vimrc for git commits?**
 
