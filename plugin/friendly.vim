@@ -49,6 +49,10 @@ if exists("&fileignorecase")
   set fileignorecase              " Make file name completion case-insensitive
 endif
 
+if exists("&spelloptions")
+  set spelloptions=camel          " Make spell check split CamelCased words
+endif
+
 set number                        " Show line numbers in left margin
 set ruler                         " Show cursor position in default status line
 
