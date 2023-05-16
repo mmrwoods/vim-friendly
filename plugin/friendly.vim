@@ -245,9 +245,17 @@ endif
 " Disable with ":augroup friendly_hlsearch | au! | augroup END"
 augroup friendly_hlsearch
   au!
-  au CmdlineEnter /,\?,: :set hls   " Highlight all matches while searching
-  au CmdlineLeave /,\?,: :set nohls " Hide all matches when search completed
+  au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
+  au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
 augroup END
+
+" Use CTRL-H to toggle search highlighting (being able to see matches is
+" really useful when operating on those matches using gn, see :help gn)
+" Note: <Cmd> mapping required to work around CmdlineLeave to set nohls
+" Could be done with <expr> mapping, but more convoluted, needs function
+if has("nvim") || has("patch-8.2.1978")
+  nnoremap <C-H> <Cmd>set hlsearch!<CR>
+endif
 
 augroup friendly_filetypes
   au!
