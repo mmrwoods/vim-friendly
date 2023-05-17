@@ -82,7 +82,9 @@ if has("balloon_eval")
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
-set synmaxcol=200                 " Disable syntax highlighting on very long lines
+" Disable syntax highlighting on very long lines, e.g. minified js, slow
+" Often breaks highlighting on following lines, so don't set this too low
+set synmaxcol=500
 
 " Assume a 256 color terminal, ignore $TERM, makes things just work, even when
 " terminal emulator is configured incorrectly or $TERM is overridden somewhere
