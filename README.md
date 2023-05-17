@@ -170,10 +170,11 @@ runtime! plugin/friendly.vim
 
 **Why do I have to explicitly load friendly.vim?**
 
-Strictly speaking, you don't, but this is far from a universally accepted set
-of defaults, and you may well want to override/unset some of them in your
-vimrc. Some settings may also have unintended side-effects if they are not
-applied first, so loading friendly.vim first avoids unexpected behaviour.
+Strictly speaking, you don't, but this is far from a universally accepted set of
+defaults, and you may well want to override/unset some of them in your vimrc
+(Vim plugins are normally loaded after your vimrc). Some settings may also have
+unintended side-effects if they are not applied first, so loading friendly.vim
+first avoids surprises.
 
 ## Caveats
 
