@@ -50,7 +50,7 @@ if exists("&fileignorecase")
 endif
 
 if exists("&spelloptions")
-  set spelloptions=camel          " Make spell check split CamelCased words
+  set spelloptions+=camel         " Make spell check split CamelCased words
 endif
 
 set number                        " Show line numbers in left margin
