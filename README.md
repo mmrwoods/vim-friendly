@@ -17,7 +17,7 @@ open a pull request).
 
 ## Features
 
-* Friendly, but not universally applicable, default settings for new Vim users.
+* Friendly, but not universally applicable, default settings for writing code.
 * Disables some default mappings which new users find confusing (e.g. Q and q).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
