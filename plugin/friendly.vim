@@ -265,8 +265,14 @@ endif
 
 augroup friendly_filetypes
   au!
-  " Turn on spell checking by default for some file types
-  autocmd FileType markdown,text,gitcommit,asciidoc,rst,rdoc setlocal spell
+  " Turn on spell checking by default for some file types, and add some syntax
+  " rules to skip URLs and upper case acronyms when checking spelling errors.
+  " Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
+  " http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
+  autocmd FileType markdown,text,gitcommit,asciidoc,rst,rdoc
+    \ setlocal spell |
+    \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
+    \ syntax match AcronymNoSpell '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
 
   " Enable syntax highlighting for long lines in git commits
   autocmd FileType gitcommit setlocal synmaxcol=0
