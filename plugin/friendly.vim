@@ -265,6 +265,9 @@ endif
 
 augroup friendly_filetypes
   au!
+  " Turn on spell checking by default for text files
+  autocmd FileType text setlocal spell
+
   " Turn on spell checking by default for git commits
   autocmd FileType gitcommit setlocal spell
 
