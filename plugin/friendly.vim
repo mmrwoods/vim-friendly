@@ -260,7 +260,9 @@ augroup END
 " Note: <Cmd> mapping required to work around CmdlineLeave to set nohls
 " Could be done with <expr> mapping, but more convoluted, needs function
 if has("nvim") || has("patch-8.2.1978")
-  nnoremap <C-H> <Cmd>set hlsearch!<CR>
+  if empty(mapcheck('<C-H>', 'n'))
+    nnoremap <C-H> <Cmd>set hlsearch!<CR>
+  endif
 endif
 
 augroup friendly_filetypes
