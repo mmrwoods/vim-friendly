@@ -265,11 +265,8 @@ endif
 
 augroup friendly_filetypes
   au!
-  " Turn on spell checking by default for text files
-  autocmd FileType text setlocal spell
-
-  " Turn on spell checking by default for git commits
-  autocmd FileType gitcommit setlocal spell
+  " Turn on spell checking by default for some file types
+  autocmd FileType markdown,text,gitcommit,asciidoc,rst,rdoc setlocal spell
 
   " Enable syntax highlighting for long lines in git commits
   autocmd FileType gitcommit setlocal synmaxcol=0
@@ -285,9 +282,6 @@ augroup friendly_filetypes
   " filetype plugin, see https://github.com/tpope/vim-git/commit/e7afd90a
   " FIXME: version check to avoid overriding after Vim runtime files updated?
   autocmd FileType gitcommit setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
-
-  " Turn on spell checking by default for markdown files
-  autocmd FileType markdown setlocal spell
 
   " Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
   " and it's not worth arguing about (personally I think markdown should be
