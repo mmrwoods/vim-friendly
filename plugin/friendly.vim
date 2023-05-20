@@ -23,7 +23,7 @@ set autoindent                    " Auto-indent if no file type specific indent
 
 set expandtab                     " Insert spaces when hitting <Tab>
 
-set shiftwidth=2                  " Use two-space indent when shifting lines
+set shiftwidth=2                  " Default 2-space indent when shifting lines
 
 set softtabstop=-1                " Use shiftwidth with <Tab> and <Backspace>
 
