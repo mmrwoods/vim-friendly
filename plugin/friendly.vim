@@ -167,6 +167,11 @@ if has("unnamedplus")
   set clipboard+=unnamedplus
 endif
 
+" Default to a dark background if vim fails to detect the terminal bg
+if exists("v:termrbgresp") && empty(v:termrbgresp)
+  set background=dark
+endif
+
 " Use a less bare, more colourful, colorscheme by default if possible
 try
   if &background ==# 'dark'
