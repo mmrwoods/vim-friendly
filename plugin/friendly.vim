@@ -223,8 +223,6 @@ inoremap <C-Z> <C-O>u
 " CTRL-Y is Redo in normal and insert modes
 noremap <C-Y> <C-R>
 inoremap <C-Y> <C-O><C-R>
-" CTRL-A is Select All in insert mode only
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
 
 " Make backspace work with visual selections again. This used to work by
 " default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
