@@ -223,6 +223,8 @@ inoremap <C-Z> <C-O>u
 " CTRL-Y is Redo in normal and insert modes
 noremap <C-Y> <C-R>
 inoremap <C-Y> <C-O><C-R>
+" CTRL-V is also Paste in terminal job mode
+tnoremap <C-V> <C-W>"+
 
 " Make backspace work with visual selections again. This used to work by
 " default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
