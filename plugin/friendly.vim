@@ -332,6 +332,14 @@ augroup friendly_startup
     \ endif
 augroup END
 
+" Diff a buffer with the file from which it was originally loaded, i.e.
+" show changes you've made but not yet saved. See :h diff-original-file
+" Revert with: ":delcommand DiffOrig"
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+    \ | wincmd p | diffthis
+endif
+
 " autochdir when in insert mode for relative file path completion
 " stolen from, damn I forget where, but I definitely stole it
 " FIXME: remap i_CTRL-X_CTRL-F and use au CompleteDone instead?
