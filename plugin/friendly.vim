@@ -340,6 +340,13 @@ if !exists(":DiffOrig")
     \ | wincmd p | diffthis
 endif
 
+" Assume a POSIX-compatible shell when shell type not specified, otherwise
+" syntax highlighting falls back to Bourne shell. See help: ft-posix-syntax
+" More info: see SetFileTypeSH function in $VIMRUNTIME/autoload/dist/ft.vim
+if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell')
+  let g:is_posix = 1
+endif
+
 " autochdir when in insert mode for relative file path completion
 " stolen from, damn I forget where, but I definitely stole it
 " FIXME: remap i_CTRL-X_CTRL-F and use au CompleteDone instead?
