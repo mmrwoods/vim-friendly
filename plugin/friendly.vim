@@ -279,7 +279,7 @@ augroup friendly_filetypes
   autocmd FileType markdown,gitcommit,asciidoc,rst,rdoc
     \ setlocal spell |
     \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
-    \ syntax match AcronymNoSpell '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
+    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell
 
   " Enable syntax highlighting for long lines in git commits
   autocmd FileType gitcommit setlocal synmaxcol=0
