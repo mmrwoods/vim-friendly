@@ -45,8 +45,8 @@ if exists("&tagcase")
 endif
 set infercase                     " And infer case when doing keyword completion
 
-if exists("&fileignorecase")
-  set fileignorecase              " Make file name completion case-insensitive
+if exists("&wildignorecase")
+  set wildignorecase              " Make file name completion case-insensitive
 endif
 
 if exists("&spelloptions")
