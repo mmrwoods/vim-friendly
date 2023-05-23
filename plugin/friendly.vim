@@ -392,6 +392,7 @@ augroup friendly_restore_cursor
     \ if line("'\"") > 1 && line("'\"") <= line("$")
     \   && &ft !~# '^\(gitcommit\|hgcommit\|gitrebase\)$' |
     \   exe "normal! g`\"" |
+    \   call feedkeys("zz") |
     \ endif
 augroup END
 
