@@ -168,16 +168,18 @@ if has("unnamedplus")
 endif
 
 " Default to a dark background if vim fails to detect the terminal bg
-if exists("v:termrbgresp") && empty(v:termrbgresp)
+if !has('gui_running') && exists("v:termrbgresp") && empty(v:termrbgresp)
   set background=dark
 endif
 
 " Use a less bare, more colourful, colorscheme by default if possible
 try
-  if &background ==# 'dark'
-    colorscheme slate
-  else
-    colorscheme delek
+  if !has("gui_running")
+    if &background ==# 'dark'
+      colorscheme slate
+    else
+      colorscheme delek
+    endif
   endif
 catch
   colorscheme default
