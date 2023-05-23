@@ -320,14 +320,15 @@ augroup friendly_cursorline
   autocmd WinLeave,BufLeave * setlocal nocursorline
 augroup END
 
-" Jump to last known cursor position when editing (except for git commits)
+" Jump to last known cursor position when editing (except for git/hg commits)
+" Copied from defaults.vim, also in Vim documentation, see :h restore-cursor
 " Note: augroup name copied from Vim's defaults.vim, I don't really like it,
 " but can't think of anything better at the moment - may change this later.
 " Disable with ":augroup friendly_startup | au! | augroup END" (for now)
 augroup friendly_startup
   au!
   autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
+    \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
     \   exe "normal! g`\"" |
     \ endif
 augroup END
