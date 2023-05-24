@@ -71,14 +71,14 @@ are a little tricky as you need to reset the autocmd group (at least for now).
 ```vim
 packadd friendly
 
-" Automatically add missing EOL at end of file
+" always fix missing EOL at end of file when saving
 set fixeol
 
-" undo q <nop> mapping, I like recording commands
+" undo q <nop> mapping, allow recording of macros
 unmap q
 
 " stop automatically clearing search highlighting
-augroup friendly_hlsearch | exe 'au!' | augroup END
+augroup friendly_hlsearch | au! | augroup END
 ```
 
 ## FAQs
