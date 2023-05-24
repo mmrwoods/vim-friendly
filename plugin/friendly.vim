@@ -168,7 +168,7 @@ if has("unnamedplus")
 endif
 
 " Default to a dark background if vim cannot detect the terminal bg
-if !has('gui_running') && exists("&t_RB") && empty(&t_RB)
+if !has('gui_running') && !has("nvim") && exists("&t_RB") && empty(&t_RB)
   set background=dark
 endif
 
