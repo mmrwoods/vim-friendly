@@ -327,7 +327,8 @@ augroup END
 augroup friendly_restore_cursor
   au!
   autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+    \ if line("'\"") > 1 && line("'\"") <= line("$")
+    \   && &ft !~# '^\(gitcommit\|hgcommit\|gitrebase\)$' |
     \   exe "normal! g`\"" |
     \ endif
 augroup END
