@@ -283,8 +283,9 @@ augroup friendly_filetypes
     \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
     \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell
 
-  " Enable syntax highlighting for long lines in git commits
-  autocmd FileType gitcommit setlocal synmaxcol=0
+  " Re-enable syntax highlighting for long lines in some (non-code) file types
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+    \ setlocal synmaxcol=0
 
   " Auto wrap and indent bulleted lists spanning multiple lines in git commits
   " Abuses Vim's comment formatting, see :h fo-table and :h format-comments
