@@ -22,7 +22,7 @@ open a pull request).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the default color scheme to slate or delek (dark or light background).
-* Enables spell checking for git commits and markdown files by default.
+* Enables spell checking for some files by default (e.g. gitcommit, markdown)
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
