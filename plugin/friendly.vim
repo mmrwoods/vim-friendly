@@ -14,8 +14,6 @@ set cursorline                    " Highlight the cursor line
 
 set ttyfast                       " Assume a fast terminal connection
 
-runtime macros/matchit.vim        " Extended matching with %, see h: matchit
-
 syntax enable                     " Turn on syntax highlighting
 filetype plugin indent on         " Turn on file type detection and indentation
 
@@ -347,6 +345,13 @@ endif
 " More info: see SetFileTypeSH function in $VIMRUNTIME/autoload/dist/ft.vim
 if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell')
   let g:is_posix = 1
+endif
+
+" Load matchit plugin, for extended matching with %, see h: matchit
+" Copied from sensible.vim, only load if user has not installed newer version
+" Note: Neovim automatically loads matchit, so this will be skipped in Neovim
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
 endif
 
 " autochdir when in insert mode for relative file path completion
