@@ -278,7 +278,7 @@ augroup friendly_filetypes
   " rules to skip URLs and upper case acronyms when checking spelling errors.
   " Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
   " http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
-  autocmd FileType markdown,gitcommit,asciidoc,rst,rdoc
+  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
     \ setlocal spell |
     \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
     \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell
