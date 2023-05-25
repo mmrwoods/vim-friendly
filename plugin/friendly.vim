@@ -165,6 +165,15 @@ if has("unnamedplus")
   set clipboard+=unnamedplus
 endif
 
+" Disable weird legacy langmap behaviour, see h: langmap and h: langremap
+" This is included in sensible.vim, defaults.vim and Neovim's defaults
+" Also see https://groups.google.com/g/vim_dev/c/QnNwLWhJ744/m/1qNcD7d9OvgJ
+" and https://groups.google.com/g/vim_dev/c/HJaS5AxwYSE/m/UxJkOPZRT2EJ
+" and https://stackoverflow.com/questions/12450803/vim-langmap-breaks-plugin-b%c3%a9po
+if has('langmap') && exists('+langremap')
+  set nolangremap
+endif
+
 " Default to a dark background if vim cannot detect the terminal bg
 if !has('gui_running') && !has("nvim") && exists("&t_RB") && empty(&t_RB)
   set background=dark
