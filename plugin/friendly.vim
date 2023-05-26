@@ -94,8 +94,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.i
 " Patterns that should be ignored when expanding wildcards
 set wildignore=*~,*.o,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png,*.pyc,.DS_Store,*.egg*,.git,__pycache__
 
-" Custom status line, show relative file path and file type
-set statusline=%<%.99{expand('%:~:.')}\ %h%w%m%r\ %=\ %{&ft}\ %l\:\%-c\ %P
+" Custom ruler format to include filetype in default vim statusline
+set rulerformat=%35(%=%l\,%c\ %{&ft}\ %P%)
 
 " Store windows, tabs, current directory, and buffer info in sessions
 " Exclude blank to avoid issues with nofile & quickfix windows (e.g.
