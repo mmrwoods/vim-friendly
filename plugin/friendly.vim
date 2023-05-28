@@ -374,7 +374,7 @@ endif
 augroup friendly_autochdir
   au!
   " set current directory on insert mode
-  autocmd InsertEnter * let w:save_cwd = getcwd() | silent! lcd %:p:h
+  autocmd InsertEnter * if !&autochdir | let w:save_cwd = getcwd() | silent! lcd %:p:h | endif
   " switch back to previous directory when leaving insert mode
   autocmd InsertLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
   " catch edge cases when leaving window or vim while in insert mode
