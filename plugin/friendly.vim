@@ -80,7 +80,7 @@ if has("balloon_eval")
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
-" Don't give ins-completion-menu messages, e.g. "Back at original", confusing
+" No ins-completion-menu messages, e.g. "Back at original", distracting
 set shortmess+=c
 
 " Disable syntax highlighting on very long lines, e.g. minified js, slow
