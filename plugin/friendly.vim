@@ -135,6 +135,9 @@ set formatoptions+=j
 " When joining lines, use one space rather than two after punctuation
 set nojoinspaces
 
+" Use :Man command instead of man program as default keywordprg, see :h K
+set keywordprg=:Man
+
 " If using grep, at least ignore binaries and exclude some paths
 set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git\ $*\ /dev/null
 
@@ -369,7 +372,6 @@ endif
 
 " Enable the :Man command everywhere (included in Vim's man filetype plugin)
 " Copied from sensible.vim, :Man command is also enabled by default in Neovim
-" Possible TODO: change default keywordprg to use :Man (defaults to man -s)
 if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
   runtime ftplugin/man.vim
 endif
