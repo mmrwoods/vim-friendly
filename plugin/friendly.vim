@@ -348,7 +348,7 @@ augroup END
 " Diff a buffer with the file from which it was originally loaded, i.e.
 " show changes you've made but not yet saved. See :h diff-original-file
 " Revert with: ":delcommand DiffOrig"
-if !exists(":DiffOrig")
+if exists(":DiffOrig") != 2
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
     \ | wincmd p | diffthis
 endif
