@@ -4,7 +4,23 @@ if exists("g:loaded_friendly")
 endif
 let g:loaded_friendly = 1
 
-set nocompatible                  " Disable vi compatibility (must come first)
+" Disable vi compatibility (must come first as it changes other options)
+" Skip if already disabled to avoid side-effects, see :h 'nocompatible'
+if &compatible
+  set nocompatible
+endif
+
+" Enable file type detection, file type plugins, and file type specific
+" indentation rules, but only if not already enabled as can slow startup.
+" See https://github.com/tpope/vim-sensible/commit/1be4e4e5409caccddf5c2f1bbfa16519f4c93de0
+if !(exists('g:did_load_filetypes') && exists('g:did_load_ftplugin') && exists('g:did_indent_on'))
+  filetype plugin indent on
+endif
+
+" Enable syntax higlighting if not already enabled (on by default in Neovim)
+if !exists('g:syntax_on')
+  syntax enable
+endif
 
 set encoding=utf-8                " Default to UTF8, don't use value from $LANG
 
@@ -13,9 +29,6 @@ set nofixeol                      " Disable fixeol by default, use .editorconfig
 set cursorline                    " Highlight the cursor line
 
 set ttyfast                       " Assume a fast terminal connection
-
-syntax enable                     " Turn on syntax highlighting
-filetype plugin indent on         " Turn on file type detection and indentation
 
 set autoindent                    " Auto-indent if no file type specific indent
 
