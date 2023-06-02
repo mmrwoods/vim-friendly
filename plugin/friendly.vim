@@ -10,14 +10,16 @@ if &compatible
   set nocompatible
 endif
 
-" Enable file type detection, file type plugins, and file type specific
-" indentation rules, but only if not already enabled as can slow startup.
+" Enable file type detection, file type plugins, and file type indentation
+" This is the default in sensible.vim, Vim's defaults.vim and in Neovim
+" Skip if already enabled as this loads runtime files and can slow startup
 " See https://github.com/tpope/vim-sensible/commit/1be4e4e5409caccddf5c2f1bbfa16519f4c93de0
 if !(exists('g:did_load_filetypes') && exists('g:did_load_ftplugin') && exists('g:did_indent_on'))
   filetype plugin indent on
 endif
 
 " Enable syntax higlighting if not already enabled (on by default in Neovim)
+" This is also enabled in sensible.vim and Vim's defaults.vim
 if !exists('g:syntax_on')
   syntax enable
 endif
@@ -378,7 +380,7 @@ endif
 
 " Load matchit plugin, for extended matching with %, see h: matchit
 " Copied from sensible.vim, only load if user has not installed newer version
-" Note: Neovim automatically loads matchit, so this will be skipped in Neovim
+" This is skipped in Neovim as matchit is included as a runtimepath plugin
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
