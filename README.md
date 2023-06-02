@@ -191,3 +191,7 @@ Everything here is copied from somewhere else, mostly these places:
 * https://github.com/thoughtbot/dotfiles/blob/main/vimrc
 * https://github.com/garybernhardt/dotfiles/blob/main/.vimrc
 * https://github.com/vim/vim/blob/master/runtime/defaults.vim
+
+## Licence
+
+Distributed under the same terms as Vim itself. See `:help license`.

@@ -1,3 +1,8 @@
+" friendly.vim - Friendly defaults for new Vim users
+" Maintainer: Mark Woods
+" URL: https://github.com/mmrwoods/vim-friendly
+" Licence: VIM
+
 " Prevent duplicate loading, allows overriding from vimrc
 if exists("g:loaded_friendly")
   finish
