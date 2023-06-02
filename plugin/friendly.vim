@@ -175,6 +175,15 @@ endif
 " and CTRL-X, e.g. make CTRL-A on "007" result in "008", not "010"
 set nrformats-=octal
 
+" Recognise single alphabetical characters when adding/subtracting using
+" CTRL-A and CTRL-X, e.g. make CTRL-A on "(a)" results in "(b)". This has
+" some oddities, e.g. CTRL-A on "bar" results in "car", but worth it IMO.
+set nrformats+=alpha
+
+" Assume numbers are unsigned when adding/subtracting using CTRL-A and CTRL-X
+" e.g. CTRL-A on the "2020" in "9-2020" results in "9-2021", not "9-2019"
+set nrformats+=unsigned
+
 " Enable mouse support in normal, visual and insert modes
 set mouse=nvi
 
