@@ -159,7 +159,9 @@ set nojoinspaces
 set keywordprg=:Man
 
 " If using grep, at least ignore binaries and exclude some paths
-set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git\ $*\ /dev/null
+if has("unix")
+  set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git\ $*\ /dev/null
+endif
 
 " Reuse existing windows when opening files from the quickfix window
 set switchbuf=useopen
