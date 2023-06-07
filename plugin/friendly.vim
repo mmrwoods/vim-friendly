@@ -433,7 +433,8 @@ function! <SID>SimpleTab()
     return "\<c-n>"
   endif
 endfunction
-inoremap <expr> <tab> <SID>SimpleTab()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : <SID>SimpleTab()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Do the right thing with swap files, inspired by vim-autoswap
 " Disable with ":augroup friendly_swapexists | au! | augroup END"
