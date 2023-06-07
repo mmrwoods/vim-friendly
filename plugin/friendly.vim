@@ -140,8 +140,8 @@ if has("nvim") || has("patch-8.2.3424")
 endif
 
 " Ins mode completion options - complete without menu if just one match,
-" only complete to longest common match, don't use preview scratch window
-set completeopt=menuone,longest
+" only complete to longest common match, use preview for additional info
+set completeopt=menuone,longest,preview
 
 " Include dictionary words in completion menu when spellcheck is enabled
 set complete+=kspell
