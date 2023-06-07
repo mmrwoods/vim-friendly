@@ -128,7 +128,7 @@ set viminfo^=!
 " list mode characters used to display whitespace, toggle with :set list!
 " note: only use basic latin and latin 1 supplement unicode characters to
 " avoid missing glyphs, see https://github.com/tpope/vim-sensible/issues/57
-set listchars=tab:»·,nbsp:¤,trail:·
+set listchars=tab:»\ ,nbsp:¤,trail:·
 if has("nvim") || has("patch-8.2.2454")
   set listchars+=lead:·
 endif
