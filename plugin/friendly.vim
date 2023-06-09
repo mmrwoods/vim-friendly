@@ -136,7 +136,7 @@ if has("nvim") || has("patch-8.2.3424")
   set listchars+=multispace:·
 endif
 
-" Ins mode completion options - complete without menu if just one match,
+" Ins mode completion options - show popup menu even if just one match,
 " only complete to longest common match, use preview for additional info
 set completeopt=menuone,longest,preview
 
