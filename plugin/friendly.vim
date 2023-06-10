@@ -137,8 +137,11 @@ if has("nvim") || has("patch-8.2.3424")
 endif
 
 " Ins mode completion options - show popup menu even if just one match,
-" only complete to longest common match, use preview for additional info
-set completeopt=menuone,longest,preview
+" require user to select a completion, use preview for additional info.
+" This does require additional keystrokes, but seems a less surprising
+" default for new users, and does not cause problems with plugins that
+" map <CR> to accept completion while the menu is visible (e.g. lexima)
+set completeopt=menuone,noselect,preview
 
 " Include dictionary words in completion menu when spellcheck is enabled
 set complete+=kspell
