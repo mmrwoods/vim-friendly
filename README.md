@@ -182,7 +182,7 @@ This is a work in progress. If found to be useful, it will change, and break.
 
 ## References
 
-Everything here is copied from somewhere else, mostly these places:
+Almost everything here is copied from somewhere else, mostly these places:
 
 * https://github.com/tpope/vim-sensible
 * https://neovim.io/doc/user/vim_diff.html
