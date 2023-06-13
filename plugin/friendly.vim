@@ -33,8 +33,6 @@ set encoding=utf-8                " Default to UTF8, don't use value from $LANG
 
 set nofixeol                      " Disable fixeol by default, use .editorconfig
 
-set cursorline                    " Highlight the cursor line
-
 set ttyfast                       " Assume a fast terminal connection
 
 set autoindent                    " Auto-indent if no file type specific indent
@@ -357,7 +355,7 @@ augroup friendly_filetypes
   autocmd filetype crontab setlocal nobackup nowritebackup
 augroup END
 
-" Only show cursorline in currently focused/active window
+" Only show cursorline in active window, easy to locate active window
 " Note: Both Buf{Enter,Leave} and Win{Enter,Leave} required to handle
 " various edge cases with popups, same buffer in multiple windows etc.
 " Disable with ":augroup friendly_cursorline | au! | augroup END"
