@@ -456,6 +456,8 @@ augroup END
 " from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
 " Disable with ":augroup friendly_commitsplit | au! | augroup END"
 function <SID>GitCommitSplitDiff()
+  if winwidth(0) < 160 | return | end
+
   " Save the contents of the z register
   let old_z = getreg("z")
   let old_z_type = getregtype("z")
