@@ -211,19 +211,17 @@ if has('langmap') && exists('+langremap')
   set nolangremap
 endif
 
-" Default to a dark background if vim cannot detect the terminal bg
-if !has('gui_running') && !has("nvim") && exists("&t_RB") && empty(&t_RB)
-  set background=dark
-endif
-
-" Use a less bare, more colourful, colorscheme by default if possible
+" Set the colorscheme to something hopefully more appealing to new users
+" At the moment this uses slate because it's included in Vim 8 and 9, and
+" Neovim, but this isn't ideal as it always sets the background to dark. Vim
+" doesn't always correctly detect the terminal background, so using a dark
+" background colorscheme by default is not that unreasonable, but it would be
+" nice to use a default colorscheme that works alongside the terminal colors.
+" Jeff Kreeftmeijer's Dim colorscheme is a great example, it sets Vim colors
+" using ANSI colors only, see https://github.com/jeffkreeftmeijer/vim-dim
 try
   if !has("gui_running")
-    if &background ==# 'dark'
-      colorscheme slate
-    else
-      colorscheme delek
-    endif
+    colorscheme slate
   endif
 catch
   colorscheme default

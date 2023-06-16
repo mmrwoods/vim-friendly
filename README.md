@@ -21,7 +21,7 @@ open a pull request).
 * Disables some default mappings which new users find confusing (e.g. Q and q).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
-* Sets the default color scheme to slate or delek (dark or light background).
+* Sets the default color scheme to slate, hopefully more appealing to new users.
 * Enables spell checking for some files by default (e.g. gitcommit, markdown)
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
@@ -85,8 +85,8 @@ augroup friendly_hlsearch | au! | augroup END
 
 **I don't like the color scheme, can I change it?**
 
-Of course, I just chose default color schemes that were included in Vim versions
-8 and 9 and resemble the defaults in Sublime and Visual Studio Code, but you can
+Of course, I just chose a default color scheme that is included in Vim versions
+8 and 9 and resembles the defaults in Sublime and Visual Studio Code, but you can
 change the color scheme using the `colorscheme` command.
 
 Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
