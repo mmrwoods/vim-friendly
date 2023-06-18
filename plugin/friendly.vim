@@ -100,6 +100,14 @@ if has("balloon_eval")
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
+" Enable timeouts on key codes in addition to mappings, and reduce the wait
+" time for a special key after Esc to make the Esc key more responsive
+" Copied from sensible.vim and defaults.vim, Neovim sets ttimeoutlen to 50
+if !has('nvim')
+  set ttimeout
+  set ttimeoutlen=100
+endif
+
 " Disable syntax highlighting on very long lines, e.g. minified js, slow
 " Often breaks highlighting on following lines, so don't set this too low
 set synmaxcol=500
