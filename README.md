@@ -7,13 +7,13 @@ but unconstrained by any ambition to be a universal set of defaults, this plugin
 overrides some of Vim's default settings and adds a few other minor tweaks to
 make Vim less terrifying.
 
-The settings have been extracted from my own vimrc, many of which are copied
+Most settings have been extracted from my own vimrc, many of which are copied
 from other people's vimrcs, tips from Vim's documentation, Vim's built-in
 defaults.vim, Tim Pope's sensible.vim and also from Neovim's defaults.
 
-Ideally, everything here should be easy to override from your own vimrc. If you
-find something is not easy to override, please submit an issue (or even better,
-open a pull request).
+This is intended as a baseline Vim configuration and everything should be easy
+to override from your own vimrc. If you find something is not easy to override,
+please submit an issue (or even better, open a pull request).
 
 ## Features
 
@@ -186,7 +186,9 @@ Almost everything here is copied from somewhere else, mostly these places:
 
 * https://github.com/tpope/vim-sensible
 * https://neovim.io/doc/user/vim_diff.html
-* https://github.com/neovim/neovim/issues/2676
+* https://github.com/neovim/neovim/issues/2676,
+  https://github.com/neovim/neovim/issues/6289,
+  https://github.com/neovim/neovim/issues/19354
 * https://github.com/mmrwoods/dotfiles/blob/main/vim/vimrc
 * https://github.com/thoughtbot/dotfiles/blob/main/vimrc
 * https://github.com/garybernhardt/dotfiles/blob/main/.vimrc
