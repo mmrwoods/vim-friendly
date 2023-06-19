@@ -235,6 +235,10 @@ endif
 try
   if !has("gui_running")
     colorscheme slate
+    " Use red and green for added and removed lines in diffs (the defaults
+    " link to Identifier and Special which are reddish and yellowish in slate)
+    highlight diffAdded ctermfg=2
+    highlight diffRemoved ctermfg=1
   endif
 catch
   colorscheme default
