@@ -108,6 +108,11 @@ if !has('nvim')
   set ttimeoutlen=100
 endif
 
+" Truncate long lines that can't be displayed in full on the screen, show as
+" much of the last line as possible, and use @@@ as marker to indicate there
+" is more text that cannot be displayed. Matters when wrap option is enabled.
+set display+=truncate
+
 " Disable syntax highlighting on very long lines, e.g. minified js, slow
 " Often breaks highlighting on following lines, so don't set this too low
 set synmaxcol=500
