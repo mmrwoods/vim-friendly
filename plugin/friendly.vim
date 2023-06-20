@@ -459,6 +459,13 @@ function! <SID>HandleSwapfile(filename, swapname)
     call system('lsof ' . a:swapname)
     if v:shell_error == 0
       " swapfile owned by another vim process, open readonly
+      if has('timers')
+        " hack to write a warning message after autocmd completes
+        function s:SwapFileWarning(...)
+          echohl WarningMsg | echo 'Swap file detected, opening read-only' | echohl None
+        endfunction
+        call timer_start(100, 's:SwapFileWarning', {'repeat':0})
+      endif
       let v:swapchoice = 'o'
     else
       " swapfile seems to be the result of a crash, recover
