@@ -443,6 +443,11 @@ function! <SID>SimpleTab()
 endfunction
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : <SID>SimpleTab()
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Experimental: map CR to accept completion, should be safe enough assuming
+" friendly.vim is loaded before other plugins which may otherwise map CR.
+" Some plugins might skip adding their own CR mapping if one exists, which
+" can be confusing, but also tends to be well documented, e.g. delimitMate
+inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<CR>'
 
 " Do the right thing with swap files, inspired by vim-autoswap
 " Disable with ":augroup friendly_swapexists | au! | augroup END"
