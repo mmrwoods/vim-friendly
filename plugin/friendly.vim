@@ -235,10 +235,16 @@ endif
 try
   if !has("gui_running")
     colorscheme slate
-    " Use red and green for added and removed lines in diffs (the defaults
-    " link to Identifier and Special which are reddish and yellowish in slate)
-    highlight diffAdded ctermfg=2
-    highlight diffRemoved ctermfg=1
+    " Customise diff colors for slate, primarily because the defaults for
+    " added and removed lines are reddish and yellowish respectively, but
+    " other colors tweaked a little too, inspired by default tig colors.
+    highlight diffAdded ctermfg=green
+    highlight diffRemoved ctermfg=red
+    highlight diffChanged ctermfg=yellow
+    highlight diffLine ctermfg=magenta
+    highlight diffFile ctermfg=yellow
+    highlight diffIndexLine ctermfg=blue
+    highlight diffSubname ctermfg=blue
   endif
 catch
   colorscheme default
