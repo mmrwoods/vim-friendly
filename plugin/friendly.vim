@@ -332,13 +332,15 @@ augroup friendly_hlsearch
   au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
 augroup END
 
-" Use CTRL-H to toggle search highlighting (being able to see matches is
+" Use CTRL-K to toggle search highlighting (being able to see matches is
 " really useful when operating on those matches using gn, see :help gn)
+" Was previously CTRL-H, changed to CTRL-K because not used by Vim in normal
+" mode and probably less contentious than CTRL-H (alternative to backspace)
 " Note: <Cmd> mapping required to work around CmdlineLeave to set nohls
 " Could be done with <expr> mapping, but more convoluted, needs function
 if has("nvim") || has("patch-8.2.1978")
-  if empty(mapcheck('<C-H>', 'n'))
-    nnoremap <C-H> <Cmd>set hlsearch!<CR>
+  if empty(mapcheck('<C-K>', 'n'))
+    nnoremap <C-K> <Cmd>set hlsearch!<CR>
   endif
 endif
 
