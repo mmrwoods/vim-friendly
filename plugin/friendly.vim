@@ -323,8 +323,9 @@ if empty(mapcheck('<C-W>', 'i'))
   inoremap <C-W> <C-G>u<C-W>
 endif
 
-" Only highlight search matches while search cmdline active. IMO this is just
-" less confusing for new Vim users, even when CTRL-L is mapped to nohlsearch.
+" Only highlight search matches while search cmdline active, IMO this is less
+" confusing for new Vim users unfamiliar with CTRL-L. Taken from a suggestion
+" in Vim's help, see :h 'incsearch', modified slightly to work for :substitute
 " Disable with ":augroup friendly_hlsearch | au! | augroup END"
 augroup friendly_hlsearch
   au!
