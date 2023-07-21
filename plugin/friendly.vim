@@ -444,7 +444,7 @@ augroup END
 " Stupid simple tab completion, file path and keyword completion only
 " Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
 " For more elaborate completions, see :h 'ins-completion' or use coc.nvim
-function! <SID>SimpleTab()
+function! FriendlyTab()
   let pos = getpos('.')
   let substr = matchstr(strpart(getline(pos[1]), 0, pos[2]-1), "[^ \t]*$")
   if empty(substr)
@@ -455,7 +455,7 @@ function! <SID>SimpleTab()
     return "\<c-n>"
   endif
 endfunction
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : <SID>SimpleTab()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : FriendlyTab()
 " FIXME: remove duplication, trigger existing S-Tab map when pum not visible
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 " Experimental: map CR to accept completion, should be safe enough assuming
