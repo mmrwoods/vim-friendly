@@ -462,7 +462,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 " friendly.vim is loaded before other plugins which may otherwise map CR.
 " Some plugins might skip adding their own CR mapping if one exists, which
 " can be confusing, but also tends to be well documented, e.g. delimitMate
-inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<CR>'
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Do the right thing with swap files, inspired by vim-autoswap
 " Disable with ":augroup friendly_swapexists | au! | augroup END"
