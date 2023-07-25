@@ -360,6 +360,15 @@ augroup friendly_filetypes
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
     \ setlocal synmaxcol=0
 
+  " Avoid c-style indentation in text files and commits when using = command
+  " Default c-style indentation does things like indent lines following a line
+  " with leading space and trailing comma, not what you want for plain text.
+  " Removes indentation on first line, otherwise uses previous line indent.
+  autocmd FileType text,gitcommit,hgcommit
+    \ if empty(&indentexpr) && empty(&equalprg) |
+    \   setlocal indentexpr=v:lnum\ ==\ 1\ ?\ 0\ :\ indent(prevnonblank(v:lnum-1)) |
+    \ endif
+
   " Auto wrap and indent bulleted lists spanning multiple lines in git commits
   " Abuses Vim's comment formatting, see :h fo-table and :h format-comments
   " FIXME: might warrant a separate augroup so can be disabled independently
