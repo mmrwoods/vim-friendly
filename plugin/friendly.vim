@@ -426,23 +426,22 @@ if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has
   runtime ftplugin/man.vim
 endif
 
-" autochdir when in insert mode for relative file path completion
-" stolen from, damn I forget where, but I definitely stole it
-" FIXME: remap i_CTRL-X_CTRL-F and use au CompleteDone instead?
+" autocmds to clean up after relative file path completion using FriendlyTab()
+" FIXME: extract to function to create/remove buffer local autocmds as needed?
 " Disable with ":augroup friendly_autochdir | au! | augroup END"
+" Disalbing these autocmds will disable FriendlyTab() relative path completion
 augroup friendly_autochdir
   au!
-  " set current directory on insert mode
-  autocmd InsertEnter * if !&autochdir | let w:save_cwd = getcwd() | silent! lcd %:p:h | endif
-  " switch back to previous directory when leaving insert mode
-  autocmd InsertLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
-  " catch edge cases when leaving window or vim while in insert mode
+  " reset path after relative path completion
+  autocmd CompleteDone * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
+  " catch edge cases when leaving window or vim before complete done
   autocmd WinLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
   autocmd VimLeavePre * windo if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
 augroup END
 
 " Stupid simple tab completion, file path and keyword completion only
 " Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
+" Vim's documentation has a similar suggestion, see :helpgrep CleverTab
 " For more elaborate completions, see :h 'ins-completion' or use coc.nvim
 function! FriendlyTab()
   let pos = getpos('.')
@@ -450,6 +449,9 @@ function! FriendlyTab()
   if empty(substr)
     return "\<tab>"
   elseif match(substr, '\/') != -1 && match(substr, '<\/') == -1
+    if !empty(autocmd_get({'group': 'friendly_autochdir'}))
+      if !&autochdir | let w:save_cwd = getcwd() | silent! lcd %:p:h | endif
+    endif
     return "\<c-x>\<c-f>"
   else
     return "\<c-n>"
