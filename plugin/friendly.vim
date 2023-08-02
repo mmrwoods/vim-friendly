@@ -490,7 +490,7 @@ function! <SID>HandleSwapfile(filename, swapname)
       " swapfile owned by another vim process, open readonly
       if has('timers')
         " hack to write a warning message after autocmd completes
-        function s:SwapFileWarning(...)
+        function! s:SwapFileWarning(...)
           echohl WarningMsg | echo 'Swap file detected, opening read-only' | echohl None
         endfunction
         call timer_start(100, 's:SwapFileWarning', {'repeat':0})
