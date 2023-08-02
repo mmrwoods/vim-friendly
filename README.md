@@ -18,7 +18,7 @@ please submit an issue (or even better, open a pull request).
 ## Features
 
 * Friendly, but not universally applicable, default settings for writing code.
-* Disables some default mappings which new users find confusing (e.g. Q and q).
+* Disables some default commands which new users find confusing (e.g. q and q:).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the default color scheme to slate, hopefully more appealing to new users.
@@ -146,6 +146,43 @@ Then configure git to use Vim as editor, initialised with this minimal vimrc:
 
 ```
 git config --global core.editor 'vim -u ~/.vimrc.minimal'
+```
+
+**Can I use this with other completion plugins, e.g. coc.nvim?**
+
+Yes, you can, though whether it "just works" is dependent on the other plugin.
+Friendly.vim adds completion menu aware Tab, Shift-Tab and CR mappings which
+move next/previous and accept completion while the menu is visible. These
+mappings might just work with your preferred plugin, if not you can override
+them as needed in your vimrc.
+
+With [coc.nvim](https://github.com/neoclide/coc.nvim), these mappings should
+just work because coc.nvim rewrites existing completion aware mappings to
+coc.nvim aware variants (coc.nvim has its own custom completion menu). If the CR
+mapping does not just work, that's probably because some other plugin has
+wrapped the friendly.vim CR mapping in a custom function before coc.nvim checks
+for existing completion menu aware mappings. You can check this by running
+`:verbose imap <CR>`, and you can fix it by adding a custom, coc.nvim aware, CR
+mapping to your vimrc, e.g.
+
+```vim
+inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : "\<CR>" )
+```
+
+With other plugins which have custom functions to navigate the completion menu
+and/or accept completions, you'll probably need to override the friendly.vim
+mappings in your vimrc. You can do this such that your mappings will trigger the
+plugin functions when the plugin is enabled, and otherwise fall back
+to friendly.vim style mappings. For example
+[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim) has a
+custom function to accept a completion, so you could add a CR mapping to your
+vimrc to use asyncomplete when enabled, otherwise fall back to standard Vim
+completion, e.g.
+
+```vim
+inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
+  \ ? asyncomplete#close_popup() : '<C-y>' ) : "\<CR>"
 ```
 
 **Can I use this with other plugin managers?**
