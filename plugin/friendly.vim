@@ -278,11 +278,6 @@ vnoremap < <gv
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" Allow Shift+Tab to delete one shiftwidth of indent (aka "outdent")
-" Seems friendly (similar to vscode and some other editors), and harmless
-" (Shift+Tab is not mapped by default in insert mode, does same as Tab)
-inoremap <S-Tab> <C-d>
-
 " Allow basic windows style editing shortcuts. Copied from mswin.vim but
 " implements fewer shortcuts, in fewer modes, to avoid breaking things like
 " CTRL-A/CTRL-X to add/subtract numbers and CTRL-V for visual block mode.
@@ -469,13 +464,11 @@ function! FriendlyTab()
     return "\<c-n>"
   endif
 endfunction
+" Tab triggers completion or moves to next completion item
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : FriendlyTab()
-" FIXME: remove duplication, trigger existing S-Tab map when pum not visible
+" Shift-Tab moves to previous completion item or deletes an indent
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
-" Experimental: map CR to accept completion, should be safe enough assuming
-" friendly.vim is loaded before other plugins which may otherwise map CR.
-" Some plugins might skip adding their own CR mapping if one exists, which
-" can be confusing, but also tends to be well documented, e.g. delimitMate
+" CR/Enter accepts the current completion if the menu is visible
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Do the right thing with swap files, inspired by vim-autoswap
