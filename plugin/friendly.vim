@@ -533,8 +533,9 @@ function <SID>GitCommitSplitDiff()
     call setreg("z", old_z, old_z_type)
   endtry
 endfunction
-augroup friendly_commitsplit
+augroup friendly_gitcommit
   au!
   autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
+  autocmd VimEnter COMMIT_EDITMSG if empty(getmatches()) | call matchadd('ColorColumn', '\%'.(&tw+1).'v.\+', -1) | endif
   autocmd QuitPre COMMIT_EDITMSG windo if &ft == 'diff' | bwipeout | endif
 augroup END
