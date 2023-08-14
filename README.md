@@ -26,12 +26,14 @@ please submit an issue (or even better, open a pull request).
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
-* Opens diff in vertical split when writing commits with `git commit --verbose`.
+* Enhanced editing of git commits, especially when using `git commit --verbose`.
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
 message is their first real interaction with Vim, and I want that to be a
 positive experience, encouraging people to use Vim (and write good commits).
+Friendly.vim improves diff syntax highlighting, highlights long lines, and opens
+diffs in a vertical split when using `git commit --verbose`.
 
 ## Requirements
 
