@@ -537,6 +537,6 @@ endfunction
 augroup friendly_gitcommit
   au!
   autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
-  autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) | endif
+  autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) | endif
   autocmd QuitPre COMMIT_EDITMSG silent bwipeout! COMMIT_DIFF
 augroup END
