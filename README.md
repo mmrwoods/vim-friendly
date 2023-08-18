@@ -135,6 +135,20 @@ forget about it. Sleuth.vim also supports EditorConfig files, but doesn't trim
 trailing whitespace. For a minimalist Vim configuration, friendly.vim and
 sleuth.vim make a great combination.
 
+**How can I show whitespace characters, similar to VS Code?**
+
+Enable the `'list'` option in Vim to show unprintable characters. You can do
+this directly from an editing session by running `:set list!` to toggle the
+option. If you prefer this to be on by default, you can set it in your vimrc:
+
+```vim
+set list
+```
+
+Which unprintable characters are shown and how they are are rendered is
+determined by the `'listchars'` option. Friendly.vim overrides the Vim default
+for `'listchars'` to render whitespace similar to VS Code.
+
 **Can I use this as a minimal vimrc for git commits?**
 
 Yes, create a separate vimrc that adds friendly.vim and disables other plugins:
