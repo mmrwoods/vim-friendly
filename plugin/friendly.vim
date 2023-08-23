@@ -503,7 +503,7 @@ augroup END
 " Show diff from git commit --verbose in a new vertical split
 " Inspired by https://github.com/rhysd/committia.vim, but mostly copied
 " from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
-" Disable with ":augroup friendly_commitsplit | au! | augroup END"
+" Disable with ":augroup friendly_gitcommit | au! | augroup END"
 function <SID>GitCommitSplitDiff()
   if winnr('$') > 1 | return | end
   if winwidth(0) < 160 | return | end
