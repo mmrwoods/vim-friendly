@@ -257,18 +257,18 @@ noremap Y y$
 nnoremap <Del> "_x
 vnoremap <Del> "_x
 
-" Don't use Q for Ex mode, except for Select mode, confusing for new users
-" Note: Neovim changes the Q command to repeat the last recorded register
+" Don't use Q for Ex mode, confusing for new users, instead remap to repeat
+" the last recorded register in normal mode, which is the default in Neovim
 " Revert with ":unmap Q".
 if !has('nvim')
   map Q <nop>
-  sunmap Q
+  nmap Q @@
 endif
 
-" Stop recording commands and opening the command history by accident
-" See ":h q" and ":h q:" to understand exactly what this disables
-" Revert with ":unmap q".
-nnoremap q <nop>
+" Stop opening the command history by accident, use CTRL-F, see :h c_CTRL-F
+nnoremap q: <nop>
+nnoremap q/ <nop>
+nnoremap q? <nop>
 
 " Retain selection after shifting highlighted lines in visual mode
 vnoremap > >gv
