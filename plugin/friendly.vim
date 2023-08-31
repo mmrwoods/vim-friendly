@@ -266,6 +266,8 @@ if !has('nvim')
 endif
 
 " Stop opening the command history by accident, use CTRL-F, see :h c_CTRL-F
+" Note: these mappings only prevent completing sequences within &timeoutlen,
+" which defaults to 1000ms, hopefully enough to prevent opening by accident.
 nnoremap q: <nop>
 nnoremap q/ <nop>
 nnoremap q? <nop>
