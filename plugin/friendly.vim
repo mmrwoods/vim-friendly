@@ -353,10 +353,12 @@ augroup friendly_filetypes
   " rules to skip URLs and upper case acronyms when checking spelling errors.
   " Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
   " http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
+  " Syntax match rule for email addresses copied from Vim's mail syntax file
   autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
     \ setlocal spell |
     \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
-    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell
+    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
+    \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
 
   " Re-enable syntax highlighting for long lines in some (non-code) file types
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
