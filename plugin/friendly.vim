@@ -364,17 +364,16 @@ augroup friendly_filetypes
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
     \ setlocal synmaxcol=0
 
-  " Auto wrap and indent bulleted lists spanning multiple lines in git commits
-  " Abuses Vim's comment formatting, see :h fo-table and :h format-comments
-  " FIXME: might warrant a separate augroup so can be disabled independently
-  autocmd FileType gitcommit setlocal comments=fb:*,fb:-
-  autocmd FileType gitcommit setlocal formatoptions+=c
-
   " Override formatlistpat for git commmits to avoid indenting after line
   " starting with number followed by space. Copied from latest gitcommit
   " filetype plugin, see https://github.com/tpope/vim-git/commit/e7afd90a
   " FIXME: version check to avoid overriding after Vim runtime files updated?
   autocmd FileType gitcommit setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
+
+  " Ensure list formatting according to formatlistpat enabled for git commits
+  " Note: this is the default in the gitcommit ftplugin included with Vim 9,
+  " but it is included here, along with formatlistpat, for earlier versions.
+  autocmd FileType gitcommit setlocal formatoptions+=n
 
   " Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
   " and it's not worth arguing about (personally I think markdown should be
