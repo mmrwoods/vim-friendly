@@ -78,6 +78,7 @@ set hlsearch                      " Enable highlighting of search matches
 set incsearch                     " And move to first match as you type
 
 set nowrap                        " Turn off line wrapping by default
+set linebreak                     " But don't break words if wrap is enabled
 set scrolloff=1                   " Show context when scrolling vertically
 
 set sidescroll=1                  " Scroll hoizontally one column at a time
@@ -360,7 +361,7 @@ augroup friendly_filetypes
     \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
     \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
 
-  " Re-enable syntax highlighting for long lines in some (non-code) file types
+  " Re-enable syntax highlighting for very long lines in some file types
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
     \ setlocal synmaxcol=0
 
@@ -375,11 +376,10 @@ augroup friendly_filetypes
   " but it is included here, along with formatlistpat, for earlier versions.
   autocmd FileType gitcommit setlocal formatoptions+=n
 
-  " Enable soft wrap for markdown, hard-wrapped markdown seems controversial,
-  " and it's not worth arguing about (personally I think markdown should be
-  " treated as source, and I will wrap at 80 if no other rules apply, but I
-  " also respect other peoples' and teams' opinions and follow their rules)
-  autocmd FileType markdown setlocal wrap linebreak
+  " Re-enable soft wrap for some file types (note that this is for display
+  " only, text will still be hard-wrapped at textwidth if it has been set)
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+    \ setlocal wrap
 
   " Disable yaml indentexpr from runtime files, too magical and confusing for
   " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
