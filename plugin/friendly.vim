@@ -371,17 +371,6 @@ endfunction
 
 augroup friendly_filetypes
   au!
-  " Turn on spell checking by default for some file types, and add some syntax
-  " rules to skip URLs and upper case acronyms when checking spelling errors.
-  " Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
-  " http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
-  " Syntax match rule for email addresses copied from Vim's mail syntax file
-  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
-    \ setlocal spell |
-    \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
-    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
-    \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
-
   " Re-enable syntax highlighting for very long lines in some file types
   " Might be worth considering inverting this, only setting synmaxcol for
   " file types that are likely to cause problems, notably html, css, js.
@@ -422,6 +411,24 @@ augroup friendly_filetypes
 
   " Avoid error editing crontab: temp file must be edited in place
   autocmd filetype crontab setlocal nobackup nowritebackup
+augroup END
+
+" Turn on spell checking by default for some file types, and add some syntax
+" rules to skip URLs and upper case acronyms when checking spelling errors.
+" Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
+" http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
+" Syntax match rule for email addresses copied from Vim's mail syntax file
+" Disable entirely with ":augroup friendly_spellcheck | au! | augroup END"
+" To keep the rules but disable spell check by default, use ":set nospell"
+augroup friendly_spellcheck
+  au!
+  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+    \ if match(execute('verbose setglobal spell?'), 'Last set from') == -1 |
+      \ setlocal spell |
+    \ endif |
+    \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
+    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
+    \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
 augroup END
 
 " Jump to last known cursor position when editing (except for git/hg commits)

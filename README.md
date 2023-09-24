@@ -149,6 +149,21 @@ Which unprintable characters are shown and how they are are rendered is
 determined by the `'listchars'` option. Friendly.vim overrides the Vim default
 for `'listchars'` to render whitespace similar to VS Code.
 
+**Why is spell checking enabled for some files, and can I disable it?**
+
+The initial use case for this plugin was to make Vim more approachable to people
+using it to write commits and edit documentation, so friendly.vim enables spell
+check by default for gitcommit, markdown and a few other file types. If you
+don't want spell checking to be enabled by default for any file types you can
+just disable it in your vimrc:
+
+```vim
+set nospell
+```
+
+If you just want to disable spellcheck temporarily, you can do this using `:set
+spell!` to toggle the option.
+
 **Can I use this as a minimal vimrc for git commits?**
 
 Yes, create a separate vimrc that adds friendly.vim and disables other plugins:
