@@ -399,11 +399,11 @@ function! GetFriendlyIndent()
   if v:lnum == 0 | return 0 | endif
   " get the previous non-blank line as basis for current line indent
   let plnum = prevnonblank(v:lnum-1)
-  " remove indent if there are no blank lines preceding current line
+  " remove indent if there are only blank lines preceding current line
   if plnum == 0 | return 0 | endif
   if match(&formatoptions, 'n') != -1
     " list formatting is enabled, check previous line for list indent
-    let listindent = strlen(matchstr(getline(plnum), &formatlistpat))
+    let listindent = strlen(matchstr(getline(v:lnum-1), &formatlistpat))
     if listindent > 0 | return listindent | endif
   endif
   " return the indent of the previous line by default, like autoindent
