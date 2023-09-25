@@ -348,27 +348,6 @@ if has("nvim") || has("patch-8.2.1978")
   endif
 endif
 
-" Simple indentation function to use with plain text and some markup files
-" Default c-style indentation does things like indent lines following a line
-" with leading space and trailing comma, not what you want for plain text.
-" Removes indentation on first line, otherwise uses previous line indent;
-" unless previous line was the start of a list, then uses formatlistpat.
-function! GetFriendlyIndent()
-  " remove indent if the current line is the start of the file
-  if v:lnum == 0 | return 0 | endif
-  " get the previous non-blank line as basis for current line indent
-  let plnum = prevnonblank(v:lnum-1)
-  " remove indent if there are no blank lines preceding current line
-  if plnum == 0 | return 0 | endif
-  if match(&formatoptions, 'n') != -1
-    " list formatting is enabled, check previous line for list indent
-    let listindent = strlen(matchstr(getline(plnum), &formatlistpat))
-    if listindent > 0 | return listindent | endif
-  endif
-  " return the indent of the previous line by default, like autoindent
-  return indent(plnum)
-endfunction
-
 augroup friendly_filetypes
   au!
   " Re-enable syntax highlighting for very long lines in some file types
@@ -394,12 +373,6 @@ augroup friendly_filetypes
   " Ensure list formatting enabled for text files, not enabled by default
   autocmd FileType text setlocal formatoptions+=n
 
-  " Avoid c-style indentation in some non-code file types when using = command
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
-    \ if empty(&indentexpr) && empty(&equalprg) |
-    \   setlocal indentexpr=GetFriendlyIndent() |
-    \ endif
-
   " Re-enable soft wrap for some file types (note that this is for display
   " only, text will still be hard-wrapped at textwidth if it has been set)
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
@@ -411,6 +384,37 @@ augroup friendly_filetypes
 
   " Avoid error editing crontab: temp file must be edited in place
   autocmd filetype crontab setlocal nobackup nowritebackup
+augroup END
+
+" Avoid c-style indentation in some non-code file types when using = command
+" Default c-style indentation does things like indent lines following a line
+" with leading space and trailing comma, not what you want for plain text.
+" Removes indentation on first line, otherwise uses previous line indent;
+" unless previous line was the start of a list, then uses formatlistpat.
+" WARNING: at the moment this overrides some automatic formatting from
+" formatoptions, just to avoid c-style indentation when using = command.
+" Disable with ":augroup friendly_indent | au! | augroup END"
+function! GetFriendlyIndent()
+  " remove indent if the current line is the start of the file
+  if v:lnum == 0 | return 0 | endif
+  " get the previous non-blank line as basis for current line indent
+  let plnum = prevnonblank(v:lnum-1)
+  " remove indent if there are no blank lines preceding current line
+  if plnum == 0 | return 0 | endif
+  if match(&formatoptions, 'n') != -1
+    " list formatting is enabled, check previous line for list indent
+    let listindent = strlen(matchstr(getline(plnum), &formatlistpat))
+    if listindent > 0 | return listindent | endif
+  endif
+  " return the indent of the previous line by default, like autoindent
+  return indent(plnum)
+endfunction
+augroup friendly_indent
+  au!
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+    \ if empty(&indentexpr) && empty(&equalprg) |
+    \   setlocal indentexpr=GetFriendlyIndent() |
+    \ endif
 augroup END
 
 " Turn on spell checking by default for some file types, and add some syntax
