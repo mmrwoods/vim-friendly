@@ -353,7 +353,7 @@ augroup friendly_filetypes
   " Re-enable syntax highlighting for very long lines in some file types
   " Might be worth considering inverting this, only setting synmaxcol for
   " file types that are likely to cause problems, notably html, css, js.
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ setlocal synmaxcol=0
 
   " Override formatlistpat for git commmits to avoid indenting after line
@@ -375,7 +375,7 @@ augroup friendly_filetypes
 
   " Re-enable soft wrap for some file types (note that this is for display
   " only, text will still be hard-wrapped at textwidth if it has been set)
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ setlocal wrap
 
   " Disable yaml indentexpr from runtime files, too magical and confusing for
@@ -411,7 +411,7 @@ function! GetFriendlyIndent()
 endfunction
 augroup friendly_indent
   au!
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ if empty(&indentexpr) && empty(&equalprg) |
     \   setlocal indentexpr=GetFriendlyIndent() |
     \ endif
@@ -426,7 +426,7 @@ augroup END
 " To keep the rules but disable spell check by default, use ":set nospell"
 augroup friendly_spellcheck
   au!
-  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc
+  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ if match(execute('verbose setglobal spell?'), 'Last set from') == -1 |
       \ setlocal spell |
     \ endif |
