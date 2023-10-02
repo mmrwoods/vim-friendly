@@ -402,9 +402,20 @@ function! GetFriendlyIndent()
   " remove indent if there are only blank lines preceding current line
   if plnum == 0 | return 0 | endif
   if match(&formatoptions, 'n') != -1
-    " list formatting is enabled, check previous line for list indent
-    let listindent = strlen(matchstr(getline(v:lnum-1), &formatlistpat))
-    if listindent > 0 | return listindent | endif
+    " list formatting enabled, use &formatlistpat if line part of list item
+    if match(getline(v:lnum), &formatlistpat) != -1
+      " current line starts new list item, get indent from first list item
+      if match(getline(v:lnum-1), "^\s\*$") != -1 | return indent(plum) | endif
+      let lnum = v:lnum
+      while lnum > 0 && match(getline(lnum-1), &formatlistpat) == -1
+        let lnum -= 1
+      endwhile
+      return indent(lnum-1)
+    else
+      " get list indent from previous line if starts new list item
+      let listindent = strlen(matchstr(getline(v:lnum-1), &formatlistpat))
+      if listindent > 0 | return listindent | endif
+    endif
   endif
   " return the indent of the previous line by default, like autoindent
   return indent(plnum)
