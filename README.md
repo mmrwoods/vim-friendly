@@ -1,6 +1,8 @@
 # friendly.vim
 
-Friendly defaults for Vim, if you are new to Vim, this is a good place to start.
+Friendly defaults for Vim, if you are new to Vim, or even Neovim, this is a good
+place to start. If you just need a basic Vim configuration for writing git
+commits and quickly editing code from your terminal, this is made for you.
 
 Inspired by Tim Pope's [sensible.vim](https://github.com/tpope/vim-sensible),
 but unconstrained by any ambition to be a universal set of defaults, this plugin
@@ -40,16 +42,17 @@ diffs in a vertical split when using `git commit --verbose`.
 Vim 8.1 or later, though some features are only supported by and enabled on
 later versions. Some features might require "huge" Vim, which is probably what
 you got when you installed Vim. Only tested on Mac and Debian, might work fine
-on Windows too. Should also work with Neovim, but may need a little tweaking.
+on Windows too. Also known to work on Neovim, but I don't use Neovim regularly.
 
 ## Installation
+
+### Vim
 
 Install as an optional plugin using Vim's built-in package support:
 
 ```
-mkdir -p ~/.vim/pack/mmrwoods/opt
-cd ~/.vim/pack/mmrwoods/opt
-git clone https://github.com/mmrwoods/vim-friendly.git friendly
+git clone https://github.com/mmrwoods/vim-friendly.git \
+  ~/.vim/pack/mmrwoods/opt/friendly
 ```
 
 Add add this line to the start of your vimrc (e.g. ~/.vimrc):
@@ -62,6 +65,27 @@ If you don't have a vimrc, just create one that loads friendly.vim:
 
 ```
 echo 'packadd friendly' >> ~/.vimrc
+```
+
+### Neovim
+
+Install as an optional plugin using Vim's built-in package support:
+
+```
+git clone https://github.com/mmrwoods/vim-friendly.git \
+  ~/.config/nvim/pack/mmrwoods/opt/friendly
+```
+
+Add add this line to the start of your vimrc (e.g. ~/.config/nvim/init.vim):
+
+```vim
+packadd friendly
+```
+
+If you don't have a vimrc, just create one that loads friendly.vim:
+
+```
+echo 'packadd friendly' >> ~/.config/nvim/init.vim
 ```
 
 ## Customisation
