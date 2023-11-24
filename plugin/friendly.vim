@@ -403,18 +403,28 @@ function! GetFriendlyIndent()
   if plnum == 0 | return 0 | endif
   if match(&formatoptions, 'n') != -1
     " list formatting enabled, use &formatlistpat if line part of list item
-    if match(getline(v:lnum), &formatlistpat) != -1
-      " current line starts new list item, get indent from first list item
-      if match(getline(v:lnum-1), "^\s\*$") != -1 | return indent(plum) | endif
-      let lnum = v:lnum
-      while lnum > 0 && match(getline(lnum-1), &formatlistpat) == -1
-        let lnum -= 1
+    if match(getline(v:lnum-1), "^\s\*$") != -1
+      " previous line is blank, search upward for start of list item
+      let slnum = plnum
+      let pindent = indent(plnum)
+      while slnum > 0 && indent(slnum) == pindent && !empty(trim(getline(slnum)))
+        let slnum -= 1
       endwhile
-      return indent(lnum-1)
-    else
-      " get list indent from previous line if starts new list item
-      let listindent = strlen(matchstr(getline(v:lnum-1), &formatlistpat))
-      if listindent > 0 | return listindent | endif
+      if match(getline(slnum), &formatlistpat) != -1
+        return indent(slnum)
+      else
+        return indent(plnum)
+      endif
+    elseif match(getline(v:lnum), &formatlistpat) != -1
+      " current line starts new list item, get indent from previous list item
+      let slnum = v:lnum
+      while slnum > 0 && match(getline(slnum-1), &formatlistpat) == -1
+        let slnum -= 1
+      endwhile
+      return indent(slnum-1)
+    elseif match(getline(v:lnum-1), &formatlistpat) != -1
+      " previous line starts new list item, get indent from previous line
+      return strlen(matchstr(getline(v:lnum-1), &formatlistpat))
     endif
   endif
   " return the indent of the previous line by default, like autoindent
