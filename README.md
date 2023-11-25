@@ -29,6 +29,8 @@ please submit an issue (or even better, open a pull request).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Enhanced editing of git commits, especially when using `git commit --verbose`.
+* Experimental: adds automatic list formatting for some file types (e.g.
+  markdown).
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
@@ -222,7 +224,7 @@ mapping to your vimrc, e.g.
 
 ```vim
 inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : "\<CR>" )
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : "\<Plug>(FriendlyCR)" )
 ```
 
 With other plugins which have custom functions to navigate the completion menu
@@ -237,7 +239,7 @@ completion, e.g.
 
 ```vim
 inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
-  \ ? asyncomplete#close_popup() : '<C-y>' ) : "\<CR>"
+  \ ? asyncomplete#close_popup() : '<C-y>' ) : "\<Plug>(FriendlyCR)"
 ```
 
 **Can I use this with other plugin managers?**

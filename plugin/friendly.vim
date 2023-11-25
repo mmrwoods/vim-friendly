@@ -536,6 +536,54 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 " CR/Enter accepts the current completion if the menu is visible
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
+" Experimental: Automatically insert list headers when list formatting enabled
+" Mostly copied from bullets.vim, but minimalist version abusing formatlistpat
+function! FriendlyCR()
+  let bullet = ''
+  let clnum = line('.')
+  " only insert bullet when list formatting enabled and at end of line
+  if match(&formatoptions, 'n') != -1 && col('.') > strlen(getline('.'))
+    if match(getline(clnum), &formatlistpat) != -1
+      if empty(trim(substitute(getline(clnum), &formatlistpat, '', '')))
+        " current line is empty list item, delete it, like a word processor
+        call setline(clnum, '')
+        " and return immediately to avoid adding a second new/blank line
+        return ''
+      else
+        " current line starts a list item, get bullet from current line
+        let bullet = matchstr(getline(clnum), &formatlistpat)
+      endif
+    else
+      " search for start of list item, get bullet from that line if found
+      let slnum = clnum
+      let indent = indent(clnum)
+      while slnum > 0 && indent(slnum) == indent && !empty(trim(getline(slnum)))
+        let slnum -= 1
+      endwhile
+      if match(getline(slnum), &formatlistpat) != -1
+        let bullet = matchstr(getline(slnum), &formatlistpat)
+      endif
+    endif
+  endif
+  " formatlistpat is normally used to find the indent level following a list
+  " header, and does not always exactly match the list header itself, e.g.
+  " markdown footnotes, so check matched bullet itself matches formatlistpat.
+  " Means this function only works for simple list headers, and that's fine.
+  if empty(bullet) || match(bullet, &formatlistpat) == -1
+    call feedkeys("\<CR>", 'n')
+  else
+    call append(clnum, bullet)
+    call setpos('.', [0, clnum+1, strlen(getline(clnum+1)) + 1])
+  endif
+  return ''
+endfunction
+" Notes: <C-y> must be expr-quote for coc.nvim compatibility. See :h expr-quote
+" coc.nvim rewrites existing completion mappings to coc equivalents on start,
+" replacing '\<C-y>' with 'coc#pum#confirm()', see coc#ui#check_pum_keymappings
+" <C-]> for iabbreviations, see https://github.com/dkarter/bullets.vim/pull/9
+inoremap <expr> <Plug>(FriendlyCR) (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>')
+inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : "\<Plug>(FriendlyCR)")
+
 " Do the right thing with swap files, inspired by vim-autoswap
 " Disable with ":augroup friendly_swapexists | au! | augroup END"
 function! <SID>HandleSwapfile(filename, swapname)
