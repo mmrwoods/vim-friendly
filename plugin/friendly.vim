@@ -350,11 +350,13 @@ endif
 
 augroup friendly_filetypes
   au!
-  " Re-enable syntax highlighting for very long lines in some file types
+  " Restore default synmaxcol for very long lines in some file types
   " Might be worth considering inverting this, only setting synmaxcol for
   " file types that are likely to cause problems, notably html, css, js.
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
-    \ setlocal synmaxcol=0
+    \ if match(execute('verbose set synmaxcol?'), 'Last set from.*friendly\.vim') != -1 |
+    \   setlocal synmaxcol=3000 |
+    \ endif
 
   " Override formatlistpat for git commmits to avoid indenting after line
   " starting with number followed by space. Copied from latest gitcommit
