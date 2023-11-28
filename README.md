@@ -224,7 +224,7 @@ mapping to your vimrc, e.g.
 
 ```vim
 inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : "\<Plug>(FriendlyCR)" )
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-]><C-R>=FriendlyCR()<CR>' )
 ```
 
 With other plugins which have custom functions to navigate the completion menu
@@ -239,7 +239,7 @@ completion, e.g.
 
 ```vim
 inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
-  \ ? asyncomplete#close_popup() : '<C-y>' ) : "\<Plug>(FriendlyCR)"
+  \ ? asyncomplete#close_popup() : '<C-y>' ) : '<C-]><C-R>=FriendlyCR()<CR>'
 ```
 
 **Can I use this with other plugin managers?**
