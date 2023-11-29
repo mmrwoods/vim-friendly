@@ -209,38 +209,46 @@ git config --global core.editor 'vim -u ~/.vimrc.minimal'
 
 Yes, you can, though whether it "just works" is dependent on the other plugin.
 Friendly.vim adds completion menu aware Tab, Shift-Tab and CR mappings which
-move next/previous and accept completion while the menu is visible. These
-mappings might just work with your preferred plugin, if not you can override
-them as needed in your vimrc.
+move next/previous and accept completion while the menu is visible. If the other
+plugin also uses Vim's built-in completion menu, then the mappings should just
+work. If the other plugin has a custom completion menu or uses custom functions
+to interact with the completion menu, then you'll have to override the
+friendly.vim mappings to continue using Tab, Shift-Tab and CR with the
+completion menu.
 
-With [coc.nvim](https://github.com/neoclide/coc.nvim), these mappings should
-just work because coc.nvim rewrites existing completion aware mappings to
-coc.nvim aware variants (coc.nvim has its own custom completion menu). If the CR
-mapping does not just work, that's probably because some other plugin has
-wrapped the friendly.vim CR mapping in a custom function before coc.nvim checks
-for existing completion menu aware mappings. You can check this by running
-`:verbose imap <CR>`, and you can fix it by adding a custom, coc.nvim aware, CR
-mapping to your vimrc, e.g.
+Setting up custom mappings for completion plugins is not unusual, and the
+documentation for the other plugin should include instructions for doing so.
+Those instructions should just work, but will remove the friendly.vim mappings,
+including the CR mapping which automatically inserts bullets when list
+formatting is enabled.
+
+If you want to retain friendly.vim's CR mapping and use it with another
+completion plugin, you'll need to modify the CR mapping suggested by the other
+plugin to call `FriendlyCR()` when the completion menu is not visible.
+If you also want to be able to enable and disable the other plugin as needed,
+and retain the friendly.vim mappings while the other plugin is disabled, then
+you'll need a custom mapping with some conditional logic in your vimrc.
+
+This is an example mapping that works with
+[coc.nvim](https://github.com/neoclide/coc.nvim):
 
 ```vim
 inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-]><C-R>=FriendlyCR()<CR>' )
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-R>=FriendlyCR()<CR>' )
 ```
 
-With other plugins which have custom functions to navigate the completion menu
-and/or accept completions, you'll probably need to override the friendly.vim
-mappings in your vimrc. You can do this such that your mappings will trigger the
-plugin functions when the plugin is enabled, and otherwise fall back
-to friendly.vim style mappings. For example
-[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim) has a
-custom function to accept a completion, so you could add a CR mapping to your
-vimrc to use asyncomplete when enabled, otherwise fall back to standard Vim
-completion, e.g.
+And this is an example that should work with
+[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim):
 
 ```vim
 inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
-  \ ? asyncomplete#close_popup() : '<C-y>' ) : '<C-]><C-R>=FriendlyCR()<CR>'
+  \ ? asyncomplete#close_popup() : '<C-y>' ) : '<C-R>=FriendlyCR()<CR>'
 ```
+
+Note: `<C-R>=FriendlyCR()` here tells Vim to insert the output from the
+`FriendlyCR()` expression into the buffer (`CTRL-R` inserts the contents
+of a register into the buffer, and `=` is the expression register, see `:help
+i_CTRL-R`).
 
 **Can I use this with other plugin managers?**
 
