@@ -573,6 +573,10 @@ function! FriendlyCR()
     call feedkeys("\<CR>", 'n')
   else
     call append(clnum, bullet)
+    if match(bullet, '\w') >= 0 && ( &ft !=# 'markdown' || match(bullet, '\<1\.') == -1 )
+      call setpos('.', [0, clnum+1, indent(clnum+1)])
+      exe "normal! \<C-A>"
+    endif
     call setpos('.', [0, clnum+1, strlen(getline(clnum+1)) + 1])
   endif
   return ''
