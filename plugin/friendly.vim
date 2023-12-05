@@ -369,8 +369,9 @@ augroup friendly_filetypes
   " but it is included here, along with formatlistpat, for earlier versions.
   autocmd FileType gitcommit setlocal formatoptions+=n
 
-  " Better formatlistpat for text files (same as gitcommit, thank you @tpope)
-  autocmd FileType text setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
+  " Better formatlistpat for text files. Copied from gitcommit, modified to
+  " support alphabetic list headers and list headers wrapped in round brackets
+  autocmd FileType text setlocal formatlistpat=^\\s*\(\\\=\\\(\\d\\+\\\|\\a\\+\\\)[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
 
   " Ensure list formatting enabled for text files, not enabled by default
   autocmd FileType text setlocal formatoptions+=n
