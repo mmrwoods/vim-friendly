@@ -572,7 +572,7 @@ function! FriendlyCR()
   " markdown footnotes, so check matched bullet itself matches formatlistpat.
   " Means this function only works for simple list headers, and that's fine.
   if empty(bullet) || match(bullet, &formatlistpat) == -1
-    call feedkeys("\<CR>", 'n')
+    return "\r"
   else
     call append(clnum, bullet)
     if match(bullet, '\w') >= 0 && ( &ft !=# 'markdown' || match(bullet, '\<1\.') == -1 )
