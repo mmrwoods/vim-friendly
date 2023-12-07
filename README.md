@@ -29,7 +29,8 @@ please submit an issue (or even better, open a pull request).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Enhanced editing of git commits, especially when using `git commit --verbose`.
-* Experimental: automatic list formatting for some file types (e.g. markdown).
+* Experimental: adds automatic list formatting for some file types (e.g.
+  markdown).
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
@@ -218,18 +219,22 @@ completion menu.
 Setting up custom mappings for completion plugins is not unusual, and the
 documentation for the other plugin should include instructions for doing so.
 Those instructions should just work, but will remove the friendly.vim mappings,
-which is fine if you want to use another plugin for completion exclusively.
+including the CR mapping which automatically inserts bullets when list
+formatting is enabled.
 
-If you want to be able to enable and disable the other plugin as needed, and
-retain the friendly.vim mappings while the other plugin is disabled, then you'll
-need a custom mapping with some conditional logic in your vimrc.
+If you want to retain friendly.vim's CR mapping and use it with another
+completion plugin, you'll need to modify the CR mapping suggested by the other
+plugin to call `FriendlyCR()` when the completion menu is not visible.
+If you also want to be able to enable and disable the other plugin as needed,
+and retain the friendly.vim mappings while the other plugin is disabled, then
+you'll need a custom mapping with some conditional logic in your vimrc.
 
 This is an example mapping that works with
 [coc.nvim](https://github.com/neoclide/coc.nvim):
 
 ```vim
 inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
-  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : "\<CR>" )
+  \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-R>=FriendlyCR()<CR>' )
 ```
 
 And this is an example that should work with
@@ -237,8 +242,13 @@ And this is an example that should work with
 
 ```vim
 inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
-  \ ? asyncomplete#close_popup() : '<C-y>' ) : "\<CR>"
+  \ ? asyncomplete#close_popup() : '<C-y>' ) : '<C-R>=FriendlyCR()<CR>'
 ```
+
+Note: `<C-R>=FriendlyCR()` here tells Vim to insert the output from the
+`FriendlyCR()` expression into the buffer (`CTRL-R` inserts the contents
+of a register into the buffer, and `=` is the expression register, see `:help
+i_CTRL-R`).
 
 **Can I use this with other plugin managers?**
 

@@ -587,13 +587,7 @@ endfunction
 " coc.nvim rewrites existing completion mappings to coc equivalents on start,
 " replacing '\<C-y>' with 'coc#pum#confirm()', see coc#ui#check_pum_keymappings
 " <C-]> for iabbreviations, see https://github.com/dkarter/bullets.vim/pull/9
-" FIXME: as this is a buffer mapping it will be override other CR mappings, at
-" least check that no other incompatible CR mappings exist before overriding.
-augroup friendly_bullets
-  au!
-  autocmd Filetype text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
-    \ inoremap <buffer> <expr> <CR> (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>')
-augroup END
+inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>')
 
 " Do the right thing with swap files, inspired by vim-autoswap
 " Disable with ":augroup friendly_swapexists | au! | augroup END"
