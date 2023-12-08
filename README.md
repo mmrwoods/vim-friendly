@@ -156,8 +156,12 @@ If you don't like this, you can change it in your vimrc:
 set shiftwidth=4
 ```
 
-Or you could just install [sleuth.vim](https://github.com/tpope/vim-sleuth) and
-forget about it. Sleuth.vim also supports EditorConfig files, but doesn't trim
+This is just a default, used when indentation rules are not otherwise applied
+for the file you are editing, and overrides the Vim default of using tabs. It
+is overridden for some file types, e.g. Python, and via editorconfig.
+
+You can also use [sleuth.vim](https://github.com/tpope/vim-sleuth) to auto-detect
+indentation rules. Sleuth.vim supports EditorConfig files, but doesn't trim
 trailing whitespace. For a minimalist Vim configuration, friendly.vim and
 sleuth.vim make a great combination.
 
