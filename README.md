@@ -25,6 +25,7 @@ please submit an issue (or even better, open a pull request).
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the default color scheme to slate, hopefully more appealing to new users.
 * Enables spell checking for some files by default (e.g. gitcommit, markdown).
+* Enables mouse support in normal, visual, and insert modes (same as Neovim).
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Handles existing swap files where possible (swap file warnings are confusing).
