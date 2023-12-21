@@ -548,7 +548,7 @@ function! FriendlyCR()
       if empty(trim(substitute(getline(clnum), &formatlistpat, '', '')))
         " current line is empty list item, delete the list header, like a word
         " processor, but leave the cursor at the indent of the previous line
-        call setline(clnum, matchstr(getline(clnum),'^\s*'))
+        call setline(clnum, matchstr(getline(clnum-1),'^\s*'))
         " and return immediately to avoid adding a second new/blank line
         return ''
       else
