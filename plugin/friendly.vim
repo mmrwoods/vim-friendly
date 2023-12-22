@@ -545,15 +545,30 @@ function! FriendlyCR()
   " only insert bullet when list formatting enabled and at end of line
   if match(&formatoptions, 'n') != -1 && col('.') > strlen(getline('.'))
     if match(getline(clnum), &formatlistpat) != -1
-      if empty(trim(substitute(getline(clnum), &formatlistpat, '', '')))
-        " current line is empty list item, delete the list header, like a word
-        " processor, but leave the cursor at the indent of the previous line
-        call setline(clnum, matchstr(getline(clnum-1),'^\s*'))
-        " and return immediately to avoid adding a second new/blank line
-        return ''
-      else
-        " current line starts a list item, get bullet from current line
+      " current line starts a list item, get bullet from current line unless
+      " list item is empty, in which case delete the list header and leave the
+      " cursor in correct position to continue the list item where appropriate
+      if !empty(trim(substitute(getline(clnum), &formatlistpat, '', '')))
         let bullet = matchstr(getline(clnum), &formatlistpat)
+      elseif match(getline(clnum-1), &formatlistpat) != -1
+        call setline(clnum, substitute(matchstr(getline(clnum-1), &formatlistpat), '\S\+', ' ', ''))
+        return ''
+      elseif !empty(trim(getline(clnum-1)))
+        call setline(clnum, matchstr(getline(clnum-1),'^\s*'))
+        return ''
+      endif
+    elseif empty(trim(getline(clnum))) && !empty(trim(getline(clnum-1)))
+      " current line is blank and previous line is non-blank, if previous line
+      " is also last line of a list, get next line indent from previous bullet
+      let slnum = clnum-1
+      let indent = indent(slnum)
+      while slnum > 0 && indent(slnum) == indent && !empty(trim(getline(slnum)))
+        let slnum -= 1
+      endwhile
+      if match(getline(slnum), &formatlistpat) != -1
+        call append(clnum, matchstr(getline(slnum),'^\s*'))
+        call setpos('.', [0, clnum+1, strlen(getline(clnum+1)) + 1])
+        return ''
       endif
     else
       " search for start of list item, get bullet from that line if found
