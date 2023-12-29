@@ -32,6 +32,7 @@ please submit an issue (or even better, open a pull request).
 * Enhanced editing of git commits, especially when using `git commit --verbose`.
 * Experimental: adds automatic list formatting for some file types (e.g.
   markdown).
+* Experimental: additional fallback filetype detection (e.g. yaml & json dotfiles)
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
