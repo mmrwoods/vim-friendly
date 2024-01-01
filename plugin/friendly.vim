@@ -143,10 +143,10 @@ set viminfo^=!
 " note: only use basic latin and latin 1 supplement unicode characters to
 " avoid missing glyphs, see https://github.com/tpope/vim-sensible/issues/57
 set listchars=tab:»\ ,nbsp:¤,trail:·
-if has("nvim") || has("patch-8.2.2454")
+if has("nvim-0.5.0") || has("patch-8.2.2454")
   set listchars+=lead:·
 endif
-if has("nvim") || has("patch-8.2.3424")
+if has("nvim-0.6.0") || has("patch-8.2.3424")
   set listchars+=multispace:·
 endif
 
@@ -179,7 +179,7 @@ endif
 
 " Reuse existing windows when opening files from the quickfix window
 set switchbuf=useopen
-if has("nvim") || has("patch-8.1.2315")
+if has("nvim-0.5.0") || has("patch-8.1.2315")
   set switchbuf+=uselast
 endif
 
