@@ -227,31 +227,19 @@ if has('langmap') && exists('+langremap')
   set nolangremap
 endif
 
-" Set the colorscheme to something hopefully more appealing to new users
-" At the moment this uses slate because it's included in Vim 8 and 9, and
-" Neovim, but this isn't ideal as it always sets the background to dark. Vim
-" doesn't always correctly detect the terminal background, so using a dark
-" background colorscheme by default is not that unreasonable, but it would be
-" nice to use a default colorscheme that works alongside the terminal colors.
-" Jeff Kreeftmeijer's Dim colorscheme is a great example, it sets Vim colors
-" using ANSI colors only, see https://github.com/jeffkreeftmeijer/vim-dim
-try
-  if !has("gui_running")
-    colorscheme slate
-    " Customise diff colors for slate, primarily because the defaults for
-    " added and removed lines are reddish and yellowish respectively, but
-    " other colors tweaked a little too, inspired by default tig colors.
-    highlight diffAdded ctermfg=green
-    highlight diffRemoved ctermfg=red
-    highlight diffChanged ctermfg=yellow
-    highlight diffLine ctermfg=magenta
-    highlight diffFile ctermfg=yellow
-    highlight diffIndexLine ctermfg=blue
-    highlight diffSubname ctermfg=blue
-  endif
-catch
-  colorscheme default
-endtry
+" Set terminal color scheme to something hopefully more appealing to new users
+" Prior to Vim 9 / Neovim 0.8.0 the included color schemes were pretty basic,
+" so skip this for earlier versions. Uses habamax as I quite like it, it looks
+" somewhat similar to the defaults in VSCode, Sublime and friends, and it has
+" nice diff syntax higlighting, unlike some other included color schemes, IMO.
+" This isn't ideal though as it always sets the background to dark, and isn't
+" guaranteed to work well with all terminals and Vim/Neovim versions. It would
+" be nice to use a color scheme that works alongside the terminal colors. Jeff
+" Kreeftmeijer's Dim colorscheme is a great example, it sets Vim colors using
+" ANSI colors only, see https://github.com/jeffkreeftmeijer/vim-dim
+if !has("gui_running") && ( has('patch-9.0.0') || has('nvim-0.8.0') )
+  colorscheme habamax
+endif
 
 " Make Y act like D and C, i.e. yank until EOL rather than yank entire line
 noremap Y y$

@@ -23,7 +23,7 @@ please submit an issue (or even better, open a pull request).
 * Disables or remaps some commands which new users find confusing (e.g. q:).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
-* Sets the default color scheme to slate, hopefully more appealing to new users.
+* Sets the color scheme to something hopefully more appealing to new users.
 * Enables spell checking for some files by default (e.g. gitcommit, markdown).
 * Enables mouse support in normal, visual, and insert modes (same as Neovim).
 * Enables system clipboard integration (and X11 primary selection if available).
@@ -115,9 +115,9 @@ augroup friendly_hlsearch | au! | augroup END
 
 **I don't like the color scheme, can I change it?**
 
-Of course, I just chose a default color scheme that is included in Vim versions
-8 and 9 and resembles the defaults in Sublime and Visual Studio Code, but you can
-change the color scheme using the `colorscheme` command.
+Of course, I just chose a color scheme that is included with Vim and Neovim and
+resembles the defaults in Sublime and Visual Studio Code, but you can change the
+color scheme using the `colorscheme` command.
 
 Open Vim and type `:colorscheme ` followed by Tab to see available color schemes
 as completion options. Try them out to see which one you like, and then add it to
@@ -126,7 +126,7 @@ your vimrc to make this your new default, e.g.
 ```vim
 packadd friendly
 
-colorscheme habamax
+colorscheme retrobox
 ```
 
 By default you can only choose from color schemes included with Vim, but there
