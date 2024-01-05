@@ -229,15 +229,17 @@ endif
 
 " Set terminal color scheme to something hopefully more appealing to new users
 " Prior to Vim 9 / Neovim 0.8.0 the included color schemes were pretty basic,
-" so skip this for earlier versions. Uses habamax as I quite like it, it looks
-" somewhat similar to the defaults in VSCode, Sublime and friends, and it has
-" nice diff syntax higlighting, unlike some other included color schemes, IMO.
-" This isn't ideal though as it always sets the background to dark, and isn't
-" guaranteed to work well with all terminals and Vim/Neovim versions. It would
-" be nice to use a color scheme that works alongside the terminal colors. Jeff
-" Kreeftmeijer's Dim colorscheme is a great example, it sets Vim colors using
-" ANSI colors only, see https://github.com/jeffkreeftmeijer/vim-dim
-if !has("gui_running") && ( has('patch-9.0.0') || has('nvim-0.8.0') )
+" so skip this for earlier versions. Uses habamax as it looks somewhat similar
+" to the defaults in VSCode, Sublime and friends, and it has nice diff syntax
+" higlighting. This isn't ideal as it always sets the background to dark, and
+" isn't guaranteed to work well with all terminals. It might be better to use
+" a color scheme that works alongside the terminal colors. Jeff Kreeftmeijer's
+" Dim color scheme is a great example, it sets Vim colors using ANSI colors
+" only, see https://github.com/jeffkreeftmeijer/vim-dim
+" Note: although Neovim 0.8.0 includes the refreshed Vim color schemes, an
+" issue in the code prevented them from working with Neovim prior to 0.8.1,
+" see https://github.com/neovim/neovim/pull/20604
+if !has("gui_running") && ( has('patch-9.0.0') || has('nvim-0.8.1') )
   colorscheme habamax
 endif
 
