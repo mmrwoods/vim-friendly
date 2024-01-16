@@ -47,7 +47,7 @@ set softtabstop=-1                " Use shiftwidth with <Tab> and <Backspace>
 
 set smarttab                      " Use shiftwidth with <Tab> at start of line
 
-set showcmd                       " Show incomplete commands as you type
+set showcmd                       " Show incomplete editor commands as you type
 
 set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 
@@ -59,7 +59,7 @@ set wildmode=list:longest,full    " Complete files like a shell (similar to zsh)
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
 if exists("&tagcase")
-  set tagcase=followscs           " Update tag search to to the same
+  set tagcase=followscs           " Update tag search to do the same
 endif
 set infercase                     " And infer case when doing keyword completion
 
@@ -356,8 +356,9 @@ augroup friendly_filetypes
   " Ensure list formatting enabled for text files, not enabled by default
   autocmd FileType text setlocal formatoptions+=n
 
-  " Re-enable soft wrap for some file types (note that this is for display
-  " only, text will still be hard-wrapped at textwidth if it has been set)
+  " Re-enable soft wrap for some file types. This is for display only, text
+  " will still be hard-wrapped at textwidth if formatoptions includes 't' and
+  " textwidth has been set, see :h formatoptions, :h fo-table and :h textwidth
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ setlocal wrap
 
