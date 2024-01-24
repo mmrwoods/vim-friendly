@@ -310,23 +310,24 @@ endif
 " confusing for new Vim users unfamiliar with CTRL-L. Taken from a suggestion
 " in Vim's help, see :h 'incsearch', modified slightly to work for :substitute
 " Disable with ":augroup friendly_hlsearch | au! | augroup END"
+" Use <leader>h to toggle search highlighting (being able to see matches is
+" really useful when operating on those matches using gn, see :help gn)
+" Vim's leader key defaults to \, so by default this means type \h to toggle
+" search higlighting, but you can set a custom leader key, see :h <leader>
+" Note: <Cmd> mapping used to avoid triggering CmdlineLeave to set nohls
+" Could be done with <expr> mapping, but more complicated, needs function
+" VimEnter autocmd is used to allow leader key to be set in user's vimrc
 augroup friendly_hlsearch
   au!
   au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
   au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
-augroup END
-
-" Use CTRL-K to toggle search highlighting (being able to see matches is
-" really useful when operating on those matches using gn, see :help gn)
-" Was previously CTRL-H, changed to CTRL-K because not used by Vim in normal
-" mode and probably less contentious than CTRL-H (alternative to backspace)
-" Note: <Cmd> mapping required to work around CmdlineLeave to set nohls
-" Could be done with <expr> mapping, but more convoluted, needs function
-if has("nvim") || has("patch-8.2.1978")
-  if empty(mapcheck('<C-K>', 'n'))
-    nnoremap <C-K> <Cmd>set hlsearch!<CR>
+  if has("nvim") || has("patch-8.2.1978")
+    autocmd VimEnter *
+      \ if empty(maparg('<leader>h', 'n')) |
+      \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
+      \ endif
   endif
-endif
+augroup END
 
 augroup friendly_filetypes
   au!
