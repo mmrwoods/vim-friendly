@@ -281,11 +281,6 @@ inoremap <C-Y> <C-O><C-R>
 " CTRL-V is also Paste in terminal job mode
 tnoremap <C-V> <C-W>"+
 
-" Make backspace work with visual selections again. This used to work by
-" default in version 8.1.1722, but upgrading to version 8.1.2234 broke it,
-" without this mapping, backspacing in visual mode just moves the cursor.
-vnoremap <BS> "_x
-
 " Use CTRL-L to clear search highlighting and call :diffupdate,
 " in addition to clearing & redrawing the screen, see :h CTRL-L
 " Copied from vim-sensible, also included in Neovim defaults
