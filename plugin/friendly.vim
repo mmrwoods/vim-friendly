@@ -476,19 +476,6 @@ if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has
   runtime ftplugin/man.vim
 endif
 
-" autocmds to clean up after relative file path completion using FriendlyTab()
-" FIXME: extract to function to create/remove buffer local autocmds as needed?
-" Disable with ":augroup friendly_autochdir | au! | augroup END"
-" Disalbing these autocmds will disable FriendlyTab() relative path completion
-augroup friendly_autochdir
-  au!
-  " reset path after relative path completion
-  autocmd CompleteDone * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
-  " catch edge cases when leaving window or vim before complete done
-  autocmd WinLeave * if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
-  autocmd VimLeavePre * windo if exists('w:save_cwd') | silent execute 'lcd' fnameescape(w:save_cwd) | endif
-augroup END
-
 " Stupid simple tab completion, file path and keyword completion only
 " Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
 " Vim's documentation has a similar suggestion, see :helpgrep CleverTab
@@ -499,8 +486,9 @@ function! FriendlyTab()
   if empty(substr)
     return "\<tab>"
   elseif match(substr, '\/') != -1 && match(substr, '<\/') == -1
-    if !empty(autocmd_get({'group': 'friendly_autochdir'}))
-      if !&autochdir | let w:save_cwd = getcwd() | silent! lcd %:p:h | endif
+    if !&autochdir && ( has("nvim-0.4.4") || has('patch-8.1.1113') )
+      silent! lcd %:p:h
+      autocmd CompleteDone <buffer> ++once lcd -
     endif
     return "\<c-x>\<c-f>"
   else
