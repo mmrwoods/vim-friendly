@@ -203,7 +203,7 @@ set nrformats+=alpha
 
 " Assume numbers are unsigned when adding/subtracting using CTRL-A and CTRL-X
 " e.g. CTRL-A on the "2020" in "9-2020" results in "9-2021", not "9-2019"
-if has("patch-8.2.0860")
+if has("nvim-0.5.0") || has("patch-8.2.0860")
   set nrformats+=unsigned
 endif
 
