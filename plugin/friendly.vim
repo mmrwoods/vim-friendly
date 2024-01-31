@@ -486,7 +486,7 @@ function! FriendlyTab()
   if empty(substr)
     return "\<tab>"
   elseif match(substr, '\/') != -1 && match(substr, '<\/') == -1
-    if !&autochdir && ( has("nvim-0.4.4") || has('patch-8.1.1113') )
+    if !&autochdir && ( has("nvim-0.4.3") || has('patch-8.1.1113') )
       silent! lcd %:p:h
       autocmd CompleteDone <buffer> ++once lcd -
     endif
