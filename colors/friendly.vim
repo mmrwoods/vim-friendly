@@ -22,6 +22,10 @@ elseif !has('nvim-0.8.0')
   hi Folded ctermfg=darkcyan ctermbg=NONE cterm=NONE
   hi Function ctermfg=yellow ctermbg=NONE cterm=NONE
   hi LineNr ctermfg=grey ctermbg=NONE cterm=NONE
+  hi PmenuSel ctermfg=black ctermbg=darkyellow cterm=NONE
+  hi Pmenu ctermfg=NONE ctermbg=darkgrey cterm=NONE
+  hi PmenuSbar ctermfg=NONE ctermbg=black cterm=NONE
+  hi PmenuThumb ctermfg=NONE ctermbg=yellow cterm=NONE
   hi SpellBad ctermfg=darkred ctermbg=NONE cterm=underline
   hi SpellCap ctermfg=darkyellow ctermbg=NONE cterm=underline
   hi SpellLocal ctermfg=red ctermbg=NONE cterm=underline
