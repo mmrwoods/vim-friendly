@@ -516,7 +516,7 @@ function! FriendlyCR()
       if !empty(trim(substitute(getline(clnum), &formatlistpat, '', '')))
         let bullet = matchstr(getline(clnum), &formatlistpat)
       elseif match(getline(clnum-1), &formatlistpat) != -1
-        call setline(clnum, substitute(matchstr(getline(clnum-1), &formatlistpat), '\S\+', ' ', ''))
+        call setline(clnum, substitute(matchstr(getline(clnum-1), &formatlistpat), '\S', ' ', 'g'))
         return ''
       elseif !empty(trim(getline(clnum-1)))
         call setline(clnum, matchstr(getline(clnum-1),'^\s*'))
