@@ -347,7 +347,7 @@ augroup friendly_filetypes
 
   " Better formatlistpat for text files. Copied from gitcommit, modified to
   " support alphabetic list headers and list headers wrapped in round brackets
-  autocmd FileType text setlocal formatlistpat=^\\s*\(\\\=\\\(\\d\\+\\\|\\a\\+\\\)[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
+  autocmd FileType text setlocal formatlistpat=^\\s*\(\\\=\\\(\\d\\+\\\|\\a\\{1}\\\)[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
 
   " Ensure list formatting enabled for text files, not enabled by default
   autocmd FileType text setlocal formatoptions+=n
