@@ -29,10 +29,9 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Enables mouse support in normal, visual, and insert modes (same as Neovim).
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
+* Adds automatic list formatting for some file types (e.g. gitcommit, markdown).
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Enhanced editing of git commits, especially when using `git commit --verbose`.
-* Experimental: adds automatic list formatting for some file types (e.g.
-  markdown).
 * Experimental: additional fallback filetype detection (e.g. yaml & json dotfiles)
 
 Changing how Vim handles git commits might seem an odd thing to include in what
