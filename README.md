@@ -301,6 +301,7 @@ Almost everything here is copied from somewhere else, mostly these places:
 * https://github.com/thoughtbot/dotfiles/blob/main/vimrc
 * https://github.com/garybernhardt/dotfiles/blob/main/.vimrc
 * https://github.com/vim/vim/blob/master/runtime/defaults.vim
+* https://github.com/bullets-vim/bullets.vim
 
 ## Licence
 
