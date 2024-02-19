@@ -373,8 +373,6 @@ augroup END
 " with leading space and trailing comma, not what you want for plain text.
 " Removes indentation on first line, otherwise uses previous line indent;
 " unless previous line was the start of a list, then uses formatlistpat.
-" WARNING: at the moment this overrides some automatic formatting from
-" formatoptions, just to avoid c-style indentation when using = command.
 " Disable with ":augroup friendly_indent | au! | augroup END"
 function! GetFriendlyIndent()
   " remove indent if the current line is the start of the file
@@ -504,7 +502,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 " CR/Enter accepts the current completion if the menu is visible
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
-" Experimental: Automatically insert list headers when list formatting enabled
+" Automatically insert list headers / bullets when formatoptions includes 'n'
 " Mostly copied from bullets.vim, but minimalist version abusing formatlistpat
 function! FriendlyCR()
   let bullet = ''
