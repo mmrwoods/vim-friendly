@@ -334,11 +334,10 @@ augroup friendly_filetypes
     \   setlocal synmaxcol=3000 |
     \ endif
 
-  " Override formatlistpat for git commmits to avoid indenting after line
-  " starting with number followed by space. Copied from latest gitcommit
-  " filetype plugin, see https://github.com/tpope/vim-git/commit/e7afd90a
-  " Note: Runtime file has been updated in Vim 9.1, but not yet in Neovim
-  if !has("patch-9.1.0")
+  " Backport improved formatlistpat from gitcommmit ftplugin if missing.
+  " Avoids indenting after line starting with number followed by space.
+  " See https://github.com/tpope/vim-git/commit/e7afd90a
+  if !has("nvim-0.10.0") && !has("patch-9.1.0")
     autocmd FileType gitcommit setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}]\\s\\+\\\|^\\s*[-*+]\\s\\+
   endif
 
