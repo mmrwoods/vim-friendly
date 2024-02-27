@@ -18,4 +18,6 @@ RUN mkdir -p /root/.config/nvim
 RUN echo set packpath+=/opt/vim >> /root/.config/nvim/init.vim
 RUN echo packadd friendly >> /root/.config/nvim/init.vim
 
+RUN for cmd in vi vim view vimdiff; do update-alternatives --remove $cmd /usr/bin/nvim; done
+
 CMD ["bash", "-l"]
