@@ -243,6 +243,14 @@ inoremap <expr> <CR> exists('*coc#pum#visible') && coc#pum#visible()
   \ ? coc#pum#confirm() : ( pumvisible() ? '<C-y>' : '<C-R>=FriendlyCR()<CR>' )
 ```
 
+And this is an example that works with
+[vim-easycomplete](https://github.com/jayli/vim-easycomplete):
+
+```vim
+inoremap <expr> <CR> pumvisible() ? ( get(g:,"easycomplete_enable",1)
+  \ ? easycomplete#TypeEnterWithPUM() : '<C-y>' ) : '<C-R>=FriendlyCR()<CR>'
+```
+
 And this is an example that should work with
 [asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim):
 
