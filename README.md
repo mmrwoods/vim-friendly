@@ -247,7 +247,7 @@ And this is an example that should work with
 [asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim):
 
 ```vim
-inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",0)
+inoremap <expr> <CR> pumvisible() ? ( get(b:,"asyncomplete_enable",1)
   \ ? asyncomplete#close_popup() : '<C-y>' ) : '<C-R>=FriendlyCR()<CR>'
 ```
 
