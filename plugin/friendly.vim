@@ -353,11 +353,13 @@ augroup friendly_filetypes
   " Ensure list formatting enabled for text files, not enabled by default
   autocmd FileType text setlocal formatoptions+=n
 
-  " Re-enable soft wrap for some file types. This is for display only, text
-  " will still be hard-wrapped at textwidth if formatoptions includes 't' and
-  " textwidth has been set, see :h formatoptions, :h fo-table and :h textwidth
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
-    \ setlocal wrap
+  " Re-enable soft wrap for documentation file types. This is for display
+  " only, text still hard-wrapped at textwidth if formatoptions includes 't'
+  " and textwidth is set, see :h formatoptions, :h fo-table and :h textwidth
+  autocmd FileType text,markdown,asciidoc,rst,rdoc,tex
+    \ if match(execute('verbose set wrap?'), 'Last set from.*friendly\.vim') != -1 |
+    \   setlocal wrap |
+    \ endif
 
   " Disable yaml indentexpr from runtime files, too magical and confusing for
   " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
