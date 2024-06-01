@@ -356,8 +356,8 @@ augroup friendly_filetypes
   " Re-enable soft wrap for some file types. This is for display only, text
   " will still be hard-wrapped at textwidth if formatoptions includes 't' and
   " textwidth has been set, see :h formatoptions, :h fo-table and :h textwidth
-  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
-    \ setlocal wrap
+  " autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
+  "   \ setlocal wrap
 
   " Disable yaml indentexpr from runtime files, too magical and confusing for
   " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
@@ -365,6 +365,22 @@ augroup friendly_filetypes
 
   " Avoid error editing crontab: temp file must be edited in place
   autocmd filetype crontab setlocal nobackup nowritebackup
+augroup END
+
+function! SetFriendlyWrap()
+  " TODO: check wrap/nowrap set by friendly.vim before continuing
+  let lines = getline(1, min([line("$"), 50]))
+  for line in lines
+    if match(line, '^\s') == -1 && len(line) > 100 && match(line, '\S\{35\}') == -1
+      setlocal wrap
+      break
+    endif
+  endfor
+endfunction
+augroup friendly_wrap
+  au!
+  autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
+    \ call SetFriendlyWrap()
 augroup END
 
 " Avoid c-style indentation in some non-code file types when using = command
