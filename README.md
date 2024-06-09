@@ -5,22 +5,22 @@ place to start. If you just need a basic Vim configuration for writing git
 commits and quickly editing code from your terminal, this is made for you.
 
 Inspired by Tim Pope's [sensible.vim](https://github.com/tpope/vim-sensible),
-but unconstrained by any ambition to be a universal set of defaults, this plugin
-overrides some of Vim's default settings and adds a few other minor tweaks to
-make Vim less terrifying.
+but lacking any ambition to be a universal set of defaults, this plugin
+overrides some of Vim's conservative default settings to provide a friendly baseline
+configuration for coding in modern Vim.
 
 The settings were originally extracted from my own vimrc, many of which were
 copied from other people's vimrcs, tips from Vim's documentation, Vim's built-in
 defaults.vim, Tim Pope's sensible.vim and also Neovim's defaults.
 
-Some features have since been added, but this is still intended as a baseline
+Some extra features have since been added, but this is still a pretty minimal
 Vim configuration and everything should be easy to override from your vimrc. If
 you find something is not easy to override, please [let me
 know](http://github.com/mmrwoods/vim-friendly/issues).
 
 ## Features
 
-* Friendly, but not universally applicable, default settings for writing code.
+* Friendly default settings for writing code in modern Vim (Vim 8+ or Neovim).
 * Disables or remaps some commands which new users find confusing (e.g. q:).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
@@ -30,9 +30,10 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Enables system clipboard integration (and X11 primary selection if available).
 * Adds simple tab completion in insert mode, including relative path completion.
 * Adds automatic list formatting for some file types (e.g. gitcommit, markdown).
+* Improves indentation defaults for some file types (e.g. gitcommit, markdown).
 * Handles existing swap files where possible (swap file warnings are confusing).
-* Enhanced editing of git commits, especially when using `git commit --verbose`.
-* Experimental: additional fallback filetype detection (e.g. yaml & json dotfiles)
+* Adds fallback file type detection for some files (e.g. yaml & json dotfiles).
+* Enhanced editing of git commits, especially with `git commit --verbose`.
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
@@ -305,6 +306,7 @@ Almost everything here is copied from somewhere else, mostly these places:
 * https://github.com/neovim/neovim/issues/2676,
   https://github.com/neovim/neovim/issues/6289,
   https://github.com/neovim/neovim/issues/19354
+* https://groups.google.com/g/vim_dev/c/479-w8khagE/m/-69oMDQhBAAJ
 * https://github.com/mmrwoods/dotfiles/blob/main/vim/vimrc
 * https://github.com/thoughtbot/dotfiles/blob/main/vimrc
 * https://github.com/garybernhardt/dotfiles/blob/main/.vimrc
