@@ -44,10 +44,11 @@ diffs in a vertical split when using `git commit --verbose`.
 
 ## Requirements
 
-Vim 8.1 or later, though some features are only supported by and enabled on
-later versions. Some features might require "huge" Vim, which is probably what
-you got when you installed Vim. Only tested on Mac and Debian, might work fine
-on Windows too. Also known to work on Neovim, but I don't use Neovim regularly.
+Vim 8.1+ or Neovim 0.3.4+, though some features are only supported by and
+enabled on later versions. Only tested on Mac and Debian, might work fine on
+Windows too. Tested with various versions of Neovim from 0.3.4 to 0.10.0, but I
+don't use Neovim regularly. Should work with Vim 8.0, but I have not tested it.
+Does not work with "tiny" Vim.
 
 ## Installation
 
