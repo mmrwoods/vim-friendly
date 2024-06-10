@@ -136,11 +136,10 @@ are hundreds, if not thousands, of other color schemes available as plugins.
 
 **Does this support [EditorConfig](https://editorconfig.org/)?**
 
-No, but Neovim natively supports EditorConfig and there is also an "official"
-EditorConfig [plugin](https://github.com/editorconfig/editorconfig-vim) for Vim.
-
-If you install the EditorConfig plugin for Vim, you might want to add the
-following lines to your vimrc:
+No, but Neovim 0.9 natively supports EditorConfig and there is also an "official"
+EditorConfig [plugin](https://github.com/editorconfig/editorconfig-vim) for Vim,
+which is bundled with Vim 9.0.1799 and above. If you use the plugin, you might
+want the following lines in your vimrc:
 
 ```vim
 " Don't force hard wrap at max line length
