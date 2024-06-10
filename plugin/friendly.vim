@@ -312,17 +312,20 @@ endif
 " Note: <Cmd> mapping used to avoid triggering CmdlineLeave to set nohls
 " Could be done with <expr> mapping, but more complicated, needs function
 " VimEnter autocmd is used to allow leader key to be set in user's vimrc
-augroup friendly_hlsearch
-  au!
-  au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
-  au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
-  if has("nvim") || has("patch-8.2.1978")
-    autocmd VimEnter *
-      \ if empty(maparg('<leader>h', 'n')) |
-      \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
-      \ endif
-  endif
-augroup END
+" Note: CmdlineEnter and CmdlineLeave were added to vim in patch 8.0.1206
+if has("nvim") || has("patch-8.0.1206")
+  augroup friendly_hlsearch
+    au!
+    au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
+    au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
+    if has("nvim") || has("patch-8.2.1978")
+      autocmd VimEnter *
+        \ if empty(maparg('<leader>h', 'n')) |
+        \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
+        \ endif
+    endif
+  augroup END
+endif
 
 augroup friendly_filetypes
   au!
