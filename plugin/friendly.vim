@@ -172,9 +172,16 @@ set nojoinspaces
 " Use :Man command instead of man program as default keywordprg, see :h K
 set keywordprg=:Man
 
-" If using grep, at least ignore binaries and exclude some paths
+" Configure external program to use for :grep command, see :h :grepprg
 if has("unix")
-  set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
+  if executable('rg')
+    " Use ripgrep if available, but assume configured outside of Vim
+    set grepprg=rg\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+  else
+    " If using grep, search recursively, ignore binaries, exclude some paths
+    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
+  endif
 endif
 
 " Reuse existing windows when opening files from the quickfix window
