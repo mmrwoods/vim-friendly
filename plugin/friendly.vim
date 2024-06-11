@@ -174,7 +174,7 @@ set keywordprg=:Man
 
 " If using grep, at least ignore binaries and exclude some paths
 if has("unix")
-  set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git\ $*\ /dev/null
+  set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
 endif
 
 " Reuse existing windows when opening files from the quickfix window
