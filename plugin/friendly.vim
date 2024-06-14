@@ -175,8 +175,10 @@ set keywordprg=:Man
 " Configure external program to use for :grep command, see :h :grepprg
 if has("unix")
   if executable('rg')
-    " Use ripgrep if available, but assume configured outside of Vim
-    set grepprg=rg\ --vimgrep
+    " Use ripgrep if available, with some reasonable default options
+    " You can supplement these options using a ripgrep configuration file,
+    " see man rg, and override them by setting grepprg in your own vimrc
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ -g'!**/{.git,vendor,node_modules}'
     set grepformat=%f:%l:%c:%m
   else
     " If using grep, search recursively, ignore binaries, exclude some paths
