@@ -20,7 +20,7 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 
 ## Features
 
-* Friendly default settings for writing code in modern Vim (Vim 8+ or Neovim).
+* Friendly default [settings][] for writing code in modern Vim (Vim 8+ or Neovim).
 * Disables or remaps some commands which new users find confusing (e.g. q:).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
@@ -33,7 +33,7 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Improves indentation defaults for some file types (e.g. gitcommit, markdown).
 * Handles existing swap files where possible (swap file warnings are confusing).
 * Adds fallback file type detection for some files (e.g. yaml & json dotfiles).
-* Enhanced editing of git commits, especially with `git commit --verbose`.
+* Enhances the git commit editor, especially when using `git commit --verbose`.
 
 Changing how Vim handles git commits might seem an odd thing to include in what
 should be a baseline Vim configuration, but for many new users, writing a commit
@@ -41,6 +41,8 @@ message is their first real interaction with Vim, and I want that to be a
 positive experience, encouraging people to use Vim (and write good commits).
 Friendly.vim improves diff syntax highlighting, highlights long lines, and opens
 diffs in a vertical split when using `git commit --verbose`.
+
+[settings]: https://github.com/mmrwoods/vim-friendly/tree/main/plugin/friendly.vim
 
 ## Requirements
 
