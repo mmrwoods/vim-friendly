@@ -172,20 +172,6 @@ set nojoinspaces
 " Use :Man command instead of man program as default keywordprg, see :h K
 set keywordprg=:Man
 
-" Configure external program to use for :grep command, see :h :grepprg
-if has("unix")
-  if executable('rg')
-    " Use ripgrep if available, with some reasonable default options
-    " You can supplement these options using a ripgrep configuration file,
-    " see man rg, and override them by setting grepprg in your own vimrc
-    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ -g'!**/{.git,vendor,node_modules}'
-    set grepformat=%f:%l:%c:%m
-  else
-    " If using grep, search recursively, ignore binaries, exclude some paths
-    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
-  endif
-endif
-
 " Reuse existing windows when opening files from the quickfix window
 set switchbuf=useopen
 if has("nvim-0.5.0") || has("patch-8.1.2315")
@@ -227,6 +213,20 @@ if has("unnamedplus")
   set clipboard+=unnamedplus
 endif
 
+" Configure external program to use for :grep command, see :h :grepprg
+if has("unix")
+  if executable('rg')
+    " Use ripgrep if available, with some reasonable default options
+    " You can supplement these options using a ripgrep configuration file,
+    " see man rg, and override them by setting grepprg in your own vimrc
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ -g'!**/{.git,vendor,node_modules}'
+    set grepformat=%f:%l:%c:%m
+  else
+    " If using grep, search recursively, ignore binaries, exclude some paths
+    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
+  endif
+endif
+
 " Disable weird legacy langmap behaviour, see h: langmap and h: langremap
 " This is included in sensible.vim, defaults.vim and Neovim's defaults
 " Also see https://groups.google.com/g/vim_dev/c/QnNwLWhJ744/m/1qNcD7d9OvgJ
@@ -234,12 +234,6 @@ endif
 " and https://stackoverflow.com/questions/12450803/vim-langmap-breaks-plugin-b%c3%a9po
 if has('langmap') && exists('+langremap')
   set nolangremap
-endif
-
-" Set terminal color scheme to something hopefully more appealing to new users
-" Uses habamax where supported, otherwise a slightly modified/improved slate
-if !has("gui_running")
-  colorscheme friendly
 endif
 
 " Make Y act like D and C, i.e. yank until EOL rather than yank entire line
@@ -310,31 +304,51 @@ if empty(mapcheck('<C-W>', 'i'))
   inoremap <C-W> <C-G>u<C-W>
 endif
 
-" Only highlight search matches while search cmdline active, IMO this is less
-" confusing for new Vim users unfamiliar with CTRL-L. Taken from a suggestion
-" in Vim's help, see :h 'incsearch', modified slightly to work for :substitute
-" Disable with ":augroup friendly_hlsearch | au! | augroup END"
-" Use <leader>h to toggle search highlighting (being able to see matches is
-" really useful when operating on those matches using gn, see :help gn)
-" Vim's leader key defaults to \, so by default this means type \h to toggle
-" search higlighting, but you can set a custom leader key, see :h <leader>
-" Note: <Cmd> mapping used to avoid triggering CmdlineLeave to set nohls
-" Could be done with <expr> mapping, but more complicated, needs function
-" VimEnter autocmd is used to allow leader key to be set in user's vimrc
-" Note: CmdlineEnter and CmdlineLeave were added to vim in patch 8.0.1206
-if has("nvim") || has("patch-8.0.1206")
-  augroup friendly_hlsearch
-    au!
-    au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
-    au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
-    if has("nvim") || has("patch-8.2.1978")
-      autocmd VimEnter *
-        \ if empty(maparg('<leader>h', 'n')) |
-        \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
-        \ endif
-    endif
-  augroup END
+" Diff a buffer with the file from which it was originally loaded, i.e.
+" show changes you've made but not yet saved. See :h diff-original-file
+" Revert with: ":delcommand DiffOrig"
+if exists(":DiffOrig") != 2
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+    \ | wincmd p | diffthis
 endif
+
+" Assume a POSIX-compatible shell when shell type not specified, otherwise
+" syntax highlighting falls back to Bourne shell. See help: ft-posix-syntax
+" More info: see SetFileTypeSH function in $VIMRUNTIME/autoload/dist/ft.vim
+if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell')
+  let g:is_posix = 1
+endif
+
+" Load matchit plugin, for extended matching with %, see h: matchit
+" Copied from sensible.vim, only load if user has not installed newer version
+" This is skipped in Neovim as matchit is included as a runtimepath plugin
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
+" Enable the :Man command everywhere (included in Vim's man filetype plugin)
+" Copied from sensible.vim, :Man command is also enabled by default in Neovim
+if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
+  runtime ftplugin/man.vim
+endif
+
+" Set terminal color scheme to something hopefully more appealing to new users
+" Uses habamax where supported, otherwise a slightly modified/improved slate
+if !has("gui_running")
+  colorscheme friendly
+endif
+
+" Jump to last known cursor position when editing (except for git/hg commits)
+" Copied from defaults.vim, also in Vim documentation, see :h restore-cursor
+" Disable with ":augroup friendly_restore_cursor | au! | augroup END"
+augroup friendly_restore_cursor
+  au!
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$")
+    \   && &ft !~# '^\(gitcommit\|hgcommit\|gitrebase\)$' |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
 
 augroup friendly_filetypes
   au!
@@ -380,6 +394,50 @@ augroup friendly_filetypes
   " Avoid error editing crontab: temp file must be edited in place
   autocmd filetype crontab setlocal nobackup nowritebackup
 augroup END
+
+" Turn on spell checking by default for some file types, and add some syntax
+" rules to skip URLs and upper case acronyms when checking spelling errors.
+" Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
+" http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
+" Syntax match rule for email addresses copied from Vim's mail syntax file
+" Disable entirely with ":augroup friendly_spellcheck | au! | augroup END"
+" To keep the rules but disable spell check by default, use ":set nospell"
+augroup friendly_spellcheck
+  au!
+  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
+    \ if match(execute('verbose setglobal spell?'), 'Last set from') == -1 |
+      \ setlocal spell |
+    \ endif |
+    \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
+    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
+    \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
+augroup END
+
+" Only highlight search matches while search cmdline active, IMO this is less
+" confusing for new Vim users unfamiliar with CTRL-L. Taken from a suggestion
+" in Vim's help, see :h 'incsearch', modified slightly to work for :substitute
+" Disable with ":augroup friendly_hlsearch | au! | augroup END"
+" Use <leader>h to toggle search highlighting (being able to see matches is
+" really useful when operating on those matches using gn, see :help gn)
+" Vim's leader key defaults to \, so by default this means type \h to toggle
+" search higlighting, but you can set a custom leader key, see :h <leader>
+" Note: <Cmd> mapping used to avoid triggering CmdlineLeave to set nohls
+" Could be done with <expr> mapping, but more complicated, needs function
+" VimEnter autocmd is used to allow leader key to be set in user's vimrc
+" Note: CmdlineEnter and CmdlineLeave were added to vim in patch 8.0.1206
+if has("nvim") || has("patch-8.0.1206")
+  augroup friendly_hlsearch
+    au!
+    au CmdlineEnter /,\?,: set hls   " Highlight all matches while searching
+    au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
+    if has("nvim") || has("patch-8.2.1978")
+      autocmd VimEnter *
+        \ if empty(maparg('<leader>h', 'n')) |
+        \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
+        \ endif
+    endif
+  augroup END
+endif
 
 " Avoid c-style indentation in some non-code file types when using = command
 " Default c-style indentation does things like indent lines following a line
@@ -430,64 +488,6 @@ augroup friendly_indent
     \   setlocal indentexpr=GetFriendlyIndent() |
     \ endif
 augroup END
-
-" Turn on spell checking by default for some file types, and add some syntax
-" rules to skip URLs and upper case acronyms when checking spelling errors.
-" Syntax match rules for URLs and acronyms come from Anthony Panozzo's blog:
-" http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
-" Syntax match rule for email addresses copied from Vim's mail syntax file
-" Disable entirely with ":augroup friendly_spellcheck | au! | augroup END"
-" To keep the rules but disable spell check by default, use ":set nospell"
-augroup friendly_spellcheck
-  au!
-  autocmd FileType markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
-    \ if match(execute('verbose setglobal spell?'), 'Last set from') == -1 |
-      \ setlocal spell |
-    \ endif |
-    \ syntax match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell |
-    \ syntax match AcronymNoSpell '\<\(\u\|\d\|-\)\{3,}\(s\?\>\|-\)' contains=@NoSpell |
-    \ syntax match EmailNoSpell '\v[_=a-z\./+0-9-]+\@[a-z0-9._-]+\a{2}' contains=@NoSpell
-augroup END
-
-" Jump to last known cursor position when editing (except for git/hg commits)
-" Copied from defaults.vim, also in Vim documentation, see :h restore-cursor
-" Disable with ":augroup friendly_restore_cursor | au! | augroup END"
-augroup friendly_restore_cursor
-  au!
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$")
-    \   && &ft !~# '^\(gitcommit\|hgcommit\|gitrebase\)$' |
-    \   exe "normal! g`\"" |
-    \ endif
-augroup END
-
-" Diff a buffer with the file from which it was originally loaded, i.e.
-" show changes you've made but not yet saved. See :h diff-original-file
-" Revert with: ":delcommand DiffOrig"
-if exists(":DiffOrig") != 2
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-    \ | wincmd p | diffthis
-endif
-
-" Assume a POSIX-compatible shell when shell type not specified, otherwise
-" syntax highlighting falls back to Bourne shell. See help: ft-posix-syntax
-" More info: see SetFileTypeSH function in $VIMRUNTIME/autoload/dist/ft.vim
-if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell')
-  let g:is_posix = 1
-endif
-
-" Load matchit plugin, for extended matching with %, see h: matchit
-" Copied from sensible.vim, only load if user has not installed newer version
-" This is skipped in Neovim as matchit is included as a runtimepath plugin
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
-
-" Enable the :Man command everywhere (included in Vim's man filetype plugin)
-" Copied from sensible.vim, :Man command is also enabled by default in Neovim
-if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
-  runtime ftplugin/man.vim
-endif
 
 " Stupid simple tab completion, file path and keyword completion only
 " Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
