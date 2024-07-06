@@ -350,6 +350,17 @@ augroup friendly_restore_cursor
     \ endif
 augroup END
 
+" Always show results of search with grep in quickfix or location list window,
+" even when there are no matches. The default is to jump to the first match if
+" there is one, but not show the quickfix or location list window and assume
+" users are familiar with :copen, :cnext, :cprevious and friends to navigate.
+" Disable with ":augroup friendly_grep | au! | augroup END"
+augroup friendly_grep
+  au!
+  autocmd QuickFixCmdPost grep copen
+  autocmd QuickFixCmdPost lgrep lopen
+augroup END
+
 augroup friendly_filetypes
   au!
   " Restore default synmaxcol for very long lines in some file types
