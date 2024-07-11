@@ -398,10 +398,6 @@ augroup friendly_filetypes
     \   setlocal wrap |
     \ endif
 
-  " Disable yaml indentexpr from runtime files, too magical and confusing for
-  " occasional use. See https://groups.google.com/g/vim_dev/c/vgNNI-pj7Gk?pli=1
-  autocmd FileType yaml setlocal autoindent indentexpr=
-
   " Avoid error editing crontab: temp file must be edited in place
   autocmd filetype crontab setlocal nobackup nowritebackup
 augroup END
