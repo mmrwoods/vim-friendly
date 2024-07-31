@@ -423,7 +423,9 @@ augroup END
 " Only highlight search matches while search cmdline active, IMO this is less
 " confusing for new Vim users unfamiliar with CTRL-L. Taken from a suggestion
 " in Vim's help, see :h 'incsearch', modified slightly to work for :substitute
-" Disable with ":augroup friendly_hlsearch | au! | augroup END"
+" Automatically disabled if vim-cool plugin or new nohlsearch optional package
+" available in recent vim versions has been enabled, see h: nohlsearch-install
+" Manually disable with ":augroup friendly_hlsearch | au! | augroup END"
 " Use <leader>h to toggle search highlighting (being able to see matches is
 " really useful when operating on those matches using gn, see :help gn)
 " Vim's leader key defaults to \, so by default this means type \h to toggle
@@ -658,3 +660,10 @@ augroup friendly_gitcommit
   autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) | endif
   autocmd QuitPre COMMIT_EDITMSG silent bwipeout! COMMIT_DIFF
 augroup END
+
+" Plugin compatibility hacks, see autoload/friendly/compat.vim
+autocmd VimEnter *
+  \ runtime! autoload/friendly/compat.vim |
+  \ for hack in getcompletion('friendly#compat#', 'function') |
+  \   exec 'call ' . hack |
+  \ endfor
