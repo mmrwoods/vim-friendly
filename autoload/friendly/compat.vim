@@ -23,3 +23,10 @@ function! friendly#compat#gitcommit()
   endif
 endfunction
 
+" Disable friendly swap file handling if autoswap plugin installed
+" See https://github.com/gioele/vim-autoswap
+function! friendly#compat#autoswap()
+  if exists('g:loaded_autoswap')
+    augroup friendly_autoswap | au! | augroup END
+  endif
+endfunction
