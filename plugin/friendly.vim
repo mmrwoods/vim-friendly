@@ -592,7 +592,7 @@ endfunction
 inoremap <expr> <CR> (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>')
 
 " Do the right thing with swap files, inspired by vim-autoswap
-" Disable with ":augroup friendly_swapexists | au! | augroup END"
+" Disable with ":augroup friendly_autoswap | au! | augroup END"
 function! <SID>HandleSwapfile(filename, swapname)
   if getftime(a:swapname) < getftime(a:filename)
     " swapfile is older than file itself, just delete it
@@ -615,7 +615,7 @@ function! <SID>HandleSwapfile(filename, swapname)
     endif
   endif
 endfunction
-augroup friendly_swapexists
+augroup friendly_autoswap
   au!
   autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
 augroup END
