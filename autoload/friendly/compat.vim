@@ -14,3 +14,12 @@ function! friendly#compat#hlsearch()
     augroup friendly_hlsearch | au! | augroup END
   endif
 endfunction
+
+" Disable friendly git commit editor if commitia plugin installed
+" See https://github.com/rhysd/committia.vim
+function! friendly#compat#gitcommit()
+  if exists('g:loaded_committia')
+    augroup friendly_gitcommit | au! | augroup END
+  endif
+endfunction
+
