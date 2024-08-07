@@ -661,9 +661,5 @@ augroup friendly_gitcommit
   autocmd QuitPre COMMIT_EDITMSG silent bwipeout! COMMIT_DIFF
 augroup END
 
-" Plugin compatibility hacks, see autoload/friendly/compat.vim
-autocmd VimEnter *
-  \ runtime! autoload/friendly/compat.vim |
-  \ for hack in getcompletion('friendly#compat#', 'function') |
-  \   exec 'call ' . hack |
-  \ endfor
+" Load compatibility hacks on VimEnter, after other plugins are loaded
+autocmd VimEnter * runtime! compat/friendly.vim
