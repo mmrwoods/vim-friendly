@@ -620,45 +620,35 @@ augroup friendly_autoswap
   autocmd SwapExists * call <SID>HandleSwapfile(expand('<afile>:p'), v:swapname)
 augroup END
 
-" Show diff from git commit --verbose in a new vertical split
-" Inspired by https://github.com/rhysd/committia.vim, but mostly copied
-" from https://gist.github.com/aroben/d54d002269d9c39f0d5c89d910f7307e
+" Inspired by https://github.com/rhysd/committia.vim, but does not run diff
+" and status commands, just extracts the diff from the commit message, which
+" means it works nicely when amending commits (shows diff for entire commit)
 " Disable with ":augroup friendly_gitcommit | au! | augroup END"
 function <SID>GitCommitSplitDiff()
-  if winnr('$') > 1 | return | end
-  if winwidth(0) < 160 | return | end
-
-  " Save the contents of the z register
-  let old_z = getreg("z")
-  let old_z_type = getregtype("z")
-
-  try
-    call cursor(1, 0)
-    let diff_start = search("^diff --git")
-    if diff_start > 0
-      " Move diff from commit message to the z register
-      :silent .,$delete z
-      :silent write
-      call cursor(1, 0)
-      " Paste from z register into a new vertial split
-      vnew
-      silent normal! V"zP
-      " Configure the diff buffer
-      setlocal filetype=diff buftype=nofile readonly nonumber noswapfile nomodified nomodifiable nofoldenable
-      silent file COMMIT_DIFF
-      " Get back to the commit message
-      wincmd p
-    endif
-  finally
-    " Restore the z register
-    call setreg("z", old_z, old_z_type)
-  endtry
+  call cursor(1, 0)
+  let scissors_line = search('^\(#\|:\) -\+ >8 -\+\n')
+  if scissors_line == 1 | return | end
+  let diff_start = search("^diff --git")
+  if diff_start > 0
+    " Move diff to a new vertical split
+    let diff = getline(diff_start, '$')
+    silent .,$delete _
+    vnew
+    call setline(1, diff)
+    " Configure the diff buffer
+    setlocal filetype=diff buftype=nofile readonly nonumber noswapfile nomodified nomodifiable nofoldenable
+    silent file COMMIT_DIFF
+    " Get back to commit message and tidy up
+    wincmd p
+    exe 'silent' scissors_line . ',$delete _'
+    call cursor(1,0)
+  endif
 endfunction
 augroup friendly_gitcommit
   au!
   autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
   autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) | endif
-  autocmd QuitPre COMMIT_EDITMSG silent bwipeout! COMMIT_DIFF
+  autocmd QuitPre COMMIT_EDITMSG if !empty(bufname('COMMIT_DIFF')) | silent bwipeout! COMMIT_DIFF | endif
 augroup END
 
 " Load compatibility hacks on VimEnter, after other plugins are loaded
