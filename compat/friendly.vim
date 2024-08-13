@@ -12,12 +12,6 @@ if exists('g:loaded_cool') || exists('g:loaded_nohlsearch')
   augroup friendly_hlsearch | au! | augroup END
 endif
 
-" Disable friendly git commit editor if commitia plugin installed
-" See https://github.com/rhysd/committia.vim
-if exists('g:loaded_committia')
-  augroup friendly_gitcommit | au! | augroup END
-endif
-
 " Disable friendly swap file handling if autoswap plugin installed
 " See https://github.com/gioele/vim-autoswap
 if exists('g:loaded_autoswap')
