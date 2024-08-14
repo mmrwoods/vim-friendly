@@ -10,7 +10,7 @@
 " Note: although Neovim 0.8.0 includes the refreshed Vim color schemes, an
 " issue in the code prevented them from working with Neovim prior to 0.8.1,
 " see https://github.com/neovim/neovim/pull/20604
-if ( has('patch-9.0.0') || has('nvim-0.8.1') )
+if ( has('patch-9.0.133') || has('nvim-0.8.1') )
   runtime colors/habamax.vim
 
   " Restore some habamax colors lost in Vim patch 9.1.0588
