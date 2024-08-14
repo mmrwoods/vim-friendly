@@ -12,6 +12,17 @@
 " see https://github.com/neovim/neovim/pull/20604
 if ( has('patch-9.0.0') || has('nvim-0.8.1') )
   runtime colors/habamax.vim
+
+  " Restore some habamax colors lost in Vim patch 9.1.0588
+  " See https://github.com/vim/vim/pull/15267
+  "
+  " Bring back yellow title color for git commit messages, without this
+  " columns exceeding the recommended max summary length are hard to see
+  hi Title ctermfg=186 ctermbg=NONE cterm=bold
+  " Bring back solid background for column separating vertically split
+  " windows, which is, IMO, visually clearer and is also consistent with
+  " the solid background status line separating horizontally split windows
+  hi VertSplit ctermfg=243 ctermbg=243 cterm=NONE
 elseif !has('nvim-0.8.0')
   runtime colors/slate.vim
 
