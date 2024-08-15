@@ -178,15 +178,6 @@ if has("nvim-0.5.0") || has("patch-8.1.2315")
   set switchbuf+=uselast
 endif
 
-" Minimalist fold text, just show first line, no line count etc.
-set foldtext=getline(v:foldstart)
-
-" Override fillchars to avoid filling folded line with dashes
-set fillchars=fold:\ ,vert:\|
-if has("nvim") || has("patch-8.2.2508")
-  set fillchars+=eob:~
-endif
-
 " Do not recognize octal numbers when adding/subtracting using CTRL-A
 " and CTRL-X, e.g. make CTRL-A on "007" result in "008", not "010"
 set nrformats-=octal
