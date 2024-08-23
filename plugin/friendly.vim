@@ -139,7 +139,7 @@ set sessionoptions=buffers,curdir,tabpages,winsize,winpos,resize
 " Persist g:UPPERCASE variables in viminfo, used by plugins, e.g. sessionman
 set viminfo^=!
 
-" list mode characters used to display whitespace, toggle with :set list!
+" List mode characters used to display whitespace, toggle with :set list!
 " note: only use basic latin and latin 1 supplement unicode characters to
 " avoid missing glyphs, see https://github.com/tpope/vim-sensible/issues/57
 set listchars=tab:»\ ,nbsp:¤,trail:·
@@ -148,6 +148,20 @@ if has("nvim-0.5.0") || has("patch-8.2.2454")
 endif
 if has("nvim-0.6.0") || has("patch-8.2.3424")
   set listchars+=multispace:·
+endif
+
+" Set vert fillchar to mimick solid line separating vertically split windows
+" This is the default for most users in Neovim, but Vim always defaults to
+" '|', which looks like a dashed vertical line when used to separate windows
+if !has("nvim")
+  set fillchars+=vert:│
+endif
+
+" Hide eob fillchar, Vim fills the first column of the screen at the end of
+" a buffer with the eob fillchar, but this really isn't necessary when line
+" numbers are enabled, lines at the end of the buffer will have no number
+if has("nvim") || has("patch-8.2.2508")
+  set fillchars+=eob:\ ,
 endif
 
 " Ins mode completion options - show popup menu even if just one match,
