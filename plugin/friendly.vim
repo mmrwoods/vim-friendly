@@ -164,12 +164,15 @@ if has("nvim") || has("patch-8.2.2508")
   set fillchars+=eob:\ ,
 endif
 
-" Ins mode completion options - show popup menu even if just one match,
-" require user to select a completion, use preview for additional info.
+" Ins mode completion options - show menu even for one match, require
+" user to select a completion, use popup if possible for additional info.
 " This does require additional keystrokes, but seems a less surprising
 " default for new users, and does not cause problems with plugins that
 " map <CR> to accept completion while the menu is visible (e.g. lexima)
 set completeopt=menuone,noselect,preview
+if !has("nvim") || has("patch-8.1.1880")
+  set completeopt+=popup
+endif
 
 " Include dictionary words in completion menu when spellcheck is enabled
 set complete+=kspell
