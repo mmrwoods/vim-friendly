@@ -170,7 +170,7 @@ endif
 " default for new users, and does not cause problems with plugins that
 " map <CR> to accept completion while the menu is visible (e.g. lexima)
 set completeopt=menuone,noselect
-if !has("nvim") || has("patch-8.1.1880")
+if has("nvim-0.10.0") || has("patch-8.1.1880")
   set completeopt+=popup
 endif
 
