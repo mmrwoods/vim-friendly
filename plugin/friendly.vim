@@ -660,4 +660,7 @@ augroup friendly_gitcommit
 augroup END
 
 " Load compatibility hacks on VimEnter, after other plugins are loaded
-autocmd VimEnter * runtime! compat/friendly.vim
+augroup friendly_compat
+  au!
+  autocmd VimEnter * runtime! compat/friendly.vim
+augroup END
