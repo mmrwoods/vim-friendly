@@ -654,7 +654,7 @@ function <SID>GitCommitSplitDiff()
 endfunction
 augroup friendly_gitcommit
   au!
-  autocmd VimEnter COMMIT_EDITMSG if !exists('g:loaded_committia') | call <SID>GitCommitSplitDiff() | endif
+  autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
   autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) | endif
   autocmd QuitPre COMMIT_EDITMSG if !empty(bufname('COMMIT_DIFF')) | silent bwipeout! COMMIT_DIFF | endif
 augroup END
@@ -663,4 +663,5 @@ augroup END
 augroup friendly_compat
   au!
   autocmd VimEnter * runtime! compat/friendly.vim
+  autocmd BufReadPre * if has('vim_starting') | runtime! compat/friendly.vim | end
 augroup END

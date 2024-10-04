@@ -1,5 +1,10 @@
 " Compatibility hacks, loaded from VimEnter autocmd in plugin/friendly.vim
 
+if exists("g:loaded_friendly_compat")
+  finish
+endif
+let g:loaded_friendly_compat = 1
+
 " Disable friendly hlsearch if vim-cool or nohlsearch plugin installed
 " See https://github.com/romainl/vim-cool
 " And https://github.com/vim/vim/pull/15042
@@ -16,4 +21,10 @@ endif
 " See https://github.com/gioele/vim-autoswap
 if exists('g:loaded_autoswap')
   augroup friendly_autoswap | au! | augroup END
+endif
+
+" Disable friendly git commit editor if commitia plugin installed
+" See https://github.com/rhysd/committia.vim
+if exists('g:loaded_committia')
+  augroup friendly_gitcommit | au! | augroup END
 endif
