@@ -634,8 +634,8 @@ augroup END
 " Disable with ":augroup friendly_gitcommit | au! | augroup END"
 function <SID>GitCommitSplitDiff()
   call cursor(1, 0)
-  let scissors_line = search('^\(#\|:\) -\+ >8 -\+\n')
-  if scissors_line == 1 | return | end
+  let scissors_line = search('^[#;@!$%^&|:] -\+ >8 -\+\n')
+  if scissors_line == 0 | return | end
   let diff_start = search("^diff --git")
   if diff_start > 0
     " Move diff to a new vertical split
