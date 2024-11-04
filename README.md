@@ -25,6 +25,7 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the color scheme to something hopefully more appealing to new users.
+* Enables EditorConfig by default in supported Vim versions (same as Neovim).
 * Enables spell checking for some files by default (e.g. gitcommit, markdown).
 * Enables mouse support in normal, visual, and insert modes (same as Neovim).
 * Enables system clipboard integration (and X11 primary selection if available).
@@ -138,17 +139,19 @@ are hundreds, if not thousands, of other color schemes available as plugins.
 
 **Does this support [EditorConfig](https://editorconfig.org/)?**
 
-No, but Neovim 0.9 natively supports EditorConfig and there is also an "official"
-EditorConfig [plugin](https://github.com/editorconfig/editorconfig-vim) for Vim,
-which is bundled with Vim 9.0.1799 and above. If you use the plugin, you might
-want the following lines in your vimrc:
+Recent versions of Vim and Neovim include support for EditorConfig. It is
+enabled by default in Neovim (from version 0.9), and available as an optional
+package in Vim (from version 9.0.1799). Friendly.vim enables the optional
+package in Vim and overrides some default settings to make it work more like
+the Neovim version by default, i.e.
 
 ```vim
 " Don't force hard wrap at max line length
 let g:EditorConfig_preserve_formatoptions = 1
 
-" Only highlight when line exceeds max length
-let g:EditorConfig_max_line_indicator = "fillexceeding"
+" Disable colorcolumn as max line indicator
+" 'fillexceeding' is a good alternative here
+let g:EditorConfig_max_line_indicator = 'none'
 ```
 
 **Why does this default to a 2-space indent?**
@@ -163,12 +166,11 @@ set shiftwidth=4
 
 This is just a default, used when indentation rules are not otherwise applied
 for the file you are editing, and overrides the Vim default of using tabs. It
-is overridden for some file types, e.g. Python, and via editorconfig.
+is overridden for some file types, e.g. Python, and via EditorConfig.
 
-You can also use [sleuth.vim](https://github.com/tpope/vim-sleuth) to auto-detect
-indentation rules. Sleuth.vim supports EditorConfig files, but doesn't trim
-trailing whitespace. For a minimalist Vim configuration, friendly.vim and
-sleuth.vim make a great combination.
+You can also use [sleuth.vim](https://github.com/tpope/vim-sleuth) or
+[vim-polyglot](https://github.com/sheerun/vim-polyglot) to auto-detect
+indentation rules.
 
 **How can I show whitespace characters, similar to VS Code?**
 

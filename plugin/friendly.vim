@@ -340,6 +340,24 @@ if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has
   runtime ftplugin/man.vim
 endif
 
+" Load EditorConfig plugin from optional packages on supported Vim versions
+" Override default settings to be less invasive and work like Neovim defaults
+if !has("nvim") && !exists('g:loaded_EditorConfig') && has("patch-9.0.1799")
+  packadd editorconfig
+  " Don't force hard wrap at max line length, this is horrible when coding
+  let g:EditorConfig_preserve_formatoptions = 1
+  " Disable max line indicator by default, same as Neovim. 'fillexceeding' is
+  " a good alternative here in Vim, but not available in Neovim implementation
+  let g:EditorConfig_max_line_indicator = 'none'
+  " Experimental: Allow editorconfig to be disabled from vimrc, same as Neovim
+  " FIXME: would be nicer to avoid loading the plugin rather than disable it
+  augroup friendly_editorconfig
+    au!
+    autocmd VimEnter * if exists('g:editorconfig') && !g:editorconfig | exe 'EditorConfigDisable' | end
+    autocmd BufReadPre * if has('vim_starting') && exists('g:editorconfig') && !g:editorconfig | exe 'EditorConfigDisable' | end
+  augroup END
+endif
+
 " Set terminal color scheme to something hopefully more appealing to new users
 " Uses habamax where supported, otherwise a slightly modified/improved slate
 if !has("gui_running")
