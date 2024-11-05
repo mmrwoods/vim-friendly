@@ -668,6 +668,7 @@ function <SID>GitCommitSplitDiff()
     wincmd p
     exe 'silent' scissors_line . ',$delete _'
     call cursor(1,0)
+    setlocal nomodified
   endif
 endfunction
 augroup friendly_gitcommit
