@@ -649,7 +649,7 @@ augroup END
 " Inspired by https://github.com/rhysd/committia.vim, but does not run diff
 " and status commands, just extracts the diff from the commit message, which
 " means it works nicely when amending commits (shows diff for entire commit)
-" Disable with ":augroup friendly_gitcommit | au! | augroup END"
+" Disable with ":augroup friendly_git_editor | au! | augroup END"
 function <SID>GitCommitSplitDiff()
   call cursor(1, 0)
   let scissors_line = search('^[#;@!$%^&|:] -\+ >8 -\+\n')
@@ -671,11 +671,19 @@ function <SID>GitCommitSplitDiff()
     setlocal nomodified
   endif
 endfunction
-augroup friendly_gitcommit
+augroup friendly_git_editor
   au!
   autocmd VimEnter COMMIT_EDITMSG call <SID>GitCommitSplitDiff()
-  autocmd VimEnter COMMIT_EDITMSG if empty(&colorcolumn) && empty(getmatches()) | call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) | endif
-  autocmd QuitPre COMMIT_EDITMSG if !empty(bufname('COMMIT_DIFF')) | silent bwipeout! COMMIT_DIFF | endif
+  autocmd QuitPre COMMIT_EDITMSG
+    \ if !empty(bufname('COMMIT_DIFF')) | silent bwipeout! COMMIT_DIFF | endif
+augroup END
+
+augroup friendly_git_syntax
+  au!
+  autocmd VimEnter COMMIT_EDITMSG
+    \ if empty(&colorcolumn) && empty(getmatches()) |
+    \   call matchadd('ColorColumn', '\(#.*\)\@<!\%>'.&tw.'v.\+', -1) |
+    \ endif
 augroup END
 
 " Load compatibility hacks on VimEnter, after other plugins are loaded

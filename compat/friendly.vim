@@ -26,5 +26,5 @@ endif
 " Disable friendly git commit editor if commitia plugin installed
 " See https://github.com/rhysd/committia.vim
 if exists('g:loaded_committia')
-  augroup friendly_gitcommit | au! | augroup END
+  augroup friendly_git_editor | au! | augroup END
 endif
