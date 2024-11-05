@@ -340,6 +340,13 @@ if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has
   runtime ftplugin/man.vim
 endif
 
+" Enable comment plugin from optional packages on supported Vim versions
+" Very similar to commenting support in Neovim 0.10.0, see :h comment.txt
+" TLDR; gcc to comment a line, gc{motion} to comment a region, e.g. gcip
+if !has("nvim") && has("patch-9.1.0375")
+  packadd comment
+endif
+
 " Load EditorConfig plugin from optional packages on supported Vim versions
 " Override default settings to be less invasive and work like Neovim defaults
 if !has("nvim") && !exists('g:loaded_EditorConfig') && has("patch-9.0.1799")
