@@ -26,6 +26,7 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the color scheme to something hopefully more appealing to new users.
 * Enables EditorConfig by default in supported Vim versions (same as Neovim).
+* Enables mappings to toggle comments in supported Vim versions (same as Neovim).
 * Enables spell checking for some files by default (e.g. gitcommit, markdown).
 * Enables mouse support in normal, visual, and insert modes (same as Neovim).
 * Enables system clipboard integration (and X11 primary selection if available).
