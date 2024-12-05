@@ -227,11 +227,11 @@ if has("unix")
     " Use ripgrep if available, with some reasonable default options
     " You can supplement these options using a ripgrep configuration file,
     " see man rg, and override them by setting grepprg in your own vimrc
-    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-parent\ -g'!**/{.git,vendor,node_modules}'
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ -g'!tags'\ -g'!*.swp'\ -g'!.git'
     set grepformat=%f:%l:%c:%m
   else
     " If using grep, search recursively, ignore binaries, exclude some paths
-    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude-dir=vendor\ --exclude-dir=node_modules\ --exclude-dir=.git
+    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude=*.swp\ --exclude-dir=.git
   endif
 endif
 
