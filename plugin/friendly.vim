@@ -122,11 +122,11 @@ set synmaxcol=500
 " terminal emulator is configured incorrectly or $TERM is overridden somewhere
 set t_Co=256
 
-" Suffixes that can be ignored when completing file names
-set suffixes=.bak,~,.swp,.o,.info,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" Suffixes with a lower preference when completing file names
+set suffixes+=.tmp
 
-" Patterns that should be ignored when expanding wildcards
-set wildignore=*~,*.o,*.aux,*.dvi,*.pdf,*.gif,*.jpg,*.png,*.pyc,.DS_Store,*.egg*,.git,__pycache__
+" Patterns that should be ignored when completing file names
+set wildignore=*.gif,*.jpg,*.pdf,*.png,*.ttf,.DS_Store,Thumbs.db
 
 " Custom ruler format to include filetype in default vim statusline
 set rulerformat=%35(%=%l\,%c\ %{&ft}\ %P%)
