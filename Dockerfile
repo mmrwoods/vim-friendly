@@ -3,8 +3,7 @@ FROM debian:buster
 LABEL name="vim-friendly"
 
 RUN apt-get update -yqq && apt-get install -yqq --no-install-recommends \
-    ssh git bash-completion bsdmainutils psmisc less rsync man-db vim neovim \
-    ca-certificates
+    ssh git bash-completion less man-db ca-certificates vim neovim
 
 WORKDIR /opt/vim/pack/mmrwoods/opt/friendly
 
