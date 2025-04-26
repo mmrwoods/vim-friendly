@@ -550,12 +550,14 @@ function! FriendlyTab()
     return "\<c-n>"
   endif
 endfunction
-" Tab triggers completion or moves to next completion item
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : FriendlyTab()
-" Shift-Tab moves to previous completion item or deletes an indent
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
-" CR/Enter accepts the current completion if the menu is visible
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+" Map <Tab> to trigger completion or move to next completion item, and
+" <Shift-Tab> to move to previous completion item or delete an indent
+" Only add mappings if not already mapped by other plugins, e.g. mucomplete
+autocmd VimEnter *
+  \ if empty(maparg('<Tab>', 'i')) && empty(maparg('<S-Tab>', 'i')) |
+  \   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : FriendlyTab() |
+  \   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>" |
+  \ endif
 
 " Automatically insert list headers / bullets when formatoptions includes 'n'
 " Mostly copied from bullets.vim, but minimalist version abusing formatlistpat
