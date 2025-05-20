@@ -474,7 +474,7 @@ if has("nvim") || has("patch-8.0.1206")
     au CmdlineLeave /,\?,: set nohls " Hide all matches when search completed
     if has("nvim") || has("patch-8.2.1978")
       autocmd VimEnter *
-        \ if empty(maparg('<leader>h', 'n')) |
+        \ if empty(mapcheck('<leader>h', 'n')) |
         \   nnoremap <leader>h <Cmd>set hlsearch!<CR>|
         \ endif
     endif
