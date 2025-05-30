@@ -283,11 +283,9 @@ vnoremap <S-Tab> <gv
 vnoremap <C-C> "+y
 " CTRL-V is Paste in insert mode
 exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
-" CTRL-Z is Undo in normal and insert modes
-noremap <C-Z> u
+" CTRL-Z is Undo in insert mode
 inoremap <C-Z> <C-O>u
-" CTRL-Y is Redo in normal and insert modes
-noremap <C-Y> <C-R>
+" CTRL-Y is Redo in insert mode
 inoremap <C-Y> <C-O><C-R>
 " CTRL-V is also Paste in terminal job mode
 tnoremap <C-V> <C-W>"+
