@@ -336,6 +336,11 @@ endif
 " Copied from sensible.vim, :Man command is also enabled by default in Neovim
 if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
   runtime ftplugin/man.vim
+  " remove leader mapping added by man ftplugin, confusing as people using
+  " the default leader will have a mapping to :call dist#man#PreGetPage(0),
+  " but people who set mapleader to something else will lose the mapping.
+  " To restore this, use `nnoremap <leader>K <Plug>ManPreGetPage` in vimrc
+  unmap <leader>K
 endif
 
 " Enable comment plugin from optional packages on supported Vim versions
