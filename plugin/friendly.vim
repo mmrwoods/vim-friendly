@@ -350,6 +350,13 @@ if !has("nvim") && has("patch-9.1.0375")
   packadd comment
 endif
 
+" Enable cfilter plugin from optional packages on supported Vim versions
+" Adds :Cfilter and :Lfilter commands to filter quickfix and location lists
+" See :help cfilter-plugin for details and example usage
+if has("nvim-0.4.0") || has("patch-8.1.0649")
+  packadd cfilter
+endif
+
 " Load EditorConfig plugin from optional packages on supported Vim versions
 " Override default settings to be less invasive and work like Neovim defaults
 if !has("nvim") && !exists('g:loaded_EditorConfig') && has("patch-9.0.1799")
