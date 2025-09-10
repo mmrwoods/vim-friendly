@@ -122,6 +122,10 @@ set synmaxcol=500
 " terminal emulator is configured incorrectly or $TERM is overridden somewhere
 set t_Co=256
 
+" Remove /usr/include from path to search for files, same as Neovim 10+
+" You may also want to add `set path+=**` to your vimrc, see :h file-searching
+set path-=/usr/include
+
 " Suffixes with a lower preference when completing file names
 set suffixes+=.tmp
 
