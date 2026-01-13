@@ -122,10 +122,6 @@ set synmaxcol=500
 " terminal emulator is configured incorrectly or $TERM is overridden somewhere
 set t_Co=256
 
-" Add ** to path to recurse into subdirectories when searching for files
-" Slower, but also seems a less surprising default, see :h file-searching
-set path+=**
-
 " Suffixes with a lower preference when completing file names
 set suffixes+=.tmp
 
