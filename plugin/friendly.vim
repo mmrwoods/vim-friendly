@@ -541,24 +541,32 @@ augroup friendly_indent
     \ endif
 augroup END
 
-" Stupid simple tab completion, file path and keyword completion only
+" Stupid simple tab completion, file path, LSP, and keyword completion
 " Cribbed from Gary Bernhardt's vimrc and Akshay Hegde's VimCompletesMe
 " Vim's documentation has a similar suggestion, see :helpgrep CleverTab
-" For more elaborate completions, see :h 'ins-completion' or use coc.nvim
+" For more extensive completion options, see :h 'ins-completion'
+" LSP completion only enabled when omnifunc set to use an LSP function,
+" which requires Neovim's native LSP or a plugin like yeggapan/lsp or
+" prabirshrestha/vim-lsp, see :h 'omnifunc' and LSP plugin documentation
+" LSP completion is only triggered following a dot preceded by a keyword,
+" as no other pattern is near universally accepted for LSP completion
 function! FriendlyTab()
   let pos = getpos('.')
   let substr = matchstr(strpart(getline(pos[1]), 0, pos[2]-1), "[^ \t]*$")
   if empty(substr)
     return "\<tab>"
-  elseif match(substr, '\/') != -1 && match(substr, '<\/') == -1
+  elseif substr =~ '\/' && substr !~ '<\/'
     if !&autochdir && ( has("nvim-0.4.3") || has('patch-8.1.1113') )
       silent! lcd %:p:h
       autocmd CompleteDone <buffer> ++once lcd -
     endif
     return "\<c-x>\<c-f>"
-  else
+  elseif &omnifunc =~? 'lsp' && substr =~ '\m\k\.$'
+    return "\<c-x>\<c-o>"
+  elseif substr =~ '\k$'
     return "\<c-n>"
   endif
+  return "\<tab>"
 endfunction
 " Map <Tab> to trigger completion or move to next completion item, and
 " <Shift-Tab> to move to previous completion item or delete an indent
