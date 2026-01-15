@@ -114,6 +114,11 @@ endif
 " is more text that cannot be displayed. Matters when wrap option is enabled.
 set display+=truncate
 
+" Limit height of popup menus, otherwise they can fill all available screen rows
+" Particularly applicable to ins-completion, avoids obscuring other code, also
+" applies to cmdline-completion if wildoptions includes pum, so not set too low
+set pumheight=25
+
 " Disable syntax highlighting on very long lines, e.g. minified js, slow
 " Often breaks highlighting on following lines, so don't set this too low
 set synmaxcol=500
