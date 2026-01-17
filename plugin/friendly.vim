@@ -499,6 +499,75 @@ if has("nvim") || has("patch-8.0.1206")
   augroup END
 endif
 
+" Make :find command into a fuzzy finder for files within working directory
+" Requires Vim 9.1.0831 and Neovim 0.11.0, see :help fuzzy-file-picker
+" Copied from https://github.com/habamax/.vim/blob/master/plugin/find.vim
+" And from https://gist.github.com/Konfekt/d6bf2941abd810768992368b4f069fb3
+" Modified to support powershell gci, tidy cache, limit matches, suppress
+" unreadable file errors using rg (same as fd), and handle interrupt errors
+" Disable by setting findfunc to empty, ":set findfunc=", see :h findfunc
+" Set global var to use custom cmd, e.g. ":let g:friendly_findcmd='my-cmd'"
+if exists('&findfunc')
+  function FriendlyFindFunc(arg, _)
+    try
+      if empty(s:filescache)
+        " Note: --path-separator required for Unix emulation environments on Windows,
+        " like Cygwin or Mingw-w64, where the path separator may default to \, but Vim
+        " thinks it's running under Unix and then wouldn't find the path for editing
+        if exists('g:friendly_findcmd') && !empty(g:friendly_findcmd)
+          let l:findcmd = g:friendly_findcmd
+        elseif executable('rg') " as fast as fd, more likely to be installed
+          let l:findcmd = 'rg --path-separator / --files --no-messages --color=never --hidden --follow --glob \!.git --glob \!"*.swp"'
+        elseif executable('fd') || executable('fdfind') " debian/ubuntu binary is fdfind
+          let l:fd = executable('fd') ? 'fd' : 'fdfind'
+          let l:findcmd = $'{l:fd} . --path-separator / --type f --color=never --hidden --follow --exclude .git --exclude "*.swp"'
+        elseif executable('git') && stridx(system('git rev-parse --is-inside-work-tree'), 'true') != -1
+          " git ls-files does not require --path-separator, it just works
+          " e.g. running Windows git.exe from Cygwin returns paths with /
+          let l:findcmd = 'git ls-files --cached --other --exclude-standard --exclude="*.swp"'
+        elseif executable('find') && !has('win32')
+          " syntax compatible with both GNU and BSD find
+          let l:findcmd = 'find -L . -type f -not -path "*/.git/*" -not -name "*.swp" -print'
+        elseif executable('powershell') && has('win32')
+          let l:findcmd = "powershell -command \"Get-ChildItem . -Name -File -Recurse -Force | Where-Object { $_ -NotLike '*\.git\*' -and $_ -NotLike '.git\*' -and $_ -NotLike '*.swp' }\""
+        endif
+        " echow l:findcmd
+        if empty(l:findcmd)
+          let s:filescache = globpath('.', '**', 1, 1)
+          call filter(s:filescache, '!isdirectory(v:val)')
+          call map(s:filescache, "fnamemodify(v:val, ':.')")
+        else
+          let s:filescache = systemlist(l:findcmd)
+          if has('win32') && stridx(l:findcmd, 'powershell') == 0
+            " strip trailing CR characters from powershell output
+            " ForEach-Object { $_ -replace "`r",'' } didn't work
+            call map(s:filescache, 'trim(v:val)')
+          endif
+        endif
+        " Clean up filescache, may contain tens of thousands of paths
+        " Note: cannot use CmdlineLeave as it applies before leaving the
+        " command line and before &findfunc is used to find the file to edit
+        " Not perfect, doesn't immediately apply on cancel, but good enough
+        autocmd BufEnter * ++once silent! unlet s:filescache
+      endif
+      " limit matches to avoid wildmode list hiding cmdline and requiring
+      " user to hit q or ESC to continue search, except when no args, where
+      " an indication that there are too many matches to show may be helpful
+      let l:max = (&lines - &cmdheight - 1)
+      return empty(a:arg) ? s:filescache : slice(matchfuzzy(s:filescache, a:arg), 0, l:max)
+    catch /^Vim:Interrupt/
+      " avoid E1514: 'findfunc' did not return a List type
+      return []
+    endtry
+  endfunction
+  augroup friendly_findfunc
+    au!
+    autocmd CmdlineEnter : let s:filescache = []
+  augroup END
+
+  set findfunc=FriendlyFindFunc
+endif
+
 " Avoid c-style indentation in some non-code file types when using = command
 " Default c-style indentation does things like indent lines following a line
 " with leading space and trailing comma, not what you want for plain text.
