@@ -53,8 +53,11 @@ set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 
 set hidden                        " Allow hidden buffers with unsaved changes
 
-set wildmenu                      " Enhanced command line completion
+set wildmenu                      " Show a menu for command line completions
 set wildmode=list:longest,full    " Complete files like a shell (similar to zsh)
+if has('patch-8.2.4325')
+  set wildoptions+=pum            " Use popup menu for command line completions
+endif
 
 set ignorecase                    " Ignore case when searching
 set smartcase                     " Except when search contains capital letters
