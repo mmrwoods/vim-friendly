@@ -505,7 +505,7 @@ endif
 " Removes indentation on first line, otherwise uses previous line indent;
 " unless previous line was the start of a list, then uses formatlistpat.
 " Disable with ":augroup friendly_indent | au! | augroup END"
-function! GetFriendlyIndent()
+function! FriendlyIndentExpr()
   " remove indent if the current line is the start of the file
   if v:lnum == 0 | return 0 | endif
   " get the previous non-blank line as basis for current line indent
@@ -545,7 +545,7 @@ augroup friendly_indent
   au!
   autocmd FileType text,markdown,gitcommit,hgcommit,asciidoc,rst,rdoc,tex
     \ if empty(&indentexpr) && empty(&equalprg) |
-    \   setlocal indentexpr=GetFriendlyIndent() |
+    \   setlocal indentexpr=FriendlyIndentExpr() |
     \ endif
 augroup END
 
