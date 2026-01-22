@@ -25,6 +25,8 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the color scheme to something hopefully more appealing to new users.
+* Configures `:grep` command to use `ripgrep` if installed (similar to Neovim).
+* Makes `:find` command a fuzzy file picker on Vim 9.1.0831+ and Neovim 0.11.0+
 * Enables EditorConfig by default in supported Vim versions (same as Neovim).
 * Enables mappings to toggle comments in supported Vim versions (same as Neovim).
 * Enables spell checking for some files by default (e.g. gitcommit, markdown).
@@ -48,11 +50,9 @@ diffs in a vertical split when using `git commit --verbose`.
 
 ## Requirements
 
-Vim 8.1+ or Neovim 0.3.4+, though some features are only supported by and
-enabled on later versions. Only tested on Mac and Debian, might work fine on
-Windows too. Tested with various versions of Neovim from 0.3.4 to 0.10.0, but I
-don't use Neovim regularly. Should work with Vim 8.0, but I have not tested it.
-Does not work with "tiny" Vim.
+Vim 8.1+ or Neovim 0.3.4+, though Vim 9.1+ or Neovim 0.11+ recommended (some features
+are only supported on later versions). Tested on Mac, Debian, and Windows. Does
+not work with "tiny" Vim. Not tested with Vim 8.0.
 
 ## Installation
 
