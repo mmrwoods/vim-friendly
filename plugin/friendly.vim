@@ -524,7 +524,7 @@ if exists('&findfunc')
         elseif executable('git') && stridx(system('git rev-parse --is-inside-work-tree'), 'true') != -1
           " git ls-files does not require --path-separator, it just works
           " e.g. running Windows git.exe from Cygwin returns paths with /
-          let l:findcmd = 'git ls-files --cached --other --exclude-standard --exclude="*.swp"'
+          let l:findcmd = 'git ls-files --cached --other --exclude-standard --no-recurse-submodules --exclude="*.swp"'
         elseif executable('find') && !has('win32')
           " syntax compatible with both GNU and BSD find
           let l:findcmd = 'find -L . -type f -not -path "*/.git/*" -not -name "*.swp" -print'
