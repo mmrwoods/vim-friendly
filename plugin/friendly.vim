@@ -566,6 +566,25 @@ if exists('&findfunc')
   augroup END
 
   set findfunc=FriendlyFindFunc
+
+  " Enable autocompletion for :find if supported, see :h cmdline-autocompletion
+  if exists('*wildtrigger')
+    augroup friendly_wildtrigger
+      au!
+      autocmd CmdlineEnter :
+        \ let s:wildmode = &wildmode |
+        \ let s:wildoptions = &wildoptions
+      autocmd CmdLineLeave :
+        \ let &wildmode = s:wildmode |
+        \ let &wildoptions = s:wildoptions
+      autocmd CmdlineChanged :
+        \ if getcmdline() =~# '\v^\s*fin%[d]\s' && &findfunc ==# 'FriendlyFindFunc' |
+        \   set wildmode=noselect:lastused,full |
+        \   set wildoptions=pum |
+        \   call wildtrigger() |
+        \ endif
+    augroup END
+  endif
 endif
 
 " Avoid c-style indentation in some non-code file types when using = command
