@@ -230,17 +230,20 @@ if has("unnamedplus")
 endif
 
 " Configure external program to use for :grep command, see :h :grepprg
-if has("unix")
-  if executable('rg')
-    " Use ripgrep if available, with some reasonable default options
-    " You can supplement these options using a ripgrep configuration file,
-    " see man rg, and override them by setting grepprg in your own vimrc
-    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ -g'!tags'\ -g'!*.swp'\ -g'!.git'
-    set grepformat=%f:%l:%c:%m
-  else
-    " If using grep, search recursively, ignore binaries, exclude some paths
-    set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude=*.swp\ --exclude-dir=.git
-  endif
+if executable('rg')
+  " Use ripgrep if available, with some reasonable default options
+  " You can supplement these options using a ripgrep configuration file,
+  " see man rg, and override them by setting grepprg in your own vimrc
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ -g'!.git'
+  set grepformat=%f:%l:%c:%m
+elseif executable('git')
+  " Prefer git grep --no-index over BSD or GNU grep, faster, even without
+  " respecting ignore files, but use with --exclude-standard, much faster
+  set grepprg=git\ grep\ --no-index\ -n\ -I\ --column\ --exclude-standard
+  set grepformat=%f:%l:%c:%m
+elseif has('unix')
+  " If using grep, search recursively, ignore binaries, exclude some paths
+  set grepprg=grep\ -r\ -n\ -I\ --exclude=tags\ --exclude=*.swp\ --exclude-dir=.git
 endif
 
 " Disable weird legacy langmap behaviour, see h: langmap and h: langremap
