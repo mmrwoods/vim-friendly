@@ -239,7 +239,8 @@ if executable('rg')
 elseif executable('git')
   " Prefer git grep --no-index over BSD or GNU grep, faster, even without
   " respecting ignore files, but use with --exclude-standard, much faster
-  set grepprg=git\ grep\ --no-index\ -n\ -I\ --column\ --exclude-standard
+  " Note: recurse submodules incompatible with --no-index in old git versions
+  set grepprg=git\ grep\ --no-index\ -n\ -I\ --column\ --no-recurse-submodules\ --exclude-standard
   set grepformat=%f:%l:%c:%m
 elseif has('unix')
   " If using grep, search recursively, ignore binaries, exclude some paths
