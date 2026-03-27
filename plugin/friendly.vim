@@ -416,6 +416,34 @@ augroup friendly_grep
   autocmd QuickFixCmdPost lgrep lopen
 augroup END
 
+" :Grep command that just works - avoid "Press ENTER to continue" prompt, avoid
+" spewing output into the parent shell, show command being run, both while it is
+" running and as the quickfix window title once finished (even if interrupted)
+" Assumes grepprg is configured to search recursively, as set by friendly.vim
+" Inspired by: https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
+function! Grep(...)
+  " Do not use expandcmd(), only added in Vim 8.1.1510 and Neovim 0.5.0
+  let args = map(copy(a:000), 'shellescape(expand(v:val))')
+  let grepcmd = &grepprg . ' ' . join(args, ' ')
+  echohl MessageWindow | echo 'Running: ' . grepcmd | echohl None
+  try
+    noautocmd cgetexpr system(grepcmd)
+    call setqflist([], 'r', {'title': grepcmd})
+  catch /^Vim:Interrupt$/
+    call setqflist([], 'r', {'title': grepcmd . ' (Interrupted)'})
+    echoerr "Interrupted: " . grepcmd
+  finally
+    redraw! | copen
+  endtry
+endfunction
+command! -nargs=+ -complete=dir -bar Grep call Grep(<f-args>)
+" Change :grep to :Grep as you type, it's probably what you want
+" See https://noahfrederick.com/log/vim-streamlining-grep
+" Revert with ":unabbrev grep"
+if match(execute('verbose set grepprg?'), 'Last set from.*friendly\.vim') != -1
+  cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Grep' : 'grep'
+endif
+
 augroup friendly_filetypes
   au!
   " Restore default synmaxcol for very long lines in some file types
