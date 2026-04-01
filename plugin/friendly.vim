@@ -424,7 +424,11 @@ augroup END
 function! Grep(...)
   " Do not use expandcmd(), only added in Vim 8.1.1510 and Neovim 0.5.0
   let args = map(copy(a:000), 'shellescape(expand(v:val))')
-  let grepcmd = &grepprg . ' ' . join(args, ' ')
+  if match(&grepprg, '\V$*') != -1
+    let grepcmd = substitute(&grepprg, '\V$*', join(args, ' '), '')
+  else
+    let grepcmd = &grepprg . ' ' . join(args, ' ')
+  endif
   echohl MessageWindow | echo 'Running: ' . grepcmd | echohl None
   try
     noautocmd cgetexpr system(grepcmd)
