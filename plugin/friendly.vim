@@ -449,9 +449,7 @@ command! -nargs=+ -complete=dir -bar Grep call Grep(<f-args>)
 " Change :grep to :Grep as you type, it's probably what you want
 " See https://noahfrederick.com/log/vim-streamlining-grep
 " Revert with ":unabbrev grep"
-if match(execute('verbose set grepprg?'), 'Last set from.*friendly\.vim') != -1
-  cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Grep' : 'grep'
-endif
+cnoreabbrev <expr> grep (getcmdtype() ==# ':' && getcmdline() ==# 'grep') ? 'Grep' : 'grep'
 
 augroup friendly_filetypes
   au!
