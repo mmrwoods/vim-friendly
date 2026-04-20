@@ -705,7 +705,7 @@ endfunction
 " Only add mappings if not already mapped by other plugins, e.g. mucomplete
 autocmd VimEnter *
   \ if empty(maparg('<Tab>', 'i')) && empty(maparg('<S-Tab>', 'i')) |
-  \   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : FriendlyTab() |
+  \   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : g:FriendlyTab() |
   \   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>" |
   \ endif
 
