@@ -28,3 +28,15 @@ endif
 if exists('g:loaded_committia')
   augroup friendly_git_editor | au! | augroup END
 endif
+
+" Lexima overwrites existing CR mappings, unlike auto-pairs which wraps them
+" Restore friendly CR mapping on buffers where list formatting enabled and no
+" buffer local mapping exists (Note: bullets.vim uses buffer local mappings)
+if exists('g:loaded_lexima')
+  augroup friendly_compat_lexima
+    autocmd BufEnter *
+      \ if match(&formatoptions, 'n') != -1 && !maparg('<CR>', 'i', 0, 1)['buffer'] |
+      \   inoremap <buffer> <expr> <CR> (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>') |
+      \ endif
+  augroup END
+endif
