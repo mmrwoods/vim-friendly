@@ -30,9 +30,13 @@ if exists('g:loaded_committia')
 endif
 
 " Lexima overwrites existing CR mappings, unlike auto-pairs which wraps them
-" Restore friendly CR mapping on buffers where list formatting enabled and no
-" buffer local mapping exists (Note: bullets.vim uses buffer local mappings)
+" Configure Lexima to accept completion on CR when completion menu is visible,
+" and restore friendly CR mapping on buffers where list formatting enabled and
+" no buffer local mapping exists (Note: bullets.vim uses buffer local mappings)
 if exists('g:loaded_lexima')
+  if stridx(maparg('<CR>', 'i'), 'FriendlyCR') != -1
+    let g:lexima_accept_pum_with_enter = 1
+  endif
   augroup friendly_compat_lexima
     autocmd BufEnter *
       \ if match(&formatoptions, 'n') != -1 && !maparg('<CR>', 'i', 0, 1)['buffer'] |
