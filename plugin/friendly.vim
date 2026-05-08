@@ -35,8 +35,6 @@ set nofixeol                      " Disable fixeol by default, use .editorconfig
 
 set cursorline                    " Highlight the cursor line
 
-set ttyfast                       " Assume a fast terminal connection
-
 set autoindent                    " Auto-indent if no file type specific indent
 
 set expandtab                     " Insert spaces when hitting <Tab>
@@ -48,8 +46,6 @@ set softtabstop=-1                " Use shiftwidth with <Tab> and <Backspace>
 set smarttab                      " Use shiftwidth with <Tab> at start of line
 
 set showcmd                       " Show incomplete editor commands as you type
-
-set backspace=indent,eol,start    " Intuitive backspacing in insert mode
 
 set hidden                        " Allow hidden buffers with unsaved changes
 
@@ -104,7 +100,18 @@ if has("balloon_eval")
   set noballooneval               " Disable slow and annoying tooltips
 endif
 
-" Enable timeouts on key codes in addition to mappings, and reduce the wait
+" Assume a fast terminal connection, always assumed by Neovim, conditionally
+" set for some terminals since Vim 7, but only became the default in Vim 9.1
+if !has('nvim') && !has('patch-9.0.0948')
+  set ttyfast
+endif
+
+" Intuitive backspacing in insert mode, the default in Neovim and Vim 9.2
+if !has('nvim') && !has('patch-9.1.0899')
+  set backspace=indent,eol,start
+endif
+
+" Enable timeouts on both key codes and mappings, and reduce the wait
 " time for a special key after Esc to make the Esc key more responsive
 " Copied from sensible.vim and defaults.vim, Neovim sets ttimeoutlen to 50
 if !has('nvim')
