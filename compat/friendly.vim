@@ -38,7 +38,7 @@ if exists('g:loaded_lexima')
     let g:lexima_accept_pum_with_enter = 1
   endif
   augroup friendly_compat_lexima
-    autocmd BufEnter *
+    autocmd BufEnter,FileType *
       \ if match(&formatoptions, 'n') != -1 && !maparg('<CR>', 'i', 0, 1)['buffer'] |
       \   inoremap <buffer> <expr> <CR> (pumvisible() ? "\<C-y>" : '<C-]><C-R>=FriendlyCR()<CR>') |
       \ endif
