@@ -96,8 +96,9 @@ set laststatus=2                  " Show the status line all the time
 set splitright                    " Open vertical splits to the right
 set splitbelow                    " Open horizontal splits below
 
+" Disable slow and annoying tooltips (Neovim does not support balloon_eval)
 if has("balloon_eval")
-  set noballooneval               " Disable slow and annoying tooltips
+  set noballooneval
 endif
 
 " Assume a fast terminal connection, always assumed by Neovim, conditionally
@@ -403,6 +404,17 @@ endif
 " Uses habamax where supported, otherwise a slightly modified/improved slate
 if !has("gui_running")
   colorscheme friendly
+endif
+
+" Make autoread just work in terminal Vim, see :h checktime
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" Disable with ":augroup friendly_checktime | au! | augroup END"
+if !has("gui_running")
+  augroup friendly_checktime
+    au!
+    autocmd BufEnter,CursorHold *
+      \ if mode() == 'n' && empty(getcmdwintype()) | checktime | endif
+  augroup END
 endif
 
 " Jump to last known cursor position when editing (except for git/hg commits)
