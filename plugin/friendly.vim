@@ -589,9 +589,8 @@ if exists('&findfunc')
         elseif executable('powershell') && has('win32')
           let l:findcmd = "powershell -command \"Get-ChildItem . -Name -File -Recurse -Force | Where-Object { $_ -NotLike '*\.git\*' -and $_ -NotLike '.git\*' -and $_ -NotLike '*.swp' }\""
         endif
-        " echow l:findcmd
         if empty(l:findcmd)
-          let s:filescache = globpath('.', '**', 1, 1)
+          let s:filescache = expand('**', 1, 1)
           call filter(s:filescache, '!isdirectory(v:val)')
           call map(s:filescache, "fnamemodify(v:val, ':.')")
         else
@@ -603,10 +602,7 @@ if exists('&findfunc')
           endif
         endif
         " Clean up filescache, may contain tens of thousands of paths
-        " Note: cannot use CmdlineLeave as it applies before leaving the
-        " command line and before &findfunc is used to find the file to edit
-        " Not perfect, doesn't immediately apply on cancel, but good enough
-        autocmd BufEnter * ++once silent! unlet s:filescache
+        autocmd CmdLineLeave : ++once let s:filescache = []
       endif
       " limit matches to avoid wildmode list hiding cmdline and requiring
       " user to hit q or ESC to continue search, except when no args, where
