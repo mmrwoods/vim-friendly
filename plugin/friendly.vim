@@ -566,6 +566,7 @@ endif
 " Disable by setting findfunc to empty, ":set findfunc=", see :h findfunc
 " Set global var to use custom cmd, e.g. ":let g:friendly_findcmd='my-cmd'"
 if exists('&findfunc')
+  let s:filescache = []
   function FriendlyFindFunc(arg, _)
     try
       if empty(s:filescache)
@@ -614,11 +615,6 @@ if exists('&findfunc')
       return []
     endtry
   endfunction
-  augroup friendly_findfunc
-    au!
-    autocmd CmdlineEnter : let s:filescache = []
-  augroup END
-
   set findfunc=FriendlyFindFunc
 
   " Enable autocompletion for :find if supported, see :h cmdline-autocompletion
