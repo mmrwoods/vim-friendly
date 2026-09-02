@@ -25,7 +25,7 @@ know](http://github.com/mmrwoods/vim-friendly/issues).
 * Adds default mappings from Neovim, sensible.vim and Vim's own defaults.vim.
 * Adds some convenience mappings for new users (e.g. Tab/S-Tab to shift lines).
 * Sets the color scheme to something hopefully more appealing to new users.
-* Configures `:grep` command to use `ripgrep` or `git-grep` where possible.
+* Configures `:grep` command to use `ripgrep` or `git grep` where possible.
 * Adds a `:Grep` command that runs in a subshell and aliases `:grep` to `:Grep`.
 * Makes `:find` command a fuzzy file picker on Vim 9.1.0831+ and Neovim 0.11.0+
 * Enables EditorConfig by default in supported Vim versions (same as Neovim).
