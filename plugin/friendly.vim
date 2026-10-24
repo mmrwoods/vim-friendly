@@ -195,8 +195,8 @@ if has("nvim-0.11.0") || has("patch-9.1.0463")
   set completeopt+=fuzzy
 endif
 
-" Include dictionary words in completion menu when spellcheck is enabled
-set complete+=kspell
+" Include some dictionary words in completion when spellcheck is enabled
+set complete+=kspell^10
 
 " Disable completing keywords in included files, can make completion slow
 set complete-=i
