@@ -190,9 +190,11 @@ set completeopt=menuone,noselect
 if has("nvim-0.10.0") || has("patch-8.1.1880")
   set completeopt+=popup
 endif
-" Enable fuzzy matching of completion items if supported
+" Enable fuzzy matching of completion items if supported, but retain ordering
+" by 'complete' source (keywords first, spelling last) rather than fuzzy score
 if has("nvim-0.11.0") || has("patch-9.1.0463")
   set completeopt+=fuzzy
+  set completeopt+=nosort
 endif
 
 " Include some dictionary words in completion when spellcheck is enabled
